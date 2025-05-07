@@ -28,6 +28,10 @@
       "import": "./dist/es/index.js",
       "require": "./dist/umd/index.js"
     },
+    "./src/*": {
+      "import": "./src/*",
+      "require": "./src/*"
+    },
     "./styles/*": "./dist/styles/*",
     "./types/*": "./types/components/*/types.d.ts"
   },
