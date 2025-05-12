@@ -8,7 +8,7 @@
 import AppConfig from '../../components/AppConfig/index.vue';
 import Typewriter from '../../components/Typewriter/index.vue';
 import markdownItMermaid from '@jsonlee_12138/markdown-it-mermaid';
-import type { TypewriterProps } from '../../components/Typewriter/types';
+// import type { TypewriterProps } from '../../components/Typewriter/types';
 import '../../../public/styles/prism.min.css';
 import { useAttrs } from 'vue';
 

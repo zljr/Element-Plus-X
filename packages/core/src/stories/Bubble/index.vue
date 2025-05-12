@@ -3,8 +3,8 @@
 import { DocumentCopy, Refresh, Search, Star } from '@element-plus/icons-vue'
 // import { usePrism } from '../../hooks'
 // import '../../../public/styles/prism-solarizedlight.min.css'
-import Bubble from '../../components/Bubble/index.vue'
-import type { BubbleProps } from '../../components/Bubble/types'
+import Bubble from '@components/Bubble/index.vue'
+import type { BubbleProps } from '@components/Bubble/types'
 import markdownItMermaid from '@jsonlee_12138/markdown-it-mermaid'
 // import 'highlight.js/styles/a11y-light.min.css'
 
