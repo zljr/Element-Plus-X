@@ -59,22 +59,20 @@ const thinkingItems: ThoughtChainItemProps<DataType>[] = [
 </script>
 
 <template>
-  <ClientOnly>
-    <ThoughtChain
-      :thinking-items="thinkingItems"
-      row-key="codeId"
-      status-key="self_status"
-      :status-enum="{
-        loading: { value: 'load', type: 'warning' },
-        error: { value: 'no', type: 'success' },
-        success: { value: 'yes', type: 'danger' },
-      }"
-    >
-      <template #icon="{ item }">
-        <span>{{ console.log(item) }}</span>
-      </template>
-    </ThoughtChain>
-  </ClientOnly>
+  <ThoughtChain
+    :thinking-items="thinkingItems"
+    row-key="codeId"
+    status-key="self_status"
+    :status-enum="{
+      loading: { value: 'load', type: 'warning' },
+      error: { value: 'no', type: 'success' },
+      success: { value: 'yes', type: 'danger' },
+    }"
+  >
+    <template #icon="{ item }">
+      <span>{{ console.log(item) }}</span>
+    </template>
+  </ThoughtChain>
 </template>
 
 <style scoped lang="less">

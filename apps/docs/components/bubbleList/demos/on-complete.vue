@@ -85,22 +85,20 @@ function changeTriggerIndices(type: 'only-last' | 'all' | number[]) {
 </script>
 
 <template>
-  <ClientOnly>
-    <div style="display: flex; flex-direction: column; gap: 12px;">
-      <div style="display: flex; align-items: center;">
-        <span style="margin-right: 12px;">trigger-indices: </span>
-        <el-button style="width: fit-content;" @click="changeTriggerIndices('only-last')">
-          only-last
-        </el-button>
-        <el-button style="width: fit-content;" type="primary" @click="changeTriggerIndices('all')">
-          all
-        </el-button>
-        <el-button style="width: fit-content;" type="success" @click="changeTriggerIndices([1, 2, 3])">
-          [1, 2, 3]
-        </el-button>
-      </div>
-
-      <BubbleList :list="list" max-height="350px" :trigger-indices="triggerIndices" @complete="onComplete" />
+  <div style="display: flex; flex-direction: column; gap: 12px;">
+    <div style="display: flex; align-items: center;">
+      <span style="margin-right: 12px;">trigger-indices: </span>
+      <el-button style="width: fit-content;" @click="changeTriggerIndices('only-last')">
+        only-last
+      </el-button>
+      <el-button style="width: fit-content;" type="primary" @click="changeTriggerIndices('all')">
+        all
+      </el-button>
+      <el-button style="width: fit-content;" type="success" @click="changeTriggerIndices([1, 2, 3])">
+        [1, 2, 3]
+      </el-button>
     </div>
-  </ClientOnly>
+
+    <BubbleList :list="list" max-height="350px" :trigger-indices="triggerIndices" @complete="onComplete" />
+  </div>
 </template>

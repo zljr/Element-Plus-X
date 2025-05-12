@@ -46,73 +46,71 @@ function setLoading(loading: boolean) {
 </script>
 
 <template>
-  <ClientOnly>
-    <div style="display: flex; flex-direction: column; gap: 12px;">
-      <div style="display: flex; gap: 12px;">
-        <span>动态设置内容 <el-switch v-model="switchValue" /></span>
-        <span>自定义 loading <el-switch v-model="loading" @change="(value: any) => setLoading(value as boolean)" /></span>
-      </div>
-      <BubbleList :list="bubbleItems" max-height="350px">
-        <!-- 自定义头像 -->
-        <template #avatar="{ item }">
-          <div class="avatar-wrapper">
-            <img :src="item.role === 'ai' ? avartAi : avatar" alt="avatar">
-          </div>
-        </template>
-  
-        <!-- 自定义头部 -->
-        <template #header="{ item }">
-          <div class="header-wrapper">
-            <div class="header-name">
-              {{ item.role === 'ai' ? 'Element Plus X 🍧' : '🧁 用户' }}
-            </div>
-          </div>
-        </template>
-  
-        <!-- 自定义气泡内容 -->
-        <template #content="{ item }">
-          <div class="content-wrapper">
-            <div class="content-text">
-              {{ item.role === 'ai' ? `${switchValue ? `#ai-${item.key}：` : ''} 💖 感谢使用 Element Plus X ! 你的支持，是我们开源的最强动力 ~` : `${switchValue ? `#user-${item.key}：` : ''}哈哈哈，让我试试` }}
-            </div>
-          </div>
-        </template>
-  
-        <!-- 自定义底部 -->
-        <template #footer="{ item }">
-          <div class="footer-wrapper">
-            <div class="footer-container">
-              <el-button type="info" :icon="Refresh" size="small" circle />
-              <el-button type="success" :icon="Search" size="small" circle />
-              <el-button type="warning" :icon="Star" size="small" circle />
-              <el-button color="#626aef" :icon="DocumentCopy" size="small" circle />
-            </div>
-            <div class="footer-time">
-              {{ item.role === 'ai' ? '下午 2:32' : '下午 2:33' }}
-            </div>
-          </div>
-        </template>
-  
-        <!-- 自定义 loading -->
-        <template #loading="{ item }">
-          <div class="loading-container">
-            <span>#{{ item.role }}-{{ item.key }}：</span>
-            <span>我</span>
-            <span>是</span>
-            <span>自</span>
-            <span>定</span>
-            <span>义</span>
-            <span>加</span>
-            <span>载</span>
-            <span>内</span>
-            <span>容</span>
-            <span>哦</span>
-            <span>~</span>
-          </div>
-        </template>
-      </BubbleList>
+  <div style="display: flex; flex-direction: column; gap: 12px;">
+    <div style="display: flex; gap: 12px;">
+      <span>动态设置内容 <el-switch v-model="switchValue" /></span>
+      <span>自定义 loading <el-switch v-model="loading" @change="(value: any) => setLoading(value as boolean)" /></span>
     </div>
-  </ClientOnly>
+    <BubbleList :list="bubbleItems" max-height="350px">
+      <!-- 自定义头像 -->
+      <template #avatar="{ item }">
+        <div class="avatar-wrapper">
+          <img :src="item.role === 'ai' ? avartAi : avatar" alt="avatar">
+        </div>
+      </template>
+
+      <!-- 自定义头部 -->
+      <template #header="{ item }">
+        <div class="header-wrapper">
+          <div class="header-name">
+            {{ item.role === 'ai' ? 'Element Plus X 🍧' : '🧁 用户' }}
+          </div>
+        </div>
+      </template>
+
+      <!-- 自定义气泡内容 -->
+      <template #content="{ item }">
+        <div class="content-wrapper">
+          <div class="content-text">
+            {{ item.role === 'ai' ? `${switchValue ? `#ai-${item.key}：` : ''} 💖 感谢使用 Element Plus X ! 你的支持，是我们开源的最强动力 ~` : `${switchValue ? `#user-${item.key}：` : ''}哈哈哈，让我试试` }}
+          </div>
+        </div>
+      </template>
+
+      <!-- 自定义底部 -->
+      <template #footer="{ item }">
+        <div class="footer-wrapper">
+          <div class="footer-container">
+            <el-button type="info" :icon="Refresh" size="small" circle />
+            <el-button type="success" :icon="Search" size="small" circle />
+            <el-button type="warning" :icon="Star" size="small" circle />
+            <el-button color="#626aef" :icon="DocumentCopy" size="small" circle />
+          </div>
+          <div class="footer-time">
+            {{ item.role === 'ai' ? '下午 2:32' : '下午 2:33' }}
+          </div>
+        </div>
+      </template>
+
+      <!-- 自定义 loading -->
+      <template #loading="{ item }">
+        <div class="loading-container">
+          <span>#{{ item.role }}-{{ item.key }}：</span>
+          <span>我</span>
+          <span>是</span>
+          <span>自</span>
+          <span>定</span>
+          <span>义</span>
+          <span>加</span>
+          <span>载</span>
+          <span>内</span>
+          <span>容</span>
+          <span>哦</span>
+          <span>~</span>
+        </div>
+      </template>
+    </BubbleList>
+  </div>
 </template>
 
 <style scoped lang="less">

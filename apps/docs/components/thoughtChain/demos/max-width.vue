@@ -32,9 +32,7 @@ const thinkingItems: ThoughtChainItemProps<DataType>[] = [
 </script>
 
 <template>
-  <ClientOnly>
-    <ThoughtChain :thinking-items="thinkingItems" max-width="calc(100% - 300px)" />
-  </ClientOnly>
+  <ThoughtChain :thinking-items="thinkingItems" max-width="calc(100% - 300px)" />
 </template>
 
 <style scoped lang="less">

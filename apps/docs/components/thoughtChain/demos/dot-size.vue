@@ -59,10 +59,8 @@ const thinkingItems: ThoughtChainItemProps<DataType>[] = [
 </script>
 
 <template>
-  <ClientOnly>
-    <ThoughtChain :thinking-items="thinkingItems" dot-size="small" />
-    <ThoughtChain :thinking-items="thinkingItems" dot-size="large" />
-  </ClientOnly>
+  <ThoughtChain :thinking-items="thinkingItems" dot-size="small" />
+  <ThoughtChain :thinking-items="thinkingItems" dot-size="large" />
 </template>
 
 <style scoped lang="less">

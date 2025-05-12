@@ -28,26 +28,24 @@ const avatarUser = 'https://avatars.githubusercontent.com/u/76239030?v=4'
 </script>
 
 <template>
-  <ClientOnly>
-    <div style="display: flex; flex-direction: column; gap: 12px;">
-      <!-- Avatar and Placement 左侧 -->
-      <Bubble content="Good morning, how are you?" placement="start" :avatar="avatarAI" avatar-size="48px" />
-  
-      <!-- avatar-size 设置头像占位空间 -->
-      <Bubble content="What a beautiful day!" placement="start" avatar-size="48px" />
-  
-      <!-- Avatar and Placement 右侧 -->
-      <Bubble content="Hi, good morning, I'm fine!" placement="end">
-        <template #avatar>
-          <el-avatar
-            :size="32"
-            :src="avatarUser"
-          />
-        </template>
-      </Bubble>
-  
-      <!-- avatar-gap 属性控制 气泡与头像的距离 -->
-      <Bubble content="Hi, good morning, I'm fine! Thank you!" placement="end" avatar-size="0px" avatar-gap="0px" />
-    </div>
-  </ClientOnly>
+  <div style="display: flex; flex-direction: column; gap: 12px;">
+    <!-- Avatar and Placement 左侧 -->
+    <Bubble content="Good morning, how are you?" placement="start" :avatar="avatarAI" avatar-size="48px" />
+
+    <!-- avatar-size 设置头像占位空间 -->
+    <Bubble content="What a beautiful day!" placement="start" avatar-size="48px" />
+
+    <!-- Avatar and Placement 右侧 -->
+    <Bubble content="Hi, good morning, I'm fine!" placement="end">
+      <template #avatar>
+        <el-avatar
+          :size="32"
+          :src="avatarUser"
+        />
+      </template>
+    </Bubble>
+
+    <!-- avatar-gap 属性控制 气泡与头像的距离 -->
+    <Bubble content="Hi, good morning, I'm fine! Thank you!" placement="end" avatar-size="0px" avatar-gap="0px" />
+  </div>
 </template>

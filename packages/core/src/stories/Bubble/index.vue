@@ -74,7 +74,7 @@ onMounted(() => {
     <div class="component-container">
       <p>新版本支持 打字器 雾化效果 使用 Mermaid.js 支持简单的图表和函数公式 </p>
       <div class="component-1">
-        <Bubble placement="start" :content="content" shape="corner" variant="shadow" :loading="loading" :typing="{
+        <Bubble :placement="placement" :content="content" :shape="shape" variant="shadow" :loading="loading" :typing="{
           step: 2,
           suffix: '💗',
         }" :is-markdown="true" :is-fog="{ bgColor: '#FFFFFF' }">

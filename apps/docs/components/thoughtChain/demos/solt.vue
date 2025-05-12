@@ -59,36 +59,34 @@ const thinkingItems: ThoughtChainItemProps<DataType>[] = [
 </script>
 
 <template>
-  <ClientOnly>
-    <ThoughtChain
-      :thinking-items="thinkingItems"
-      row-key="codeId"
-      title-key="self_title"
-      think-title-key="self_thinkTitle"
-      think-content-key="self_thinkContent"
-    >
-      <template #icon="{ item }">
-        <span
-          v-if="item.status === 'success'"
-          style="font-size: 18px; margin-left: 7px; color: var(--el-color-success);"
-        >
-          <el-icon><SuccessFilled /></el-icon>
-        </span>
-        <span
-          v-if="item.status === 'error'"
-          style="font-size: 18px; margin-left: 7px; color: var(--el-color-danger);"
-        >
-          <el-icon><CircleCloseFilled /></el-icon>
-        </span>
-        <span
-          v-if="item.status === 'loading'"
-          style="font-size: 18px; margin-left: 7px; "
-        >
-          <el-icon class="is-loading"><Loading /></el-icon>
-        </span>
-      </template>
-    </ThoughtChain>
-  </ClientOnly>
+  <ThoughtChain
+    :thinking-items="thinkingItems"
+    row-key="codeId"
+    title-key="self_title"
+    think-title-key="self_thinkTitle"
+    think-content-key="self_thinkContent"
+  >
+    <template #icon="{ item }">
+      <span
+        v-if="item.status === 'success'"
+        style="font-size: 18px; margin-left: 7px; color: var(--el-color-success);"
+      >
+        <el-icon><SuccessFilled /></el-icon>
+      </span>
+      <span
+        v-if="item.status === 'error'"
+        style="font-size: 18px; margin-left: 7px; color: var(--el-color-danger);"
+      >
+        <el-icon><CircleCloseFilled /></el-icon>
+      </span>
+      <span
+        v-if="item.status === 'loading'"
+        style="font-size: 18px; margin-left: 7px; "
+      >
+        <el-icon class="is-loading"><Loading /></el-icon>
+      </span>
+    </template>
+  </ThoughtChain>
 </template>
 
 <style scoped lang="less">

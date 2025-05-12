@@ -57,9 +57,7 @@ const thinkingItems: ThoughtChainItemProps<DataType>[] = [
 </script>
 
 <template>
-  <ClientOnly>
-    <ThoughtChain :thinking-items="thinkingItems" line-gradient />
-  </ClientOnly>
+  <ThoughtChain :thinking-items="thinkingItems" line-gradient />
 </template>
 
 <style scoped lang="less">

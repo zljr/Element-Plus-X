@@ -62,9 +62,7 @@ const thinkingItems: ThoughtChainItemProps<DataType>[] = [
 </script>
 
 <template>
-  <ClientOnly>
-    <ThoughtChain :thinking-items="thinkingItems" row-key="codeId" />
-  </ClientOnly>
+  <ThoughtChain :thinking-items="thinkingItems" row-key="codeId" />
 </template>
 
 <style scoped lang="less">

@@ -56,23 +56,21 @@ const thinkingItems: ThoughtChainItemProps<DataType>[] = [
   },
 ]
 
-const handleExpand = (value: string[]) => {
+function handleExpand(value: string[]) {
   const expandedItems = thinkingItems.filter(item => value.includes(item.codeId))
   console.log(expandedItems)
 }
 </script>
 
 <template>
-  <ClientOnly>
-    <ThoughtChain
-      :thinking-items="thinkingItems"
-      row-key="codeId"
-      title-key="self_title"
-      think-title-key="self_thinkTitle"
-      think-content-key="self_thinkContent"
-      @handle-expand="(value: string[]) => handleExpand(value)"
-    />
-  </ClientOnly>
+  <ThoughtChain
+    :thinking-items="thinkingItems"
+    row-key="codeId"
+    title-key="self_title"
+    think-title-key="self_thinkTitle"
+    think-content-key="self_thinkContent"
+    @handle-expand="(value: string[]) => handleExpand(value)"
+  />
 </template>
 
 <style scoped lang="less">

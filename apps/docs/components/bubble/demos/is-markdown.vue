@@ -22,18 +22,16 @@ function changeContent() {
 </script>
 
 <template>
-  <ClientOnly>
-    <div style="display: flex; flex-direction: column; gap: 12px;">
-      <el-button style="width: fit-content;" @click="changeContent">
-        设置 markdown
-      </el-button>
-      <Bubble :content="content" typing is-markdown>
-        <template #avatar>
-          <el-avatar :size="32" :src="avatarUser" />
-        </template>
-      </Bubble>
-    </div>
-  </ClientOnly>
+  <div style="display: flex; flex-direction: column; gap: 12px;">
+    <el-button style="width: fit-content;" @click="changeContent">
+      设置 markdown
+    </el-button>
+    <Bubble :content="content" typing is-markdown>
+      <template #avatar>
+        <el-avatar :size="32" :src="avatarUser" />
+      </template>
+    </Bubble>
+  </div>
 </template>
 
 <style scoped lang="less">

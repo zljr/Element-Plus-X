@@ -58,15 +58,13 @@ const thinkingItems: ThoughtChainItemProps<DataType>[] = [
 </script>
 
 <template>
-  <ClientOnly>
-    <ThoughtChain
-      :thinking-items="thinkingItems"
-      row-key="codeId"
-      title-key="self_title"
-      think-title-key="self_thinkTitle"
-      think-content-key="self_thinkContent"
-    />
-  </ClientOnly>
+  <ThoughtChain
+    :thinking-items="thinkingItems"
+    row-key="codeId"
+    title-key="self_title"
+    think-title-key="self_thinkTitle"
+    think-content-key="self_thinkContent"
+  />
 </template>
 
 <style scoped lang="less">

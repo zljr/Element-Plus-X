@@ -1,5 +1,4 @@
 import type { BubbleProps } from '../Bubble/types'
-import type { TypewriterProps } from '../Typewriter/types'
 
 // 暂时这样包一层，后续看有没有拓展
 export interface BubbleListItemProps extends BubbleProps {}

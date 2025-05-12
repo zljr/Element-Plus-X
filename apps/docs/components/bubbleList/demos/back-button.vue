@@ -83,21 +83,19 @@ function generateFakeItems(count: number): listType[] {
 </script>
 
 <template>
-  <ClientOnly>
-    <div style="display: flex; flex-direction: column; gap: 24px;">
-      <div style="display: flex; gap: 5px; border: 1px solid gray; border-radius: 12px; padding: 8px; flex-direction: column;">
-        <span>滚动条显示：<el-switch v-model="alwaysShowScrollbar" inactive-text="鼠标悬停展示" active-text="一直展示" /></span>
-        <span>底部按钮加载状态：<el-switch v-model="btnLoading" inactive-text="false" active-text="true" /></span>
-        <span>底部按钮颜色： <el-color-picker v-model="btnColor" /></span>
-  
-        <span>底部按钮位</span>
-        <span>距离底部：<el-slider v-model="bottomValue" /></span>
-        <span>距离左边：<el-slider v-model="leftValue" /></span>
-  
-        <span>底部按钮尺寸：<el-slider v-model="btnSize" /></span>
-      </div>
-  
-      <BubbleList :list="list" max-height="350px" :always-show-scrollbar="alwaysShowScrollbar" :btn-color="btnColor" :btn-loading="btnLoading" :back-button-position="backButtonPosition" :btn-icon-size="btnSize" />
+  <div style="display: flex; flex-direction: column; gap: 24px;">
+    <div style="display: flex; gap: 5px; border: 1px solid gray; border-radius: 12px; padding: 8px; flex-direction: column;">
+      <span>滚动条显示：<el-switch v-model="alwaysShowScrollbar" inactive-text="鼠标悬停展示" active-text="一直展示" /></span>
+      <span>底部按钮加载状态：<el-switch v-model="btnLoading" inactive-text="false" active-text="true" /></span>
+      <span>底部按钮颜色： <el-color-picker v-model="btnColor" /></span>
+
+      <span>底部按钮位</span>
+      <span>距离底部：<el-slider v-model="bottomValue" /></span>
+      <span>距离左边：<el-slider v-model="leftValue" /></span>
+
+      <span>底部按钮尺寸：<el-slider v-model="btnSize" /></span>
     </div>
-  </ClientOnly>
+
+    <BubbleList :list="list" max-height="350px" :always-show-scrollbar="alwaysShowScrollbar" :btn-color="btnColor" :btn-loading="btnLoading" :back-button-position="backButtonPosition" :btn-icon-size="btnSize" />
+  </div>
 </template>

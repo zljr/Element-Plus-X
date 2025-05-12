@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { APP_CONFIG_PROVIDE_KEY, defaultAppConfig } from './constants';
-import type { AppConfigProps } from './types';
+import type { AppConfigProps } from './types'
+import { APP_CONFIG_PROVIDE_KEY, defaultAppConfig } from './constants'
 
 const props = withDefaults(defineProps<AppConfigProps>(), {
 })
@@ -12,5 +12,5 @@ provide<AppConfigProps>(APP_CONFIG_PROVIDE_KEY, {
 </script>
 
 <template>
-  <slot></slot>
+  <slot />
 </template>
