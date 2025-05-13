@@ -2,7 +2,9 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 import Bubble from './index.vue';
 import BubbleSource from '@components/Bubble/index.vue'
-
+import 'prismjs/components/prism-java'
+import 'prismjs/components/prism-go'
+import 'prismjs/themes/prism.min.css'
 
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories
@@ -50,10 +52,13 @@ export const BubbleDemo: Story = {
 - 列表项 1
 - 列表项 2
 **粗体文本** 和 *斜体文本*
+
+### javascript
 \`\`\`javascript
 console.log('Hello, world!');
 \`\`\`
 
+### java
 \`\`\`java
 public class HelloWorld {
     public static void main(String[] args) {
@@ -62,6 +67,7 @@ public class HelloWorld {
 }
 \`\`\`
 
+### go
 \`\`\`go
 package main
 
@@ -72,6 +78,7 @@ func main() {
 }
 \`\`\`
 
+### mermaid 饼状图
 \`\`\`mermaid
 pie
     "传媒及文化相关" : 35
@@ -83,6 +90,7 @@ pie
     "其他" : 15
 \`\`\`
 
+### mermaid 数学公式
 \`\`\`mermaid
 sequenceDiagram
     autonumber

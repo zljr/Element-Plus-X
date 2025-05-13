@@ -3,9 +3,12 @@
 import { DocumentCopy, Refresh, Search, Star } from '@element-plus/icons-vue'
 // import { usePrism } from '../../hooks'
 // import '../../../public/styles/prism-solarizedlight.min.css'
+import AppConfig from '@components/AppConfig/index.vue'
 import Bubble from '@components/Bubble/index.vue'
 import type { BubbleProps } from '@components/Bubble/types'
 import markdownItMermaid from '@jsonlee_12138/markdown-it-mermaid'
+// import 'prismjs/components/prism-java'
+// import { usePrism } from '../../hooks'
 // import 'highlight.js/styles/a11y-light.min.css'
 
 // import { fromAsyncCodeToHtml } from '@shikijs/markdown-it/async'
