@@ -2,6 +2,9 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 import Typewriter from './index.vue';
 import TypewriterSource from '@components/Typewriter/index.vue'
+import 'prismjs/components/prism-java'
+import 'prismjs/components/prism-go'
+import 'prismjs/themes/prism.min.css'
 
 
 
@@ -19,7 +22,7 @@ const meta = {
   },
   args: {
     typing: {
-      step: 2,
+      step: 20,
       interval: 100,
       suffix: ''
     },
@@ -53,9 +56,28 @@ export const BaseRender: Story = {
 export const CodeRender: Story = {
   args: {
     content: `
+    # javascript
   \`\`\`javascript
     const name = "world";
     console.log('Hello, \$\{name\}\`);
+  \`\`\`
+  # java
+  \`\`\`java
+    public class HelloWorld {
+        public static void main(String[] args) {
+            System.out.println("Hello, world!");
+        }
+    }
+  \`\`\`
+  # go
+  \`\`\`go
+    package main
+
+    import "fmt"
+
+    func main() {
+        fmt.Println("Hello, world!")
+    }
   \`\`\`
       `.trim()
   } as Story['args'],
