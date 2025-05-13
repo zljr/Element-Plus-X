@@ -3,6 +3,7 @@ import type { BubbleListProps } from '@components/BubbleList/types'
 import type { FilesType } from '@components/FilesCard/types'
 import type { ThinkingStatus } from '@components/Thinking/types'
 
+
 const avatar
   = 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
 
@@ -40,7 +41,7 @@ export const messageArr: BubbleListProps<MessageItem>['list'] = [
     avatar,
   },
   {
-    key: 1,
+    key: 3,
     role: 'ai',
     placement: 'start',
     content:
@@ -53,7 +54,7 @@ export const messageArr: BubbleListProps<MessageItem>['list'] = [
     avatar,
   },
   {
-    key: 2,
+    key: 4,
     role: 'user',
     placement: 'end',
     content: '这是用户的消息',
@@ -64,7 +65,7 @@ export const messageArr: BubbleListProps<MessageItem>['list'] = [
     avatar,
   },
   {
-    key: 1,
+    key: 5,
     role: 'ai',
     placement: 'start',
     content:
@@ -77,7 +78,7 @@ export const messageArr: BubbleListProps<MessageItem>['list'] = [
     avatar,
   },
   {
-    key: 2,
+    key: 6,
     role: 'user',
     placement: 'end',
     content: '这是用户的消息',
@@ -88,7 +89,7 @@ export const messageArr: BubbleListProps<MessageItem>['list'] = [
     avatar,
   },
   {
-    key: 1,
+    key: 7,
     role: 'ai',
     placement: 'start',
     content:
@@ -101,7 +102,7 @@ export const messageArr: BubbleListProps<MessageItem>['list'] = [
     avatar,
   },
   {
-    key: 2,
+    key: 8,
     role: 'user',
     placement: 'end',
     content: '这是用户的消息',

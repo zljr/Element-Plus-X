@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import type { MessageItem } from '@assets/mock'
 import { messageArr } from '@assets/mock'
+import { ElMessage } from 'element-plus'
 
 const bubbleItems = ref<MessageItem[]>(messageArr)
 
+const avatar = ref('https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png')
 const bubbleListRef = ref()
 const num = ref(0)
 
@@ -12,7 +14,7 @@ function addMessage() {
   const isUser = !!(i % 2)
   const content = isUser
     ? 'Mock user content.'
-    : 'Mock AI content. '.repeat(100)
+    : 'Mock AI content. '.repeat(5)
   const placement = isUser ? 'end' : 'start'
   const typing = isUser ? false : { step: 2, suffix: '...' }
   const obj = {
@@ -22,9 +24,11 @@ function addMessage() {
     placement,
     typing,
     isFog: true,
+    avatar: avatar.value,
   }
   bubbleItems.value.push(obj as MessageItem)
   bubbleListRef.value.scrollToBottom()
+  ElMessage.success('条数：'+bubbleItems.value.length)
 }
 
 function onCompleteFunc(_self: unknown) {
