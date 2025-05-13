@@ -21,6 +21,8 @@ declare module 'vue' {
     EditorSender: typeof import('./src/components/EditorSender/index.vue')['default']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElButton: typeof import('element-plus/es')['ElButton']
+    ElIcon: typeof import('element-plus/es')['ElIcon']
+    ElInputNumber: typeof import('element-plus/es')['ElInputNumber']
     Excel: typeof import('./src/components/FilesCard/fileSvg/excel.vue')['default']
     File: typeof import('./src/components/FilesCard/fileSvg/file.vue')['default']
     FilesCard: typeof import('./src/components/FilesCard/index.vue')['default']
