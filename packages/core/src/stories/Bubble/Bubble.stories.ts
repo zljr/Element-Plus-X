@@ -15,6 +15,7 @@ const meta = {
     content: { control: 'text' },
     placement: { control: 'radio', options: ['start', 'end'] },
     shape: { control: 'radio', options: ['round', 'corner'] },
+    variant: { control: 'radio', options: ['filled', 'borderless', 'outlined', 'shadow'] },
     avatar: { control: 'text' },
     isMarkdown: { control: 'boolean' },
     typing: { control: 'object' },
@@ -23,9 +24,14 @@ const meta = {
   args: {
     // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
     placement: 'start',
-    shape:'round',
+    shape: 'round',
+    variant: 'filled',
     isMarkdown: true,
     isFog: true,
+    typing: {
+      step: 2,
+      suffix: '💗'
+    },
   },
 } satisfies Meta<typeof BubbleSource>;
 
