@@ -1,5 +1,6 @@
 // import { fn } from '@storybook/test';
 import type { Meta, StoryObj } from '@storybook/vue3';
+// import storybookCodePanel from 'storybook-code-panel';
 import Bubble from './index.vue';
 import BubbleSource from '@components/Bubble/index.vue'
 import 'prismjs/components/prism-java'
@@ -34,7 +35,7 @@ const meta = {
       step: 2,
       suffix: '💗'
     },
-  },
+  }
 } satisfies Meta<typeof BubbleSource>;
 
 export default meta;
@@ -102,5 +103,5 @@ sequenceDiagram
 \`\`\`
 `.trim(),
     avatar: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
-  },
+  }
 };
