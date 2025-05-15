@@ -7,12 +7,22 @@ const meta = {
     component: Thinking,
     tags: ['autodocs'],
     argTypes: {
-        modelValue: {
-            control: 'boolean', 
-        }
+        modelValue: {control: 'boolean' },
+        autoCollapse: { control: 'boolean' },
+        duration: { control: 'text' },
+        buttonWidth: { control: 'text' },
+        maxWidth: { control: 'text' },
+        backgroundColor: { control: 'color' },
+        color: { control: 'color' },
     },
     args: {
-        modelValue: true
+        modelValue: true,
+        autoCollapse: false,
+        duration: '0.2s',
+        buttonWidth: '160px',
+        maxWidth: '500px',
+        backgroundColor: '#fcfcfc',
+        color: 'var(--el-color-info)'
     }
 } satisfies Meta<typeof ThinkingSource>;
 
@@ -23,6 +33,11 @@ type Story = StoryObj<typeof meta>;
  */
 export const ThinkingDemo: Story = {
     args: {
-        
-    } 
+        modelValue: true,
+        autoCollapse: false,
+        duration: '0.2s',
+        buttonWidth: '160px',
+        maxWidth: '500px',
+        color: 'var(--el-color-info)'
+    } as Story['args'],
 }

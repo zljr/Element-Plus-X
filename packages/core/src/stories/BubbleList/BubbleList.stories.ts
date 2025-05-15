@@ -15,11 +15,22 @@ const meta = {
   tags: ['autodocs'],
   argTypes: {
     maxHeight: { control: 'text' },
-    showBackButton: { control: 'boolean' }
+    showBackButton: { control: 'boolean' },
+    backButtonPosition: { control: 'object' },
+    backButtonThreshold: { control: 'number' },
+    btnLoading: { control: 'boolean' },
+    btnColor: { control: 'color' },
+    btnIconSize: { control: 'number' }
   },
   args: {
     // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
     maxHeight: '500px',
+    showBackButton: true,
+    backButtonPosition: { bottom: '20px', left: 'calc(50% - 19px)' },
+    backButtonThreshold: 80,
+    btnLoading: true,
+    btnColor: '#409EFF',
+    btnIconSize: 24
   },
 } satisfies Meta<typeof BubbleListSource>;
 
@@ -33,5 +44,11 @@ type Story = StoryObj<typeof meta>;
 export const BubbleListDemo: Story = {
   args: {
     maxHeight: '500px',
+    showBackButton: true,
+    backButtonPosition: { bottom: '20px', left: 'calc(50% - 19px)' },
+    backButtonThreshold: 80,
+    btnLoading: true,
+    btnColor: '#409EFF',
+    btnIconSize: 24
   } as Story['args'],
 };

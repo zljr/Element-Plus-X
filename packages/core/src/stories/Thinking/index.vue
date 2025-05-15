@@ -18,7 +18,7 @@ const senderRef = ref<any>(null)
 const bubbleItems = ref<MessageItem[]>([])
 const bubbleListRef = ref<BubbleListInstance | null>(null)
 const processedIndex = ref(0)
-const modelValue  = ref()
+const attrs = useAttrs()
 
 
 // 封装数据处理逻辑
@@ -151,7 +151,7 @@ function handleChange(payload: { value: boolean, status: ThinkingStatus }) {
       </div>
       <BubbleList ref="bubbleListRef" :list="bubbleItems">
         <template #header="{ item }">
-          <Thinking v-if="item.reasoning_content" :content="item.reasoning_content" :status="item.thinkingStatus" class="thinking-chain-warp" @change="handleChange" :model-value="modelValue"/>
+          <Thinking v-if="item.reasoning_content" v-bind="attrs" :content="item.reasoning_content" :status="item.thinkingStatus" class="thinking-chain-warp" @change="handleChange"/>
         </template>
 
         <template #content="{ item }">

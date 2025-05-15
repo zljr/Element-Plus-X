@@ -4,7 +4,6 @@ import BubbleList from '@components/BubbleList/index.vue'
 import { messageArr } from '@assets/mock'
 import { ElMessage } from 'element-plus'
 
-const showBackButton = ref()
 const bubbleItems = ref<MessageItem[]>(messageArr)
 
 const avatar = ref('https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png')
