@@ -3,6 +3,7 @@ import type { BubbleListProps } from '@components/BubbleList/types'
 import type { FilesType } from '@components/FilesCard/types'
 import type { ThinkingStatus } from '@components/Thinking/types'
 
+
 const avatar
   = 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
 
