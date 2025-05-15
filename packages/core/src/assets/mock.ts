@@ -41,7 +41,7 @@ export const messageArr: BubbleListProps<MessageItem>['list'] = [
     avatar,
   },
   {
-    key: 3,
+    key: 1,
     role: 'ai',
     placement: 'start',
     content:
@@ -54,7 +54,7 @@ export const messageArr: BubbleListProps<MessageItem>['list'] = [
     avatar,
   },
   {
-    key: 4,
+    key: 2,
     role: 'user',
     placement: 'end',
     content: '这是用户的消息',
@@ -65,7 +65,7 @@ export const messageArr: BubbleListProps<MessageItem>['list'] = [
     avatar,
   },
   {
-    key: 5,
+    key: 1,
     role: 'ai',
     placement: 'start',
     content:
@@ -78,7 +78,7 @@ export const messageArr: BubbleListProps<MessageItem>['list'] = [
     avatar,
   },
   {
-    key: 6,
+    key: 2,
     role: 'user',
     placement: 'end',
     content: '这是用户的消息',
@@ -89,7 +89,7 @@ export const messageArr: BubbleListProps<MessageItem>['list'] = [
     avatar,
   },
   {
-    key: 7,
+    key: 1,
     role: 'ai',
     placement: 'start',
     content:
@@ -102,7 +102,7 @@ export const messageArr: BubbleListProps<MessageItem>['list'] = [
     avatar,
   },
   {
-    key: 8,
+    key: 2,
     role: 'user',
     placement: 'end',
     content: '这是用户的消息',

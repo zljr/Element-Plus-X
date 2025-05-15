@@ -3,11 +3,13 @@ import type { MessageItem } from '@assets/mock'
 import { messageArr } from '@assets/mock'
 import { ElMessage } from 'element-plus'
 
+
 const bubbleItems = ref<MessageItem[]>(messageArr)
 
 const avatar = ref('https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png')
 const bubbleListRef = ref()
 const num = ref(0)
+const maxHeight = ref('')
 
 function addMessage() {
   const i = bubbleItems.value.length
@@ -77,6 +79,8 @@ onMounted(() => {
         ref="bubbleListRef"
         :list="bubbleItems"
         @on-complete="onCompleteFunc"
+        :maxHeight="maxHeight"
+        :showBackButton="true"
       >
         <template #avatar="{ item }">
           <el-avatar :size="32" :src="item.avatar" />
