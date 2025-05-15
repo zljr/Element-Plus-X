@@ -26,6 +26,7 @@ const hooksEntriesObj = Object.fromEntries(hooksEntries.map((f) => {
   ]
 }))
 
+console.log("index>>", resolve(__dirname, '../src/index.ts'));
 const buildConfig: BuildEnvironmentOptions = {
   lib: {
     name: 'ElementPlusX',
