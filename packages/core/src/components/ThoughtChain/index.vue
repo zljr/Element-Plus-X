@@ -4,7 +4,7 @@ import type { DefaultThoughtChainItemProps, ThinkingInstance, ThoughtChainProps,
 import { Check, Close, Loading } from '@element-plus/icons-vue'
 import { get } from 'radash'
 import { computed, ref, watch } from 'vue'
-import { Typewriter } from '../../components'
+import Typewriter from '../Typewriter/index.vue'
 
 const props = withDefaults(defineProps<ThoughtChainProps<T>>(), {
   thinkingItems: () => [],

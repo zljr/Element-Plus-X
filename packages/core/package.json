@@ -1,13 +1,57 @@
 {
-  "name": "core",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
+  "name": "vue-element-plus-x",
+  "version": "1.1.6-beta",
+  "license": "MIT",
   "scripts": {
-    "build": "vue-tsc -b && vite build",
+    "build:es": "vue-tsc -b && vite build",
+    "build:umd": "vue-tsc -b && vite build --config vite.config.umd.ts",
+    "build": "rimraf dist && rimraf types && pnpm run aeac && pnpm run build:es && pnpm run build:umd",
     "preview": "vite preview",
     "dev": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build:storybook": "storybook build",
+    "aeac": "rimraf src/index.ts && rimraf src/install.ts && esno .build/scripts/auto-export-all-components.js"
+  },
+  "homepage": "https://element-plus-x.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HeJiaYue520/Element-Plus-X.git"
+  },
+  "bugs": {
+    "url": "https://github.com/HeJiaYue520/Element-Plus-X/issues",
+    "email": "lijunsong2@gmail.com"
+  },
+  "keywords": [
+    "vue",
+    "element-plus",
+    "element-plus-x",
+    "vue-element-plus-x",
+    "vue3",
+    "vue3-element-plus",
+    "vue3-element-plus-x",
+    "vue3-element-plus-x-components"
+  ],
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "import": "./dist/es/index.js",
+      "require": "./dist/umd/index.js"
+    },
+    "./styles/*": "./dist/styles/*",
+    "./types/*": "./types/components/*/types.d.ts"
+  },
+  "main": "dist/umd/index.js",
+  "module": "dist/es/index.js",
+  "unpkg": "dist/umd/index.js",
+  "types": "types/index.d.ts",
+  "files": [
+    "!dist/**/*.map",
+    "README.md",
+    "dist",
+    "types/components",
+    "types/hooks"
+  ],
+  "peerDependencies": {
+    "typescript-api-pro": "^0.0.6"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.1",
@@ -29,7 +73,9 @@
     "@storybook/addon-onboarding": "^8.6.12",
     "@storybook/blocks": "^8.6.12",
     "@storybook/experimental-addon-test": "^8.6.12",
+    "@storybook/manager-api": "^8.6.12",
     "@storybook/test": "^8.6.12",
+    "@storybook/theming": "^8.6.12",
     "@storybook/vue3": "^8.6.12",
     "@storybook/vue3-vite": "^8.6.12",
     "@types/dom-speech-recognition": "^0.0.4",
