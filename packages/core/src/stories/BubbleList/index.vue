@@ -3,7 +3,7 @@ import type { MessageItem } from '@assets/mock'
 import { messageArr } from '@assets/mock'
 import { ElMessage } from 'element-plus'
 
-
+const showBackButton = ref()
 const bubbleItems = ref<MessageItem[]>(messageArr)
 
 const avatar = ref('https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png')
@@ -80,7 +80,7 @@ onMounted(() => {
         :list="bubbleItems"
         @on-complete="onCompleteFunc"
         :maxHeight="maxHeight"
-        :showBackButton="true"
+        :showBackButton="showBackButton"
       >
         <template #avatar="{ item }">
           <el-avatar :size="32" :src="item.avatar" />
@@ -132,7 +132,7 @@ onMounted(() => {
   background-color: white;
   padding: 12px;
   border-radius: 15px;
-  height: calc(100vh - 220px);
+  height: calc(100vh - 60px);
   overflow: auto;
 
   .btn-list {
