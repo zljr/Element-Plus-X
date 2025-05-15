@@ -8,6 +8,7 @@
   "scripts": {
     "build": "turbo run build",
     "build:core": "turbo run build --filter=vue-element-plus-x",
+    "publish:core": "cd packages/core && npm publish",
     "dev:playground": "turbo run dev --filter=playground",
     "dev:core": "turbo run dev --filter=vue-element-plus-x",
     "build:storybook": "pnpm run build:storybook --filter=vue-element-plus-x",
