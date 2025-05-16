@@ -1,9 +1,15 @@
 <script setup lang="ts">
-import type { ComputedRef } from 'vue'
 import type { TypewriterInstance, TypingConfig } from '../Typewriter/types.d.ts'
 
 import type { BubbleProps } from './types.d.ts'
 import Typewriter from '../Typewriter/index.vue'
+
+interface Emits{
+  (start: 'start', instance: TypewriterInstance): void
+  (finish: 'finish', instance: TypewriterInstance): void
+  (writing: 'writing', instance: TypewriterInstance): void
+  (avatarError: 'avatarError', e: Event): void
+}
 
 const props = withDefaults(defineProps<BubbleProps>(), {
   content: '',
@@ -22,7 +28,8 @@ const props = withDefaults(defineProps<BubbleProps>(), {
   noStyle: false
 })
 
-const emits = defineEmits(['start', 'finish', 'writing', 'avatarError'])
+// const emits = defineEmits(['start', 'finish', 'writing', 'avatarError'])
+const emits = defineEmits<Emits>()
 
 const internalDestroyed = ref(false) // 内部销毁状态
 // 新增：响应式变量跟踪打字状态
@@ -50,26 +57,12 @@ const instance: TypewriterInstance = {
   ),
 }
 
-const _step: ComputedRef<number> = computed(() => {
-  if (typeof props.typing === 'object' && props.typing.step)
-    return props.typing.step
-  else
-    return 2
-})
-
-const _suffix: ComputedRef<string> = computed(() => {
-  if (typeof props.typing === 'object' && props.typing.suffix)
-    return props.typing.suffix
-  else
-    return '|'
-})
-
-const _interval: ComputedRef<number> = computed(() => {
-  if (typeof props.typing === 'object' && props.typing.interval)
-    return props.typing.interval
-  else
-    return 50
-})
+const DEFAULT_TYPING:  TypingConfig = {
+  step: 2,
+  suffix: '|',
+  interval: 50,
+  isRequestEnd: false
+}
 
 const _typing = computed(() => {
   if (typeof props.typing === 'undefined') {
@@ -79,11 +72,7 @@ const _typing = computed(() => {
     return props.typing
   }
   else {
-    return {
-      suffix: _suffix.value,
-      step: _step.value,
-      interval: _interval.value,
-    }
+    return Object.assign({}, DEFAULT_TYPING, props.typing)
   }
 }) as boolean | TypingConfig
 

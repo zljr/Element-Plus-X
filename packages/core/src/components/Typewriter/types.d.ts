@@ -10,6 +10,8 @@ export interface TypingConfig {
   interval?: number
   /** 打字光标后缀 */
   suffix?: string
+  /** 接口是否结束 */
+  isRequestEnd?: boolean
 }
 
 /* 打字雾化效果配置 */
@@ -34,6 +36,12 @@ export interface TypewriterProps {
   isFog?: boolean | TypingFogfig
   highlight?: (code: string, language: string) => string
   mdPlugins?: MarkdownItPlugin[]
+}
+
+export interface TypewriterEmits {
+  (e: 'start', instance: TypewriterInstance): void;
+  (e: 'writing', instance: TypewriterInstance): void;
+  (e: 'finish', instance: TypewriterInstance): void;
 }
 
 /** 组件实例类型 */

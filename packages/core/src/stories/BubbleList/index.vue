@@ -3,6 +3,7 @@ import type { MessageItem } from '@assets/mock'
 import BubbleList from '@components/BubbleList/index.vue'
 import { messageArr } from '@assets/mock'
 import { ElMessage } from 'element-plus'
+import 'element-plus/theme-chalk/el-message.css'
 
 const bubbleItems = ref<MessageItem[]>(messageArr)
 
@@ -33,8 +34,8 @@ function addMessage() {
   ElMessage.success('条数：'+bubbleItems.value.length)
 }
 
-function onCompleteFunc(_self: unknown) {
-  // console.log('列表打字结束', self)
+function handleOnComplete(_self: unknown) {
+  ElMessage.success('列表打字结束')
 }
 
 function scrollToTop() {
@@ -79,7 +80,7 @@ onMounted(() => {
         v-bind="attrs"
         ref="bubbleListRef"
         :list="bubbleItems"
-        @on-complete="onCompleteFunc"
+        @complete="handleOnComplete"
       >
         <template #avatar="{ item }">
           <el-avatar :size="32" :src="item.avatar" />
@@ -89,7 +90,7 @@ onMounted(() => {
           <div class="header-container">
             {{
               item.role === "ai" ? "机器人头部自定义内容" : "用户头部自定义内容"
-            }}
+            }}>>index:{{ item.key }}
           </div>
         </template>
 

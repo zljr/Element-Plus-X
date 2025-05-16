@@ -2,10 +2,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 import BubbleList from './index.vue';
 import BubbleListSource from '@components/BubbleList/index.vue'
-// import { messageArr } from '@assets/mock'
-// import type { MessageItem } from '@assets/mock'
-
-// const bubbleItem = ref<MessageItem[]>(messageArr)
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories
 const meta = {

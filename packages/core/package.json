@@ -1,6 +1,6 @@
 {
   "name": "vue-element-plus-x",
-  "version": "1.1.8-beta",
+  "version": "1.1.9-beta",
   "license": "MIT",
   "scripts": {
     "build:es": "vue-tsc -b && vite build",
@@ -37,7 +37,7 @@
       "require": "./dist/umd/index.js"
     },
     "./styles/*": "./dist/styles/*",
-    "./types/components/*": "./types/components/*/types.d.ts"
+    "./types/*": "./types/components/*/types.d.ts"
   },
   "main": "dist/umd/index.js",
   "module": "dist/es/index.js",
