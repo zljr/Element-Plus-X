@@ -22,7 +22,9 @@ const props = withDefaults(defineProps<BubbleListProps<T>>(), {
   btnIconSize: 24
 })
 
-const emits = defineEmits(['complete'])
+const emits = defineEmits<{
+  (e: 'complete', instance: TypewriterInstance, index: number): void
+}>()
 
 const initStyle = ()=> {
   document.documentElement.style.setProperty('--el-bubble-list-max-height', props.maxHeight)
