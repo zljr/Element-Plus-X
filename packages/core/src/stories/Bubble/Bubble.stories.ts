@@ -29,7 +29,9 @@ const meta = {
     isFog: true,
     typing: {
       step: 2,
-      suffix: '💗'
+      suffix: '💗',
+      interval: 100,
+      isRequestEnd: true
     },
   }
 } satisfies Meta<typeof BubbleSource>;

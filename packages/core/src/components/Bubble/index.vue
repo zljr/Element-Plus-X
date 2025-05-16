@@ -61,7 +61,7 @@ const DEFAULT_TYPING:  TypingConfig = {
   step: 2,
   suffix: '|',
   interval: 50,
-  isRequestEnd: false
+  isRequestEnd: true
 }
 
 const _typing = computed(() => {

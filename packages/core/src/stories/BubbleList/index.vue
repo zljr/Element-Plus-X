@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import type { MessageItem } from '@assets/mock'
 import BubbleList from '@components/BubbleList/index.vue'
-import { messageArr } from '@assets/mock'
 import { ElMessage } from 'element-plus'
 import 'element-plus/theme-chalk/el-message.css'
+import type { BubbleListProps } from '@components/BubbleList/types'
 
-const bubbleItems = ref<MessageItem[]>(messageArr)
+const props = defineProps<Pick<BubbleListProps, 'list'>>();
+
+const bubbleItems = ref<BubbleListProps<MessageItem>['list']>(props.list as BubbleListProps<MessageItem>['list'])
+
 
 const avatar = ref('https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png')
 const bubbleListRef = ref()
@@ -90,7 +93,7 @@ onMounted(() => {
           <div class="header-container">
             {{
               item.role === "ai" ? "机器人头部自定义内容" : "用户头部自定义内容"
-            }}>>index:{{ item.key }}
+            }}
           </div>
         </template>
 

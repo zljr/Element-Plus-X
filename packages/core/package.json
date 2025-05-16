@@ -1,6 +1,6 @@
 {
   "name": "vue-element-plus-x",
-  "version": "1.1.9-beta",
+  "version": "1.2.0-beta",
   "license": "MIT",
   "scripts": {
     "build:es": "vue-tsc -b && vite build",
