@@ -221,7 +221,7 @@ function handleDeleteCard(item: SelfFilesCardProps) {
   background-color: white;
   padding: 12px;
   border-radius: 15px;
-  height: calc(100vh - 220px);
+  height: calc(100vh - 80px);
   overflow-y: auto;
 
   .component-title {
