@@ -41,7 +41,7 @@ export const messageArr: BubbleListProps<MessageItem>['list'] = [
     avatar,
   },
   {
-    key: 1,
+    key: 3,
     role: 'ai',
     placement: 'start',
     content:
@@ -54,7 +54,7 @@ export const messageArr: BubbleListProps<MessageItem>['list'] = [
     avatar,
   },
   {
-    key: 2,
+    key: 4,
     role: 'user',
     placement: 'end',
     content: '这是用户的消息',
@@ -65,7 +65,7 @@ export const messageArr: BubbleListProps<MessageItem>['list'] = [
     avatar,
   },
   {
-    key: 1,
+    key: 5,
     role: 'ai',
     placement: 'start',
     content:
@@ -78,7 +78,7 @@ export const messageArr: BubbleListProps<MessageItem>['list'] = [
     avatar,
   },
   {
-    key: 2,
+    key: 6,
     role: 'user',
     placement: 'end',
     content: '这是用户的消息',
@@ -89,7 +89,7 @@ export const messageArr: BubbleListProps<MessageItem>['list'] = [
     avatar,
   },
   {
-    key: 1,
+    key: 7,
     role: 'ai',
     placement: 'start',
     content:
@@ -98,11 +98,11 @@ export const messageArr: BubbleListProps<MessageItem>['list'] = [
     shape: 'corner',
     variant: 'filled',
     isMarkdown: false,
-    typing: { step: 2, suffix: '💗' },
+    typing: { step: 2, suffix: '💗', isRequestEnd: true },
     avatar,
   },
   {
-    key: 2,
+    key: 8,
     role: 'user',
     placement: 'end',
     content: '这是用户的消息',
@@ -113,6 +113,7 @@ export const messageArr: BubbleListProps<MessageItem>['list'] = [
     avatar,
   },
 ]
+
 
 // 模拟自定义文件卡片数据
 // 内置样式

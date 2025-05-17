@@ -22,14 +22,16 @@ const props = withDefaults(defineProps<BubbleListProps<T>>(), {
   btnIconSize: 24
 })
 
-const emits = defineEmits(['complete'])
+const emits = defineEmits<{
+  (e: 'complete', instance: TypewriterInstance, index: number): void
+}>()
 
-const initStyle = ()=> {
+const initStyle = () => {
   document.documentElement.style.setProperty('--el-bubble-list-max-height', props.maxHeight)
   document.documentElement.style.setProperty('--el-bubble-list-btn-size', `${props.btnIconSize}px`)
 }
 
-onMounted(()=> {
+onMounted(() => {
   initStyle()
 })
 
@@ -47,41 +49,6 @@ const accumulatedScrollUpDistance = ref(0)
 const threshold = 20
 const resizeObserver = ref<ResizeObserver | null>(null)
 const showBackToBottom = ref(false) // 控制按钮显示
-
-/* 计算有效的触发索引数组 */
-const effectiveTriggerIndices = computed(() => {
-  if (props.triggerIndices === 'only-last') {
-    const triggerIndices = props.list.filter(item => item.typing).map((_, index) => index)
-    return triggerIndices.length > 0 ? [triggerIndices[triggerIndices.length - 1]] : []
-  }
-  else if (props.triggerIndices === 'all') {
-    return props.list.map((_, index) => index)
-  }
-  else if (Array.isArray(props.triggerIndices)) {
-    const validIndices = getValidIndices(props.list, props.triggerIndices)
-    return validIndices.length > 0 ? [validIndices[validIndices.length - 1]] : []
-  }
-  return []
-})
-
-// 提取有效索引判断逻辑到独立函数
-function getValidIndices(list: T[], indices: number[]) {
-  const validIndices: number[] = []
-  const invalidIndices: number[] = []
-  for (let i = 0; i < indices.length; i++) {
-    const index = indices[i]
-    if (index < 0 || index >= list.length || !list[index].typing) {
-      invalidIndices.push(index)
-    }
-    else {
-      validIndices.push(index)
-    }
-  }
-  if (invalidIndices.length > 0) {
-    console.warn(`无效索引 ${invalidIndices}`)
-  }
-  return validIndices
-}
 
 // 监听数组长度变化，如果改变，则判断是否在最底部，如果在，就自动滚动到底部
 watch(
@@ -167,10 +134,25 @@ function autoScroll() {
   }
 }
 
+const completeMap = ref<Record<number, TypewriterInstance>>({});
+const typingList = computed(() => props.list.map((item, _index_) => ({ ...item, _index_ })).filter(item => item.typing))
 // 打字机播放完成回调
 function handleBubbleComplete(index: number, instance: TypewriterInstance) {
-  if (effectiveTriggerIndices.value.includes(index)) {
-    emits('complete', instance, index)
+  switch (props.triggerIndices) {
+    case 'only-last':
+      if (index === typingList.value[typingList.value.length - 1]?._index_) {
+        emits('complete', instance, index)
+      }
+      break;
+    case 'all':
+      completeMap.value[index] = instance;
+      if (Object.keys(completeMap.value).length === typingList.value.length) {
+        emits('complete', instance, index)
+      }
+      break;
+    default:
+      props.triggerIndices.includes(index) && emits('complete', instance, index)
+      break;
   }
 }
 
@@ -232,37 +214,17 @@ defineExpose({
 </script>
 
 <template>
-  <div
-    ref="scrollContainer"
-    class="el-bubble-list"
-    :class="{ 'always-scrollbar': props.alwaysShowScrollbar }"
-    @scroll="handleScroll"
-  >
+  <div ref="scrollContainer" class="el-bubble-list" :class="{ 'always-scrollbar': props.alwaysShowScrollbar }"
+    @scroll="handleScroll">
     <!-- 如果给 BubbleList 的 item 传入 md 配置，则按照 item 的 md 配置渲染 -->
     <!-- 否则，则按照 BubbleList 的 md 配置渲染 -->
-    <Bubble
-      v-for="(item, index) in list"
-      :key="index"
-      :content="item.content"
-      :placement="item.placement"
-      :loading="item.loading"
-      :shape="item.shape"
-      :variant="item.variant"
-      :is-markdown="item.isMarkdown"
-      :is-fog="item.isFog"
-      :typing="item.typing"
-      :max-width="item.maxWidth"
-      :avatar="item.avatar"
-      :avatar-size="item.avatarSize"
-      :avatar-gap="item.avatarGap"
-      :avatar-shape="item.avatarShape"
-      :avatar-icon="item.avatarIcon"
-      :avatar-src-set="item.avatarSrcSet"
-      :avatar-alt="item.avatarAlt"
-      :avatar-fit="item.avatarFit"
-      :no-style="item.noStyle"
-      @finish="(instance) => handleBubbleComplete(index, instance)"
-    >
+    <Bubble v-for="(item, index) in list" :key="index" :content="item.content" :placement="item.placement"
+      :loading="item.loading" :shape="item.shape" :variant="item.variant" :is-markdown="item.isMarkdown"
+      :is-fog="item.isFog" :typing="item.typing" :max-width="item.maxWidth" :avatar="item.avatar"
+      :avatar-size="item.avatarSize" :avatar-gap="item.avatarGap" :avatar-shape="item.avatarShape"
+      :avatar-icon="item.avatarIcon" :avatar-src-set="item.avatarSrcSet" :avatar-alt="item.avatarAlt"
+      :avatar-fit="item.avatarFit" :no-style="item.noStyle"
+      @finish="(instance) => handleBubbleComplete(index, instance)">
       <template v-if="$slots.avatar" #avatar>
         <slot name="avatar" :item="item" />
       </template>
@@ -282,23 +244,14 @@ defineExpose({
 
     <!-- 自定义按钮插槽 默认返回按钮 -->
 
-    <div
-      v-if="showBackToBottom && hasVertical"
-      class="el-bubble-list-default-back-button"
-      :class="{
-        'el-bubble-list-back-to-bottom-solt': $slots.backToBottom,
-      }"
-      :style="{
-        bottom: backButtonPosition.bottom,
-        left: backButtonPosition.left,
-      }"
-      @click="scrollToBottom"
-    >
+    <div v-if="showBackToBottom && hasVertical" class="el-bubble-list-default-back-button" :class="{
+      'el-bubble-list-back-to-bottom-solt': $slots.backToBottom,
+    }" :style="{
+      bottom: backButtonPosition.bottom,
+      left: backButtonPosition.left,
+    }" @click="scrollToBottom">
       <slot name="backToBottom">
-        <el-icon
-          class="el-bubble-list-back-to-bottom-icon"
-          :style="{ color: props.btnColor }"
-        >
+        <el-icon class="el-bubble-list-back-to-bottom-icon" :style="{ color: props.btnColor }">
           <ArrowDownBold />
           <loadingBg v-if="props.btnLoading" class="back-to-bottom-loading-svg-bg" />
         </el-icon>
@@ -318,6 +271,7 @@ defineExpose({
   scroll-behavior: smooth;
 
   position: relative;
+
   /* 默认滚动条样式（透明） */
   &::-webkit-scrollbar {
     width: 6px;
@@ -396,7 +350,7 @@ defineExpose({
 
   &:hover {
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   }
 
   .el-bubble-list-back-to-bottom-icon {
@@ -413,6 +367,7 @@ defineExpose({
       0% {
         transform: rotate(0deg);
       }
+
       100% {
         transform: rotate(360deg);
       }

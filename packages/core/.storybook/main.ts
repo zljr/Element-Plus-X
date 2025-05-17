@@ -2,6 +2,7 @@ import type { StorybookConfig } from '@storybook/vue3-vite';
 
 import { join, dirname } from "node:path"
 
+
 // TODO: 需要处理代码展示功能
 /**
 * This function is used to resolve the absolute path of a package.
@@ -22,6 +23,8 @@ const config: StorybookConfig = {
         "docs": false
       }
     },
+    'storybook-dark-mode',
+    'storybook-addon-code-editor',
     getAbsolutePath('@storybook/addon-onboarding'),
     getAbsolutePath('@chromatic-com/storybook'),
     getAbsolutePath("@storybook/experimental-addon-test")
