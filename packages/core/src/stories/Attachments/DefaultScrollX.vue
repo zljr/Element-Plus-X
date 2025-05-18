@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import Attachments from '@components/Attachments/index.vue'
 import { useAttachmentStubs } from './useAttachmentStubs'
+import type { AttachmentsProps } from '@components/Attachments/types';
+
+type Props = Pick<AttachmentsProps, 'items'>;
+
+const props = withDefaults(defineProps<Props>(), {
+  items: () => [],
+})
 
 const {
   files,
@@ -8,7 +15,7 @@ const {
   handleHttpRequest,
   handleUploadDrop,
   handleDeleteCard,
-} = useAttachmentStubs()
+} = useAttachmentStubs(props.items)
 </script>
 
 <template>
@@ -16,20 +23,8 @@ const {
     <div class="component-title">
       附件上传组件-默认: scrollX
     </div>
-    <Attachments
-      :file-list="files"
-      :http-request="handleHttpRequest"
-      :items="files"
-      drag
-      overflow="scrollX"
-      :list-style="{
-        padding: '0 12px',
-      }"
-      :before-upload="handleBeforeUpload"
-      :hide-upload="false"
-      @upload-drop="handleUploadDrop"
-      @delete-card="handleDeleteCard"
-    />
+    <Attachments v-bind="$attrs" :file-list="files" :items="files" :http-request="handleHttpRequest"
+      :before-upload="handleBeforeUpload" @upload-drop="handleUploadDrop" @delete-card="handleDeleteCard" />
   </div>
 </template>
 

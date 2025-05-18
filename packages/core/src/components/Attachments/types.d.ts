@@ -13,3 +13,5 @@ export interface FileListProps {
   uploadIconSize?: string
   dragTarget?: string | Ref<HTMLElement> | HTMLElement
 }
+
+export type AttachmentsProps = FileListProps;

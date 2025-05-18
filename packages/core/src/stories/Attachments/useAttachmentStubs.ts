@@ -1,19 +1,17 @@
 import type { FilesCardProps, FilesType } from '@components/FilesCard/types'
 import { ElMessage } from 'element-plus'
 import { ref } from 'vue'
+import { colorMap1 } from '@assets/mock.ts';
+import 'element-plus/theme-chalk/el-message.css';
 
 export type SelfFilesCardProps = FilesCardProps & { id?: number }
 
-export const files = ref<SelfFilesCardProps[]>([])
-
 // 初始化 30 个模拟文件
-export async function initDemoFiles() {
-  if (files.value.length)
-    return
-  const { colorMap1 } = await import('@assets/mock.ts')
+export function genDefaultFiles(count: number = 30) {
+  const res: SelfFilesCardProps[] = [];
   const typeList = Object.keys(colorMap1) as FilesType[]
-  for (let i = 0; i < 30; i++) {
-    files.value.push({
+  for (let i = 0; i < count; i++) {
+    res.push({
       id: i,
       uid: i.toString(),
       name: `文件${i}`,
@@ -25,10 +23,12 @@ export async function initDemoFiles() {
       showDelIcon: true,
     })
   }
+  return res;
 }
 
-export function useAttachmentStubs() {
-  initDemoFiles()
+export function useAttachmentStubs(initValue: SelfFilesCardProps[] = []) {
+  // alert('useAttachmentStubs:'+JSON.stringify(initValue))
+  const files = ref<SelfFilesCardProps[]>(initValue)
   function handleBeforeUpload(file: File) {
     if (file.size > 1024 * 1024 * 2) {
       ElMessage.error('文件大小不能超过 2MB!')

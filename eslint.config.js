@@ -18,6 +18,7 @@ export default antfu({
   },
   ignores: [
     '**/dist/**',
+    '**/storybook-static/**',
     '**/node_modules/**',
     '**/build/**',
     '**/lib/**',

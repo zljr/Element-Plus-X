@@ -2,13 +2,22 @@
 import Attachments from '@components/Attachments/index.vue'
 import { useAttachmentStubs } from './useAttachmentStubs'
 import 'element-plus/theme-chalk/el-message.css'
+import type { AttachmentsProps } from '@components/Attachments/types'
+
+type Props = Pick<AttachmentsProps, 'items'>;
+
+const props = withDefaults(defineProps<Props>(), {
+  items: ()=> [],
+})
+
+const attrs = useAttrs()
 
 const {
   files,
   handleBeforeUpload,
   handleHttpRequest,
   handleUploadDrop,
-} = useAttachmentStubs()
+} = useAttachmentStubs(props.items)
 </script>
 
 <template>
@@ -17,22 +26,15 @@ const {
       <div class="component-title">
         附件上传组件-自定义 列表内容
       </div>
-      <Attachments
-        :items="files"
-        overflow="scrollX"
-        :list-style="{ padding: '0 12px' }"
-        :before-upload="handleBeforeUpload"
-        :hide-upload="false"
-        :http-request="handleHttpRequest"
-        @upload-drop="handleUploadDrop"
-      >
+      <!-- :items="files"
+      overflow="scrollX"
+      :list-style="{ padding: '0 12px' }"
+      :hide-upload="false" -->
+      <Attachments v-bind="attrs" :items="files" :before-upload="handleBeforeUpload" :http-request="handleHttpRequest"
+        @upload-drop="handleUploadDrop">
         <template #file-list="{ items }">
           <div class="custom-list">
-            <div
-              v-for="(item, idx) in items"
-              :key="idx"
-              class="custom-item"
-            >
+            <div v-for="(item, idx) in items" :key="idx" class="custom-item">
               <div class="custom-item-name">
                 {{ item.name }}
               </div>
@@ -74,8 +76,10 @@ const {
     }
   }
 }
+
 .custom-list {
   display: flex;
+
   .custom-item {
     margin: 8px;
     width: 200px;
