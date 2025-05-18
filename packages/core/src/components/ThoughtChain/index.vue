@@ -50,7 +50,7 @@ function getNodeBtnColor(item: T) {
 }
 
 const getLineColor = computed(() => {
-  if (props.thinkingItems.length && props.thinkingItems.length) {
+  if (props.thinkingItems.length) {
     const arr = props.thinkingItems.map((item) => {
       const _type_ = getType(item)
       if (_type_) {
@@ -82,11 +82,15 @@ function setRadialGradient(colors: typeof getLineColor.value, ele: HTMLElement[]
   Array.from(ele).forEach((item, index) => {
     const line = item.children[0]
     if (line) {
-      line.setAttribute('style', `
-      border: none;
-      width:2px;
-      background: linear-gradient(to bottom, ${colors[index]} 0% , ${colors[index < length ? index + 1 : index]} 100%);
-    `)
+      if (colors.length > 0) {
+        line.setAttribute('style', `
+        border: none;
+        width:2px;
+        background: linear-gradient(to bottom, ${colors[index]} 0% , ${colors[index < length ? index + 1 : index]} 100%);`)
+      }
+      else {
+        line.setAttribute('style', ``)
+      }
     }
   })
 }
@@ -95,6 +99,10 @@ function getEle() {
   if (getLineColor.value && timelineRef.value && props.lineGradient) {
     const ele = timelineRef.value.$el.children[0].children
     setRadialGradient(getLineColor.value, ele)
+  }
+  else if (getLineColor.value && timelineRef.value && !props.lineGradient) {
+    const ele = timelineRef.value.$el.children[0].children
+    setRadialGradient([], ele)
   }
 }
 
@@ -136,7 +144,7 @@ watch(() => activeNamesComputed.value, (v) => {
   defaultActiveNodes.value = [...v]
 })
 
-watch(() => getLineColor.value, () => {
+watch(() => [getLineColor.value, props.lineGradient], () => {
   getEle()
 })
 

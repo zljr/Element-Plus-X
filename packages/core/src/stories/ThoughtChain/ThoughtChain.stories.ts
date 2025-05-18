@@ -13,11 +13,38 @@ const meta: Meta<typeof ThoughtChain> = {
       control: { type: 'select' },
       options: ['small', 'default', 'large'],
     },
+    maxWidth: {
+      control: { type: 'text' },
+    },
     lineGradient: {
       control: { type: 'boolean' },
     },
-    maxWidth: {
+    rowKey: {
       control: { type: 'text' },
+      defaultValue: 'id',
+      description: 'id字段名',
+    },
+    titleKey: {
+      control: { type: 'text' },
+      defaultValue: 'title',
+      description: '标题字段名',
+    },
+    statusKey: {
+      control: { type: 'text' },
+      defaultValue: 'status',
+      description: '状态字段名',
+
+    },
+    thinkContentKey: {
+      control: { type: 'text' },
+      defaultValue: 'content',
+      description: '思考内容字段名',
+
+    },
+    thinkTitleKey: {
+      control: { type: 'text' },
+      defaultValue: 'title',
+      description: '思考标题字段名',
     },
   },
 }
@@ -64,18 +91,14 @@ const baseItems: ThoughtChainProps['thinkingItems'] = [
   },
 ]
 
-export const Default = Template.bind({})
-Default.args = {
-  thinkingItems: baseItems,
-  dotSize: 'default',
-  lineGradient: false,
+const defaultConfig = {
   maxWidth: '600px',
-}
-
-export const WithGradientLine = Template.bind({})
-WithGradientLine.args = {
-  thinkingItems: baseItems,
-  lineGradient: true,
+  rowKey: 'id',
+  titleKey: 'title',
+  thinkTitleKey: 'thinkTitle',
+  thinkContentKey: 'thinkContent',
+  statusKey: 'status',
+  lineGradient: false,
   dotBackgroundColor: {
     loading: '#f39c12',
     success: '#2ecc71',
@@ -83,21 +106,39 @@ WithGradientLine.args = {
   },
 }
 
+export const Default = Template.bind({})
+Default.args = {
+  thinkingItems: baseItems,
+  ...defaultConfig,
+  lineGradient: false,
+}
+
+export const WithGradientLine = Template.bind({})
+WithGradientLine.args = {
+  thinkingItems: baseItems,
+  ...defaultConfig,
+  lineGradient: true,
+}
+
 export const SmallDots = Template.bind({})
 SmallDots.args = {
   thinkingItems: baseItems,
+  ...defaultConfig,
   dotSize: 'small',
 }
 
 export const LargeDots = Template.bind({})
 LargeDots.args = {
   thinkingItems: baseItems,
+  ...defaultConfig,
   dotSize: 'large',
+
 }
 
 export const CustomMaxWidth = Template.bind({})
 CustomMaxWidth.args = {
   thinkingItems: baseItems,
+  ...defaultConfig,
   maxWidth: '800px',
 }
 
@@ -136,4 +177,5 @@ const CustomIconSlot: StoryFn = args => ({
 export const CustomIcon = CustomIconSlot.bind({})
 CustomIcon.args = {
   thinkingItems: baseItems,
+  ...defaultConfig,
 }
