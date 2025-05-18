@@ -1,26 +1,19 @@
-import type { RequiredDependency } from 'typescript-api-pro'
-import type { TypingConfig, TypewriterProps } from '../Typewriter/types'
+import type { TypingConfig } from '../Typewriter/types'
 
 /**
  * 思考节点的id类型
  */
 type ThoughtChainItemId = string | number
 
-export type ThoughtChainType = 'info' | 'success' | 'warning' | 'danger' | 'primary'
+type HexDigit = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | 'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F'
 
-export interface ThinkStatusEnum {
-  loading: {
-    value: string | number
-    type: ThoughtChainType
-  }
-  error: {
-    value: string | number
-    type: ThoughtChainType
-  }
-  success: {
-    value: string | number
-    type: ThoughtChainType
-  }
+export type HexColor = `#${HexDigit}${HexDigit}${HexDigit}${HexDigit}${HexDigit}${HexDigit}`
+
+export interface DefaultColor {
+  loading: HexColor
+  success: HexColor
+  error: HexColor
+  [key: string]: HexColor
 }
 
 /**
@@ -74,9 +67,15 @@ interface ThoughtChainItemBase {
   typing?: TypingConfig
 }
 
-export type DefaultThoughtChainItemProps = RequiredDependency<ThoughtChainItemBase, 'isCanExpand' | 'thinkContent'>
+/** 指定这两个字段为必填 */
+type RequiredKeys = 'isCanExpand' | 'thinkContent'
 
-export type ThoughtChainItemProps<T = DefaultThoughtChainItemProps> = Pick<ThoughtChainItemBase, 'hideTitle' | 'isMarkdown' | 'typing' | 'isDefaultExpand' | 'isCanExpand' | 'placement'> & T
+export type DefaultThoughtChainItemProps =
+  Required<Pick<ThoughtChainItemBase, RequiredKeys>> &
+  Omit<ThoughtChainItemBase, RequiredKeys>
+
+// 再定义最终使用的 props 类型，直接使用这个合并结构即可
+export type ThoughtChainItemProps<T> = DefaultThoughtChainItemProps & T
 
 /**
  * 思考组件的属性
@@ -107,9 +106,9 @@ export interface ThoughtChainProps<T = ThoughtChainItemBase> {
    */
   statusKey?: string
   /**
-   * 节点状态枚举
+   * 节点状态颜色设置
    */
-  statusEnum?: ThinkStatusEnum
+  dotBackgroundColor?: DefaultColor
   /**
    * 节点图标大小
    */
@@ -124,10 +123,9 @@ export interface ThoughtChainProps<T = ThoughtChainItemBase> {
   lineGradient?: boolean
 }
 
-export interface ThinkingInstance {
+export interface ThinkingInstance<T> {
   /**
-   * 展开的节点的id
-   * @param id 节点的id
+   * 展开的节点
    */
-  expandKeys: string[]
+  expandItem: T
 }
