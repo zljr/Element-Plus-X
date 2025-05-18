@@ -24,7 +24,8 @@ const meta = {
     typing: {
       step: 20,
       interval: 100,
-      suffix: ''
+      suffix: '',
+      isRequestEnd: true
     },
     isFog: true,
     isMarkdown: true

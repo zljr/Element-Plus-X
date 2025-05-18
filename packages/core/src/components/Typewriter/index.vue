@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ComputedRef } from 'vue'
-import type { TypewriterInstance, TypewriterProps, TypingConfig } from './types.d.ts'
+import type { TypewriterEmits, TypewriterInstance, TypewriterProps, TypingConfig } from './types.d.ts'
 import DOMPurify from 'dompurify' // 新增安全过滤
 import MarkdownIt from 'markdown-it'
 import { usePrism } from '../../hooks/usePrism'
@@ -10,17 +10,10 @@ const props = withDefaults(defineProps<TypewriterProps>(), {
   content: '',
   isMarkdown: false,
   typing: false,
-  isFog: false,
+  isFog: false
 })
 
-const emits = defineEmits<{
-  /** 开始打字时触发 */
-  start: [instance: TypewriterInstance]
-  /** 打字过程中触发（携带进度百分比） */
-  writing: [instance: TypewriterInstance]
-  /** 打字结束时触发 */
-  finish: [instance: TypewriterInstance]
-}>()
+const emits = defineEmits<TypewriterEmits>()
 
 const appConfig = useAppConfig();
 
@@ -195,7 +188,9 @@ function startTyping() {
 function finishTyping() {
   isTyping.value = false
   typingIndex.value = contentCache.value.length
-  emits('finish', instance)
+  if((props.typing as TypingConfig)?.isRequestEnd ?? true){
+    emits('finish', instance)
+  }
 }
 
 // 公共方法

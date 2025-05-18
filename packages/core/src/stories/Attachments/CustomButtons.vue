@@ -1,0 +1,119 @@
+<script setup lang="ts">
+import Attachments from '@components/Attachments/index.vue'
+import { useAttachmentStubs } from './useAttachmentStubs'
+import type { AttachmentsProps } from '@components/Attachments/types';
+
+type Props = Pick<AttachmentsProps, 'items'>;
+const props = withDefaults(defineProps<Props>(), {
+  items: ()=> [],
+})
+
+const {
+  files,
+  handleBeforeUpload,
+  handleHttpRequest,
+  handleUploadDrop,
+  handleDeleteCard,
+} = useAttachmentStubs(props.items)
+</script>
+
+<template>
+  <div class="component-container">
+    <div class="component-title">
+      附件上传组件-自定义左右按钮
+    </div>
+      <!-- :items="files"
+      overflow="scrollX"
+      :list-style="{
+        padding: '0 12px',
+      }" -->
+    <Attachments
+      v-bind="$attrs"
+      :items="files"
+      :http-request="handleHttpRequest"
+      :before-upload="handleBeforeUpload"
+      @upload-drop="handleUploadDrop"
+      @delete-card="handleDeleteCard"
+    >
+      <!-- 自定义左侧按钮（覆盖默认插槽） -->
+      <template #prev-button="{ show, onScrollLeft }">
+        <button
+          v-if="show"
+          class="custom-prev"
+          @click="onScrollLeft"
+        >
+          👈
+        </button>
+      </template>
+
+      <!-- 自定义右侧按钮（覆盖默认插槽） -->
+      <template #next-button="{ show, onScrollRight }">
+        <button
+          v-if="show"
+          class="custom-next"
+          @click="onScrollRight"
+        >
+          👉
+        </button>
+      </template>
+    </Attachments>
+  </div>
+</template>
+
+<style scoped lang="scss">
+.component-container {
+  background-color: white;
+  padding: 12px;
+  border-radius: 15px;
+  height: calc(100vh - 80px);
+  overflow-y: auto;
+
+  .component-title {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-left: 12px;
+    font-weight: 700;
+    line-height: 1.5;
+    margin-bottom: 12px;
+    margin-top: 24px;
+
+    &::after {
+      position: absolute;
+      content: '';
+      display: block;
+      width: 5px;
+      height: 75%;
+      border-radius: 15px;
+      left: 0;
+      background-color: #409EFF;
+    }
+  }
+}
+/* 用户自定义样式（覆盖默认外观） */
+.custom-prev,
+.custom-next {
+  position: absolute;  /* 必须保留定位样式 */
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+
+  /* 自定义外观 */
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: 2px solid  rgba(255, 255, 255, 0.5);
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+.custom-prev { left: 8px; }
+.custom-next { right: 8px; }
+
+.custom-prev:hover,
+.custom-next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  border-color: rgba(255, 255, 255, 0.8);
+}
+</style>

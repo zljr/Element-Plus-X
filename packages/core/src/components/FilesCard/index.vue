@@ -367,6 +367,7 @@ defineExpose({
   border-radius: 8px;
   overflow: hidden;
   transition: all 0.3s;
+  flex-shrink: 0;
 
   .preview-mask {
     position: absolute;

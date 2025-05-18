@@ -1,11 +1,7 @@
 // import { fn } from '@storybook/test';
 import type { Meta, StoryObj } from '@storybook/vue3';
-// import storybookCodePanel from 'storybook-code-panel';
 import Bubble from './index.vue';
 import BubbleSource from '@components/Bubble/index.vue'
-import 'prismjs/components/prism-java'
-import 'prismjs/components/prism-go'
-import 'prismjs/themes/prism.min.css'
 
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories
@@ -33,7 +29,9 @@ const meta = {
     isFog: true,
     typing: {
       step: 2,
-      suffix: '💗'
+      suffix: '💗',
+      interval: 100,
+      isRequestEnd: true
     },
   }
 } satisfies Meta<typeof BubbleSource>;
