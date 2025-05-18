@@ -33,11 +33,5 @@ type Story = StoryObj<typeof meta>;
  */
 export const ThinkingDemo: Story = {
     args: {
-        modelValue: true,
-        autoCollapse: false,
-        duration: '0.2s',
-        buttonWidth: '160px',
-        maxWidth: '500px',
-        color: 'var(--el-color-info)'
     } as Story['args'],
 }

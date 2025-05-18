@@ -123,6 +123,10 @@ export interface ThoughtChainProps<T = ThoughtChainItemBase> {
   lineGradient?: boolean
 }
 
+export interface ThoughtChainEmits<T> {
+  (e: 'handleExpand', item: T): void
+}
+
 export interface ThinkingInstance<T> {
   /**
    * 展开的节点

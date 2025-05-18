@@ -1,12 +1,13 @@
 <script lang='ts' setup generic="T = DefaultThoughtChainItemProps">
 import type { ElTimeline } from 'element-plus'
-import type { DefaultColor, DefaultThoughtChainItemProps, ThinkingInstance, ThoughtChainItemBase, ThoughtChainProps } from './types.d.ts'
+import type { DefaultColor, DefaultThoughtChainItemProps, ThoughtChainEmits, ThoughtChainItemBase, ThoughtChainProps } from './types.d.ts'
 import { Check, Close, Loading } from '@element-plus/icons-vue'
 import { get } from 'radash'
 import { computed, ref, watch } from 'vue'
 import { Typewriter } from '../../components'
 
 const props = withDefaults(defineProps<ThoughtChainProps<T>>(), {
+  // @ts-ignore
   thinkingItems: () => [],
   dotSize: 'default',
   maxWidth: '600px',
@@ -18,9 +19,7 @@ const props = withDefaults(defineProps<ThoughtChainProps<T>>(), {
   thinkContentKey: 'thinkContent',
 })
 
-const emits = defineEmits<{
-  handleExpand: [value: ThinkingInstance<T>['expandItem']]
-}>()
+const emits = defineEmits<ThoughtChainEmits<T>>()
 
 const defaultDotBackgroundColor: DefaultColor = {
   loading: '#e6a23c',
