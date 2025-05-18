@@ -1,10 +1,10 @@
 <script lang='ts' setup generic="T = DefaultThoughtChainItemProps">
 import type { ElTimeline } from 'element-plus'
-import type { DefaultThoughtChainItemProps, ThinkingInstance, ThoughtChainProps, ThoughtChainType } from './types.d.ts'
+import type { DefaultColor, DefaultThoughtChainItemProps, ThinkingInstance, ThoughtChainItemBase, ThoughtChainProps } from './types.d.ts'
 import { Check, Close, Loading } from '@element-plus/icons-vue'
 import { get } from 'radash'
 import { computed, ref, watch } from 'vue'
-import Typewriter from '../Typewriter/index.vue'
+import { Typewriter } from '../../components'
 
 const props = withDefaults(defineProps<ThoughtChainProps<T>>(), {
   thinkingItems: () => [],
@@ -13,28 +13,20 @@ const props = withDefaults(defineProps<ThoughtChainProps<T>>(), {
   lineGradient: false,
   rowKey: 'id',
   statusKey: 'status',
-  statusEnum: () => ({
-    loading: {
-      value: 'loading',
-      type: 'warning',
-    },
-    error: {
-      value: 'error',
-      type: 'danger',
-    },
-    success: {
-      value: 'success',
-      type: 'success',
-    },
-  }),
   titleKey: 'title',
   thinkTitleKey: 'thinkTitle',
   thinkContentKey: 'thinkContent',
 })
 
 const emits = defineEmits<{
-  handleExpand: [value: ThinkingInstance['expandKeys']]
+  handleExpand: [value: ThinkingInstance<T>['expandItem']]
 }>()
+
+const defaultDotBackgroundColor: DefaultColor = {
+  loading: '#e6a23c',
+  success: '#67c23a',
+  error: '#f56c6c',
+}
 
 const dotMargin = computed(() => {
   switch (props.dotSize) {
@@ -47,22 +39,22 @@ const dotMargin = computed(() => {
   }
 })
 
-const colorArr: Record<ThoughtChainType, string> = {
-  info: 'var(--el-color-primary)',
-  success: 'var(--el-color-success)',
-  warning: 'var(--el-color-warning)',
-  danger: 'var(--el-color-danger)',
-  primary: 'var(--el-color-primary)',
-}
-
 const timelineRef = ref<InstanceType<typeof ElTimeline>>()
 
+function getNodeBtnColor(item: T) {
+  const _type_ = getType(item)
+  if (_type_) {
+    return props.dotBackgroundColor ? props.dotBackgroundColor[_type_] : defaultDotBackgroundColor[_type_]
+  }
+  return ''
+}
+
 const getLineColor = computed(() => {
-  if (props.thinkingItems.length) {
+  if (props.thinkingItems.length && props.thinkingItems.length) {
     const arr = props.thinkingItems.map((item) => {
       const _type_ = getType(item)
       if (_type_) {
-        return colorArr[_type_]
+        return props.dotBackgroundColor ? props.dotBackgroundColor[_type_] : defaultDotBackgroundColor[_type_]
       }
       return ''
     })
@@ -81,7 +73,7 @@ const activeNamesComputed = computed(() =>
 
 const defaultActiveNodes = ref<string[]>([...activeNamesComputed.value])
 
-function handleExpand(item: any) {
+function handleExpand(item: T) {
   emits('handleExpand', item)
 }
 
@@ -108,21 +100,21 @@ function getEle() {
 
 function isLoading(item: T): boolean {
   const status = getStatus(item)
-  return status === props.statusEnum.loading.value
+  return status === 'loading'
 }
 
 function isError(item: T): boolean {
   const status = getStatus(item)
-  return status === props.statusEnum.error.value
+  return status === 'error'
 }
 
 function getId(item: T) {
   return get(item, props.rowKey)
 }
 
-function getType(item: T): ThoughtChainType {
-  const status = getStatus(item)
-  return props.statusEnum[status as keyof typeof props.statusEnum]?.type ?? 'success'
+function getType(item: T) {
+  const status = getStatus(item) as ThoughtChainItemBase['status']
+  return status ?? 'success'
 }
 
 function getTitle(item: T) {
@@ -162,7 +154,7 @@ onMounted(() => {
     >
       <TransitionGroup name="thought-chain" tag="el-timeline-item">
         <el-timeline-item
-          v-for="item in props.thinkingItems" :key="getId(item)" :type="getType(item)"
+          v-for="item in props.thinkingItems" :key="getId(item)"
           :timestamp="getTitle(item)" :hide-timestamp="item.hideTitle" :placement="item.placement ?? 'top'"
         >
           <div v-if="!item.isCanExpand">
@@ -180,9 +172,20 @@ onMounted(() => {
           </el-collapse>
 
           <template #dot>
-            <div class="el-thought-chain-item-dot">
+            <div :class="{ 'el-thought-chain-item-dot': !$slots.icon }" style="position: relative;">
               <slot name="icon" :item="item">
-                <el-button circle :type="getType(item)" :loading="isLoading(item)" :size="dotSize">
+                <el-button
+                  circle
+                  :loading="isLoading(item)"
+                  :size="props.dotSize"
+                  :style="
+                    {
+                      '--custom-background-color': getNodeBtnColor(item),
+                      '--custom-border-color': getNodeBtnColor(item),
+                      'backgroundColor': getNodeBtnColor(item),
+                      'borderColor': getNodeBtnColor(item),
+                    }"
+                >
                   <template #loading>
                     <el-icon class="thought-chain-loading">
                       <Loading />
@@ -205,23 +208,23 @@ onMounted(() => {
   </div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .el-thought-chain {
 
   &-item-dot {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     margin: v-bind(dotMargin);
     :deep(.el-button){
       cursor:default !important;
       &:active {
-        background-color: var(--el-button-bg-color) !important;
-        border-color: var(--el-button-bg-color) !important;
+        background-color: var(--custom-background-color) !important;
+        border-color: var(--custom-border-color) !important;
       };
       &:hover {
-        background-color: var(--el-button-bg-color) !important;
-        border-color: var(--el-button-bg-color) !important;
+        background-color: var(--custom-background-color) !important;
+        border-color: var(--custom-border-color) !important;
+      }
+      .el-icon svg path{
+        fill: white;
       }
     }
   }
