@@ -1,4 +1,4 @@
-.typer-container{
+.typer-container {
   overflow-x: auto;
 }
 /* Markdown基础样式 */
@@ -10,7 +10,6 @@
 // 添加对 h1-h6, ol, ul 的特殊处理
 .typing-markdown-cursor-foggy,
 .typing-cursor-foggy {
-
   &.markdown-content :deep() h1,
   &.markdown-content :deep() h2,
   &.markdown-content :deep() h3,

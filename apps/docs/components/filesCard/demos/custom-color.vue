@@ -80,13 +80,13 @@ const filesCardProps = ref<FilesCardProps>({
 
 <style scoped lang="less">
 .files-card-container-wrapper {
+  display: flex;
+  gap: 12px;
+  flex-direction: column;
+  .files-card-container {
     display: flex;
-    gap: 12px;
-    flex-direction: column;
-    .files-card-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
+    flex-wrap: wrap;
+    gap: 8px;
   }
+}
 </style>

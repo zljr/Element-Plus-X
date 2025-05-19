@@ -86,14 +86,14 @@ const {
       height: 75%;
       border-radius: 15px;
       left: 0;
-      background-color: #409EFF;
+      background-color: #409eff;
     }
   }
 }
 /* 用户自定义样式（覆盖默认外观） */
 .custom-prev,
 .custom-next {
-  position: absolute;  /* 必须保留定位样式 */
+  position: absolute; /* 必须保留定位样式 */
   top: 50%;
   transform: translateY(-50%);
   z-index: 10;
@@ -101,14 +101,18 @@ const {
   /* 自定义外观 */
   background-color: rgba(0, 0, 0, 0.5);
   color: white;
-  border: 2px solid  rgba(255, 255, 255, 0.5);
+  border: 2px solid rgba(255, 255, 255, 0.5);
   padding: 8px 16px;
   border-radius: 4px;
   font-size: 14px;
   transition: all 0.3s ease;
 }
-.custom-prev { left: 8px; }
-.custom-next { right: 8px; }
+.custom-prev {
+  left: 8px;
+}
+.custom-next {
+  right: 8px;
+}
 
 .custom-prev:hover,
 .custom-next:hover {

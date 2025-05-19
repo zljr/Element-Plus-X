@@ -241,7 +241,7 @@ function handleMenuClick(menuKey: string, item: any) {
   display: flex;
   align-items: center;
   font-weight: 500;
-  color: #409EFF;
+  color: #409eff;
 }
 
 .menu-buttons {
@@ -273,7 +273,7 @@ function handleMenuClick(menuKey: string, item: any) {
 
     &:hover {
       background-color: #f5f7fa;
-      color: #409EFF;
+      color: #409eff;
     }
   }
 }

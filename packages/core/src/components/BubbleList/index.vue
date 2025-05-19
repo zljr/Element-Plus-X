@@ -288,7 +288,7 @@ defineExpose({
     background: transparent;
     background-color: #0003;
     border-radius: 10px;
-    transition: background-color .2s ease-in-out;
+    transition: background-color 0.2s ease-in-out;
   }
 
   &::-webkit-scrollbar-track {
@@ -317,7 +317,6 @@ defineExpose({
       background: #a8a8a8;
     }
   }
-
 }
 
 /* 火狐浏览器滚动条样式 */
@@ -350,7 +349,9 @@ defineExpose({
   background-color: #ffffff;
   // background-color: aquamarine;
   border-radius: 50%;
-  box-shadow: 0 0 4px 0 rgba(0, 0, 0, .02), 0 6px 10px 0 rgba(47, 53, 64, .1);
+  box-shadow:
+    0 0 4px 0 rgba(0, 0, 0, 0.02),
+    0 6px 10px 0 rgba(47, 53, 64, 0.1);
   transition: all 0.3s ease;
   z-index: 100;
 

@@ -433,7 +433,7 @@ defineExpose({
         width: calc(100% - 12px) !important;
         height: calc(100% - 12px) !important;
 
-        svg>path:nth-child(1) {
+        svg > path:nth-child(1) {
           stroke: rgba(255, 255, 255, 0.2);
           stroke-width: 8px;
         }

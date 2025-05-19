@@ -28,14 +28,15 @@ const DEFAULT_PART_SEPARATOR = '\n';
 // 键值对默认分隔符（使用冒号）
 const DEFAULT_KV_SEPARATOR = ':';
 ```
+
 :::
 
 ## 返回钩子
 
-| 属性名  | 说明                 | 类型                         |
-| ----- | -------------------- | ---------------------------- |
-| startStream | 开始请求流模式接口 | `({readableStream, transformStream}) => void` |
-| cancel | 中断流式请求 | `() => void` |
-| loading | 是否正在请求流式数据 | `boolean` |
-| data | 实时返回的流式数据 | `string` |
-| error | 流式请求报错信息 | `string` |
+| 属性名      | 说明                 | 类型                                          |
+| ----------- | -------------------- | --------------------------------------------- |
+| startStream | 开始请求流模式接口   | `({readableStream, transformStream}) => void` |
+| cancel      | 中断流式请求         | `() => void`                                  |
+| loading     | 是否正在请求流式数据 | `boolean`                                     |
+| data        | 实时返回的流式数据   | `string`                                      |
+| error       | 流式请求报错信息     | `string`                                      |

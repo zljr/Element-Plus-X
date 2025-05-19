@@ -1,12 +1,12 @@
 import antfu from '@antfu/eslint-config'
 
 export default antfu({
+  formatters: true,
   vue: {
     'vue/block-order': ['error', { // 块顺序
       order: ['script', 'template', 'style'],
     }],
   },
-  typescript: true,
   stylistic: {
     indent: 2, // 缩进
     semi: true, // 语句分号

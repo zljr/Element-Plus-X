@@ -105,6 +105,6 @@ const activeKey2 = ref('g1');
   display: flex;
   align-items: center;
   font-weight: 500;
-  color: #409EFF;
+  color: #409eff;
 }
 </style>

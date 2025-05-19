@@ -262,7 +262,9 @@ defineExpose({
   line-height: 1.5;
   border: 1px solid #dcdfe6;
   border-radius: 4px;
-  transition: border-color 0.2s, height 0.2s;
+  transition:
+    border-color 0.2s,
+    height 0.2s;
   overflow-y: auto;
   box-sizing: border-box;
   outline: none;

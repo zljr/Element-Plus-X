@@ -242,7 +242,21 @@ watch(() => props.status, (newVal) => {
   font-size: 14px;
   color: var(--el-thinking-content-wrapper-color);
   white-space: pre-wrap;
-  font-family: DeepSeek-CJK-patch,Inter,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Noto Sans,Ubuntu,Cantarell,Helvetica Neue,Oxygen,Open Sans,sans-serif;
+  font-family:
+    DeepSeek-CJK-patch,
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    Segoe UI,
+    Roboto,
+    Noto Sans,
+    Ubuntu,
+    Cantarell,
+    Helvetica Neue,
+    Oxygen,
+    Open Sans,
+    sans-serif;
   margin: 0;
   line-height: var(--el-font-line-height-primary);
 }

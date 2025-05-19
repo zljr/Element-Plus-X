@@ -3,13 +3,14 @@
 | 工具         | 版本要求            | 说明          |
 | ------------ | ------------------- | ------------- |
 | Node.js      | ≥ 18.x（推荐≥20.x） | 主流 LTS 版本 |
-| Vue          | ≥ 3.3.X                | Vue 3 正式版  |
-| Element-Plus | ≥ 2.8.X                | 安装为依赖    |
-| pnpm   |  ≥ 10.X               | pnpm 安装    |
+| Vue          | ≥ 3.3.X             | Vue 3 正式版  |
+| Element-Plus | ≥ 2.8.X             | 安装为依赖    |
+| pnpm         | ≥ 10.X              | pnpm 安装     |
 
 #### **二、安装**
 
 ::: code-group
+
 ```sh [npm]
 npm install vue-element-plus-x --save
 ```
@@ -21,9 +22,11 @@ pnpm add vue-element-plus-x --save
 ```sh [yarn]
 yarn add vue-element-plus-x --save
 ```
+
 :::
 
 **CDN 引入**
+
 ```html
 <!-- 该方法 有待测试 -->
 <!-- CDN 引入 -->

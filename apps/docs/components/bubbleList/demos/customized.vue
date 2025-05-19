@@ -115,56 +115,56 @@ function setLoading(loading: boolean) {
 
 <style scoped lang="less">
 .avatar-wrapper {
-    width: 40px;
-    height: 40px;
-    img {
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-    }
-}
-
-.header-wrapper {
-    .header-name {
-        font-size: 14px;
-        color: #979797;
-    }
-}
-
-.content-wrapper {
-    .content-text {
-        font-size: 14px;
-        color: #333;
-        padding: 12px;
-        background: linear-gradient(to right, #fdfcfb 0%, #ffd1ab 100%);
-        border-radius: 15px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-}
-
-.footer-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    .footer-time {
-        font-size: 12px;
-        margin-top: 3px;
-    }
-}
-
-.footer-container {
-  :deep(.el-button+.el-button) {
-    margin-left: 8px;
+  width: 40px;
+  height: 40px;
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
   }
 }
 
-.loading-container {
+.header-wrapper {
+  .header-name {
+    font-size: 14px;
+    color: #979797;
+  }
+}
+
+.content-wrapper {
+  .content-text {
     font-size: 14px;
     color: #333;
     padding: 12px;
     background: linear-gradient(to right, #fdfcfb 0%, #ffd1ab 100%);
     border-radius: 15px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.footer-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  .footer-time {
+    font-size: 12px;
+    margin-top: 3px;
+  }
+}
+
+.footer-container {
+  :deep(.el-button + .el-button) {
+    margin-left: 8px;
+  }
+}
+
+.loading-container {
+  font-size: 14px;
+  color: #333;
+  padding: 12px;
+  background: linear-gradient(to right, #fdfcfb 0%, #ffd1ab 100%);
+  border-radius: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .loading-container span {
@@ -173,7 +173,8 @@ function setLoading(loading: boolean) {
 }
 
 @keyframes bounce {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(5px);
   }
   50% {
@@ -184,16 +185,16 @@ function setLoading(loading: boolean) {
 .loading-container span:nth-child(4n) {
   animation: bounce 1.2s ease infinite;
 }
-.loading-container span:nth-child(4n+1) {
+.loading-container span:nth-child(4n + 1) {
   animation: bounce 1.2s ease infinite;
-  animation-delay: .3s;
+  animation-delay: 0.3s;
 }
-.loading-container span:nth-child(4n+2) {
+.loading-container span:nth-child(4n + 2) {
   animation: bounce 1.2s ease infinite;
-  animation-delay: .6s;
+  animation-delay: 0.6s;
 }
-.loading-container span:nth-child(4n+3) {
+.loading-container span:nth-child(4n + 3) {
   animation: bounce 1.2s ease infinite;
-  animation-delay: .9s;
+  animation-delay: 0.9s;
 }
 </style>

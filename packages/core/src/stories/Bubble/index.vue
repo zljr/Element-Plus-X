@@ -60,7 +60,7 @@ onMounted(() => {
   .component-1 {
     .footer-container {
       :deep() {
-        .el-button+.el-button {
+        .el-button + .el-button {
           margin-left: 8px;
         }
       }

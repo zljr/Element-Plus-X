@@ -6,7 +6,7 @@
 
 <div align="center">
 
-  [![License](https://img.shields.io/badge/license-MIT-blue)](https://github.com/HeJiaYue520/Element-Plus-X/blob/main/LICENSE)&emsp;[![GitHub stars](https://img.shields.io/github/stars/HeJiaYue520/Element-Plus-X)](https://github.com/HeJiaYue520/Element-Plus-X)&emsp;[![npm version](https://img.shields.io/npm/v/vue-element-plus-x)](https://www.npmjs.com/package/vue-element-plus-x)&emsp;[![npm](https://img.shields.io/npm/dm/vue-element-plus-x.svg)](https://www.npmjs.com/package/vue-element-plus-x)
+[![License](https://img.shields.io/badge/license-MIT-blue)](https://github.com/HeJiaYue520/Element-Plus-X/blob/main/LICENSE)&emsp;[![GitHub stars](https://img.shields.io/github/stars/HeJiaYue520/Element-Plus-X)](https://github.com/HeJiaYue520/Element-Plus-X)&emsp;[![npm version](https://img.shields.io/npm/v/vue-element-plus-x)](https://www.npmjs.com/package/vue-element-plus-x)&emsp;[![npm](https://img.shields.io/npm/dm/vue-element-plus-x.svg)](https://www.npmjs.com/package/vue-element-plus-x)
 
 </div>
 
@@ -19,30 +19,35 @@
 
 <div align="center">
 
- **English** | [简体中文](./introduce.md)
+**English** | [简体中文](./introduce.md)
 
 </div>&emsp;
 
 # 🚀 Element-Plus-X
+
 **An out-of-the-box enterprise-level AI component library (based on Vue 3 + Element-Plus)**
 
 ## 📢 Quick Links
-| Resource Type         | <div style="width: 300px;">Link</div>    |
-|-----------------------|-----------------------------------------------|
-| **Documentation**     | [📖 Development Documentation](https://element-plus-x.com)  |
-| **Online Demo**       | [👁️ Online Preview](https://v.element-plus-x.com)                         |
-| **Code Repository**   | [🐙 GitHub](https://github.com/HeJiaYue520/Element-Plus-X)           |
-| **NPM Package**       | [📦 npm](https://www.npmjs.com/package/vue-element-plus-x)           |
-| **Issue Feedback**    | [🐛 Submit a Bug](https://github.com/HeJiaYue520/Element-Plus-X/issues)  |
-| **Community**      | [🐒 Discussion Group](https://element-plus-x.com/introduce.html#%F0%9F%91%A5-%E7%A4%BE%E5%8C%BA%E6%94%AF%E6%8C%81)  |
+
+| Resource Type       | <div style="width: 300px;">Link</div>                                                                              |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| **Documentation**   | [📖 Development Documentation](https://element-plus-x.com)                                                         |
+| **Online Demo**     | [👁️ Online Preview](https://v.element-plus-x.com)                                                                  |
+| **Code Repository** | [🐙 GitHub](https://github.com/HeJiaYue520/Element-Plus-X)                                                         |
+| **NPM Package**     | [📦 npm](https://www.npmjs.com/package/vue-element-plus-x)                                                         |
+| **Issue Feedback**  | [🐛 Submit a Bug](https://github.com/HeJiaYue520/Element-Plus-X/issues)                                            |
+| **Community**       | [🐒 Discussion Group](https://element-plus-x.com/introduce.html#%F0%9F%91%A5-%E7%A4%BE%E5%8C%BA%E6%94%AF%E6%8C%81) |
 
 ## 🛠️ Core Features
+
 - ✨ **Enterprise-level AI Components**: Pre-built scenario-based components such as chatbots and voice interaction.
 - 🚀 **Zero-configuration Integration**: Based on the Element-Plus design system, ready to use right out of the box.
 - 📦 **On-demand Loading**: Provides Tree Shaking optimization.
 
 ## 🔎 Installation
+
 ::: code-group
+
 ```sh [npm]
 npm install vue-element-plus-x --save
 ```
@@ -54,6 +59,7 @@ pnpm add vue-element-plus-x --save
 ```sh [yarn]
 yarn add vue-element-plus-x --save
 ```
+
 :::
 
 ## 📚 Usage Examples
@@ -94,6 +100,7 @@ app.mount('#app');
 ```
 
 3. **CDN Import**
+
 ```html
 <!-- This method is still under testing -->
 <!-- CDN Import -->
@@ -102,23 +109,23 @@ app.mount('#app');
 
 ## 🌟 Implemented Components and Hooks
 
-| Component Name | Description                     | Documentation Link           |
-|----------------|-------------------------------|-----------------------------|
-| `Typewriter`   | Typing animation component    | [📄 Docs](https://element-plus-x.com/components/typewriter/) |
-| `Bubble`       | Bubble message component (extended)       | [📄 Docs](https://element-plus-x.com/components/bubble/) |
-| `BubbleList`   | Bubble message list (extended)            | [📄 Docs](https://element-plus-x.com/components/bubbleList/) |
-| `Welcome`      | Welcome component               | [📄 Docs](https://element-plus-x.com/components/welcome/) |
-| `Sender`       | Smart input (with voice interaction、Built in instruction operation) | [📄 Docs](https://element-plus-x.com/components/sender/) |
-| `MentionSender` | Instruction input box (mention list) |[📄 Docs](https://element-plus-x.com/components/MentionSender/)|
-| `Thinking`     | Thinking state component (extended) | [📄 Docs](https://element-plus-x.com/components/thinking/) |
-| `ThoughtChain` | Thought chain component         | [📄 Docs](https://element-plus-x.com/components/thoughtChain/) |
-| `useRecord`    | Browser built-in speech recognition hooks | [📄 Docs](https://element-plus-x.com/components/useRecord/) |
-| `useXStream`   | Streaming API hooks             | [📄 Docs](https://element-plus-x.com/components/useXStream/) |
-| `useSend & XRequest` | Split streaming hooks (extended) | [📄 Docs](https://element-plus-x.com/components/useSend/) |
+| Component Name       | Description                                                          | Documentation Link                                              |
+| -------------------- | -------------------------------------------------------------------- | --------------------------------------------------------------- |
+| `Typewriter`         | Typing animation component                                           | [📄 Docs](https://element-plus-x.com/components/typewriter/)    |
+| `Bubble`             | Bubble message component (extended)                                  | [📄 Docs](https://element-plus-x.com/components/bubble/)        |
+| `BubbleList`         | Bubble message list (extended)                                       | [📄 Docs](https://element-plus-x.com/components/bubbleList/)    |
+| `Welcome`            | Welcome component                                                    | [📄 Docs](https://element-plus-x.com/components/welcome/)       |
+| `Sender`             | Smart input (with voice interaction、Built in instruction operation) | [📄 Docs](https://element-plus-x.com/components/sender/)        |
+| `MentionSender`      | Instruction input box (mention list)                                 | [📄 Docs](https://element-plus-x.com/components/MentionSender/) |
+| `Thinking`           | Thinking state component (extended)                                  | [📄 Docs](https://element-plus-x.com/components/thinking/)      |
+| `ThoughtChain`       | Thought chain component                                              | [📄 Docs](https://element-plus-x.com/components/thoughtChain/)  |
+| `useRecord`          | Browser built-in speech recognition hooks                            | [📄 Docs](https://element-plus-x.com/components/useRecord/)     |
+| `useXStream`         | Streaming API hooks                                                  | [📄 Docs](https://element-plus-x.com/components/useXStream/)    |
+| `useSend & XRequest` | Split streaming hooks (extended)                                     | [📄 Docs](https://element-plus-x.com/components/useSend/)       |
 
 ## 🎯 Development Plan (Updated Weekly)
 
-🎀 We will collect everyone's encountered problems and demand scenarios in various aspects such as issues and communication groups, and develop short-term and long-term development plans. For more details, please move on 👉 **[Development Plan]( https://element-plus-x.com/roadmap.html)**
+🎀 We will collect everyone's encountered problems and demand scenarios in various aspects such as issues and communication groups, and develop short-term and long-term development plans. For more details, please move on 👉 **[Development Plan](https://element-plus-x.com/roadmap.html)**
 
 ## 🤝 Contribute
 
@@ -134,6 +141,7 @@ We welcome:
 - 🎨 Style optimizations
 
 ## 👥 Community Support
+
 <div align="center">
 <img src="https://cdn.element-plus-x.com/vw-2025-05-06.png" alt="WeChat communication group" width="180" style="margin: 20px;" />
 <p>Join the WeChat communication group to get the latest news and technical support</p>

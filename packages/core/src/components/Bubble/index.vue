@@ -348,7 +348,6 @@ defineExpose(instance);
 
     /* 波浪动画 */
     @keyframes wave {
-
       0%,
       100% {
         transform: translateY(-2px);

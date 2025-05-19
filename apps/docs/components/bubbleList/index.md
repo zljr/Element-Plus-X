@@ -53,42 +53,42 @@
 
 ## 属性
 
-| 属性名      | 类型   | <div style="width: 70px">是否必填</div> | 默认值  | 说明                                                                                                                                                                  |
-| ----------- | ------ | -------- | ------- |  ---------- |
-| `list`      | Array  | 是       | 无      | 包含气泡信息的数组，每个元素为一个对象，包含 `content`、`placement`、`loading`、`shape`、`variant`、`isMarkdown`、`typing` 等 `Bubble` 属性，用于配置每个气泡的显示内容和样式。 |
-| `maxHeight` | String | 否       | '500px' | 气泡列表容器的最大高度，超过该高度会出现垂直滚动条。   |
-| `alwaysShowScrollbar` | Boolean | 否       | false      | 是否一直显示滚动条，默认为 `false`。 |
-| `backButtonThreshold` | Number | 否       | 80      | 滚动条显示阈值，当滚动条距离底部小于该值时，会显示滚动条。 |
-| `showBackButton` | Boolean | 否       | true      | 是否显示返回顶部按钮，默认为 `true`。 |
-| `backButtonPosition` | `{ bottom: '20px', left: 'calc(50% - 19px)' }`  |  否 | `{ bottom: '20px', left: 'calc(50% - 19px)' }`  | 返回顶部按钮的位置, 默认底部居中展示。 |
-| `btnLoading` | Boolean | 否       | true      | 是否开启返回顶部按钮 loading 状态，默认为 `true`。 |
-| `btnColor` | String | 否       | '#409EFF'      | 返回顶部按钮的颜色，默认为 `'#409EFF'`。 |
-| `btnIconSize` | Number | 否       | 24      | 返回顶部按钮的图标大小，默认为 24px。 |
-| `triggerIndices` | 'only-last' \| 'all' \| number[]  |  否 | 'only-last'      | 触发滚动完成事件的气泡 `索引数组`，默认为 `'only-last'`。 |
+| 属性名                | 类型                                           | <div style="width: 70px">是否必填</div> | 默认值                                         | 说明                                                                                                                                                                            |
+| --------------------- | ---------------------------------------------- | --------------------------------------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `list`                | Array                                          | 是                                      | 无                                             | 包含气泡信息的数组，每个元素为一个对象，包含 `content`、`placement`、`loading`、`shape`、`variant`、`isMarkdown`、`typing` 等 `Bubble` 属性，用于配置每个气泡的显示内容和样式。 |
+| `maxHeight`           | String                                         | 否                                      | '500px'                                        | 气泡列表容器的最大高度，超过该高度会出现垂直滚动条。                                                                                                                            |
+| `alwaysShowScrollbar` | Boolean                                        | 否                                      | false                                          | 是否一直显示滚动条，默认为 `false`。                                                                                                                                            |
+| `backButtonThreshold` | Number                                         | 否                                      | 80                                             | 滚动条显示阈值，当滚动条距离底部小于该值时，会显示滚动条。                                                                                                                      |
+| `showBackButton`      | Boolean                                        | 否                                      | true                                           | 是否显示返回顶部按钮，默认为 `true`。                                                                                                                                           |
+| `backButtonPosition`  | `{ bottom: '20px', left: 'calc(50% - 19px)' }` | 否                                      | `{ bottom: '20px', left: 'calc(50% - 19px)' }` | 返回顶部按钮的位置, 默认底部居中展示。                                                                                                                                          |
+| `btnLoading`          | Boolean                                        | 否                                      | true                                           | 是否开启返回顶部按钮 loading 状态，默认为 `true`。                                                                                                                              |
+| `btnColor`            | String                                         | 否                                      | '#409EFF'                                      | 返回顶部按钮的颜色，默认为 `'#409EFF'`。                                                                                                                                        |
+| `btnIconSize`         | Number                                         | 否                                      | 24                                             | 返回顶部按钮的图标大小，默认为 24px。                                                                                                                                           |
+| `triggerIndices`      | 'only-last' \| 'all' \| number[]               | 否                                      | 'only-last'                                    | 触发滚动完成事件的气泡 `索引数组`，默认为 `'only-last'`。                                                                                                                       |
 
 ## 事件
 
-| 事件名       | 参数  | 类型       | 描述                                         |
-| ------------ | ------------ |--- | -------------------------------------------- |
+| 事件名      | 参数              | 类型     | 描述                                   |
+| ----------- | ----------------- | -------- | -------------------------------------- |
 | `@complete` | (instance, index) | Function | 当某个气泡的打字效果完成时触发的事件。 |
 
 ## Ref 实例方法
 
-| 属性名       | 类型         | 描述                                         |
-| ----------- | ------------ | -------------------------------------------- |
-| `scrollToTop` | Function | 滚动到顶部。                                     |
-| `scrollToBottom` | Function | 滚动到底部。                                     |
-| `scrollToBubble` | Function | 滚动到指定气泡索引位置。                     |
+| 属性名           | 类型     | 描述                     |
+| ---------------- | -------- | ------------------------ |
+| `scrollToTop`    | Function | 滚动到顶部。             |
+| `scrollToBottom` | Function | 滚动到底部。             |
+| `scrollToBubble` | Function | 滚动到指定气泡索引位置。 |
 
 ## 插槽
 
-| 插槽名       | 参数  | 类型       | 描述                                         |
-| ------------ | ------------ |--- | -------------------------------------------- |
-| `#avatar` | - | Slot | 自定义头像展示内容 |
-| `#header` | - | Slot | 自定义气泡顶部展示内容 |
-| `#content` | - | Slot | 自定义气泡展示内容 |
-| `#loading` | - | Slot | 自定义气泡加载状态展示内容 |
-| `#footer` | - | Slot | 自定义气泡加载状态展示内容 |
+| 插槽名     | 参数 | 类型 | 描述                       |
+| ---------- | ---- | ---- | -------------------------- |
+| `#avatar`  | -    | Slot | 自定义头像展示内容         |
+| `#header`  | -    | Slot | 自定义气泡顶部展示内容     |
+| `#content` | -    | Slot | 自定义气泡展示内容         |
+| `#loading` | -    | Slot | 自定义气泡加载状态展示内容 |
+| `#footer`  | -    | Slot | 自定义气泡加载状态展示内容 |
 
 ## 功能特性
 

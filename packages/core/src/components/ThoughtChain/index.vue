@@ -217,20 +217,19 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .el-thought-chain {
-
   &-item-dot {
     margin: v-bind(dotMargin);
-    :deep(.el-button){
-      cursor:default !important;
+    :deep(.el-button) {
+      cursor: default !important;
       &:active {
         background-color: var(--custom-background-color) !important;
         border-color: var(--custom-border-color) !important;
-      };
+      }
       &:hover {
         background-color: var(--custom-background-color) !important;
         border-color: var(--custom-border-color) !important;
       }
-      .el-icon svg path{
+      .el-icon svg path {
         fill: white;
       }
     }
@@ -292,7 +291,7 @@ onMounted(() => {
   position: absolute;
 }
 
-.thought-chain-loading{
+.thought-chain-loading {
   animation: rotating 1.5s linear infinite;
   transform-origin: center center;
   will-change: transform;

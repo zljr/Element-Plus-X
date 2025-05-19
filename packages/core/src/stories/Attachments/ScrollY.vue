@@ -63,7 +63,7 @@ const {
       height: 75%;
       border-radius: 15px;
       left: 0;
-      background-color: #409EFF;
+      background-color: #409eff;
     }
   }
 }

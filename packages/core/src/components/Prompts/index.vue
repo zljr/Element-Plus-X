@@ -130,8 +130,9 @@ function isActive(key: string | number) {
     line-height: 1.5;
     box-sizing: border-box;
     word-break: break-word;
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
-      sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    font-family:
+      BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji',
+      'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   }
 
   .el-prompts-items {
@@ -165,7 +166,9 @@ function isActive(key: string | number) {
     justify-content: flex-start;
     background: #ffffff;
     border-radius: 8px;
-    transition: border 0.3s, background 0.3s;
+    transition:
+      border 0.3s,
+      background 0.3s;
     border: 1px solid #f0f0f0;
   }
 

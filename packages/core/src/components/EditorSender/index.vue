@@ -518,7 +518,7 @@ defineExpose({
   transition: width var(--el-sender-header-animation-duration);
 
   &:after {
-    content: "";
+    content: '';
     position: absolute;
     inset: 0;
     pointer-events: none;
