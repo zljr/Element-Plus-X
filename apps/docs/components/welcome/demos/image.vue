@@ -7,7 +7,7 @@ title: image 插槽
 </docs>
 
 <script setup lang="ts">
-const bgColor = 'linear-gradient(97deg, rgba(90,196,255,0.12) 0%, rgba(174,136,255,0.12) 100%)'
+const bgColor = 'linear-gradient(97deg, rgba(90,196,255,0.12) 0%, rgba(174,136,255,0.12) 100%)';
 </script>
 
 <template>

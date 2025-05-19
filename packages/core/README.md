@@ -60,13 +60,13 @@ yarn install vue-element-plus-x
 
 ```vue
 <script>
-import { BubbleList, Sender } from 'vue-element-plus-x'
+import { BubbleList, Sender } from 'vue-element-plus-x';
 const list = [
   {
     content: 'Hello, Element Plus X',
     role: 'user',
   },
-]
+];
 </script>
 
 <template>
@@ -81,14 +81,14 @@ const list = [
 
 ```ts
 // main.ts
-import { createApp } from 'vue'
-import ElementPlusX from 'vue-element-plus-x'
-import App from './App.vue'
+import { createApp } from 'vue';
+import ElementPlusX from 'vue-element-plus-x';
+import App from './App.vue';
 
-const app = createApp(App)
+const app = createApp(App);
 // 使用 app.use() 全局引入
-app.use(ElementPlusX)
-app.mount('#app')
+app.use(ElementPlusX);
+app.mount('#app');
 ```
 
 3. **CDN 引入**

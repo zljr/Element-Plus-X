@@ -1,9 +1,9 @@
 <!-- ClearButton 清理按钮 -->
 <script setup lang="ts">
-import { Brush } from '@element-plus/icons-vue'
-import { defineEmits } from 'vue'
+import { Brush } from '@element-plus/icons-vue';
+import { defineEmits } from 'vue';
 
-const emit = defineEmits(['clear'])
+const emit = defineEmits(['clear']);
 </script>
 
 <template>

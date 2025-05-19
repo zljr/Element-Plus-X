@@ -1,7 +1,7 @@
-import { resolve } from 'node:path'
-import process from 'node:process'
-import { defineConfig } from 'vite'
-import plugins from './.build/plugins'
+import { resolve } from 'node:path';
+import process from 'node:process';
+import { defineConfig } from 'vite';
+import plugins from './.build/plugins';
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -15,7 +15,7 @@ export default defineConfig({
       entry: resolve(__dirname, './src/index.ts'),
       formats: ['umd'],
       fileName: (format) => {
-        return `${format}/index.js`
+        return `${format}/index.js`;
       },
       cssFileName: 'styles.css',
     },
@@ -35,4 +35,4 @@ export default defineConfig({
   esbuild: {
     drop: ['console', 'debugger'],
   },
-})
+});

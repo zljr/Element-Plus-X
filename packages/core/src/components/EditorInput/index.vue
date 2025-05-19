@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { CSSProperties } from 'vue'
-import type { EditorInputProps } from './types.d.ts'
-import { useContentEditable } from '../../utils/useContentEditable.ts'
+import type { CSSProperties } from 'vue';
+import type { EditorInputProps } from './types.d.ts';
+import { useContentEditable } from '../../utils/useContentEditable.ts';
 
 const props = withDefaults(defineProps<EditorInputProps>(), {
   modelValue: '',
@@ -10,13 +10,13 @@ const props = withDefaults(defineProps<EditorInputProps>(), {
     return {
       minRows: 1,
       maxRows: 5,
-    }
+    };
   },
   disabled: false,
   readOnly: false,
   placeholder: '',
   submitType: 'enter',
-})
+});
 
 const emits = defineEmits([
   'update:modelValue',
@@ -26,16 +26,16 @@ const emits = defineEmits([
   'keydown',
   'handleBlur',
   'handleFocus',
-])
+]);
 
-const editableElement = ref<HTMLElement | null>(null)
-const isComposing = ref(false)
-const lineHeight = ref(20)
-const paddingTop = ref(0)
-const paddingBottom = ref(0)
-const paddingLeft = ref(0)
-const paddingRight = ref(0)
-const borderWidth = ref(0) // 上下边框宽度和
+const editableElement = ref<HTMLElement | null>(null);
+const isComposing = ref(false);
+const lineHeight = ref(20);
+const paddingTop = ref(0);
+const paddingBottom = ref(0);
+const paddingLeft = ref(0);
+const paddingRight = ref(0);
+const borderWidth = ref(0); // 上下边框宽度和
 
 const {
   selectAll,
@@ -44,164 +44,164 @@ const {
   moveToEnd,
   focusElement,
   blurElement,
-} = useContentEditable(editableElement)
+} = useContentEditable(editableElement);
 
 // 合并为单个计算属性
 const showPlaceholder = computed(() => {
   return !isComposing.value
     && !props.modelValue
-    && !!props.placeholder
-})
+    && !!props.placeholder;
+});
 
 // 新增DOM变化监听
 const observer = new MutationObserver((mutations) => {
   mutations.forEach((mutation) => {
-    console.log('监听内容变化 mutation', mutation)
+    console.log('监听内容变化 mutation', mutation);
 
     // mutation.removedNodes.forEach((node) => {
     //   if (node.parentElement?.children.length === 0) {
     //     node.parentElement.remove()
     //   }
     // })
-  })
-})
+  });
+});
 
 onMounted(() => {
   if (editableElement.value) {
-    const style = window.getComputedStyle(editableElement.value)
-    lineHeight.value = Number.parseFloat(style.lineHeight) || 20
-    paddingTop.value = Number.parseFloat(style.paddingTop) || 0
-    paddingBottom.value = Number.parseFloat(style.paddingBottom) || 0
-    paddingLeft.value = Number.parseFloat(style.paddingLeft) || 0
-    paddingRight.value = Number.parseFloat(style.paddingRight) || 0
+    const style = window.getComputedStyle(editableElement.value);
+    lineHeight.value = Number.parseFloat(style.lineHeight) || 20;
+    paddingTop.value = Number.parseFloat(style.paddingTop) || 0;
+    paddingBottom.value = Number.parseFloat(style.paddingBottom) || 0;
+    paddingLeft.value = Number.parseFloat(style.paddingLeft) || 0;
+    paddingRight.value = Number.parseFloat(style.paddingRight) || 0;
     borderWidth.value
       = Number.parseFloat(style.borderTopWidth)
-        + Number.parseFloat(style.borderBottomWidth) || 0
+        + Number.parseFloat(style.borderBottomWidth) || 0;
 
-    editableElement.value.textContent = props.modelValue
-    adjustHeight()
+    editableElement.value.textContent = props.modelValue;
+    adjustHeight();
 
     observer.observe(editableElement.value, {
       childList: true,
       subtree: true,
-    })
+    });
   }
-})
+});
 
 const mergedStyle = computed<CSSProperties>(() => {
   const minRows = typeof props.autosize === 'object'
     ? props.autosize.minRows ?? props.rows
-    : props.rows
+    : props.rows;
 
   return {
     minHeight: `${minRows * lineHeight.value + paddingTop.value + paddingBottom.value + borderWidth.value}px !important`,
     resize: 'none',
     ...(typeof props.inputStyle === 'object' ? props.inputStyle : {}) as CSSProperties,
-  }
-})
+  };
+});
 
 const mergedPlaceholderStyle = computed<CSSProperties>(() => {
   return {
     padding: `${paddingTop.value}px ${paddingRight.value}px ${paddingBottom.value}px ${paddingLeft.value}px`,
-  }
-})
+  };
+});
 
 function adjustHeight() {
   if (!editableElement.value || !props.autosize)
-    return
+    return;
 
   nextTick(() => {
-    const el = editableElement.value!
-    el.style.height = 'auto'
-    const scrollHeight = el.scrollHeight
+    const el = editableElement.value!;
+    el.style.height = 'auto';
+    const scrollHeight = el.scrollHeight;
 
     if (typeof props.autosize === 'object') {
-      const maxRows = props.autosize.maxRows ?? Number.MAX_SAFE_INTEGER
-      const maxHeight = maxRows * lineHeight.value + paddingTop.value + paddingBottom.value
-      el.style.height = `${Math.min(scrollHeight, maxHeight)}px`
+      const maxRows = props.autosize.maxRows ?? Number.MAX_SAFE_INTEGER;
+      const maxHeight = maxRows * lineHeight.value + paddingTop.value + paddingBottom.value;
+      el.style.height = `${Math.min(scrollHeight, maxHeight)}px`;
     }
     else {
-      el.style.height = `${scrollHeight}px`
+      el.style.height = `${scrollHeight}px`;
     }
-  })
+  });
 }
 
 function handleInput() {
-  const element = editableElement.value
+  const element = editableElement.value;
   if (!element)
-    return
+    return;
 
-  console.log('editableElement', editableElement.value)
-  adjustHeight()
+  console.log('editableElement', editableElement.value);
+  adjustHeight();
 }
 
 function handleCompositionStart(e: CompositionEvent) {
-  isComposing.value = true
-  emits('compositionstart', e)
+  isComposing.value = true;
+  emits('compositionstart', e);
 }
 
 function handleCompositionEnd(e: CompositionEvent) {
-  isComposing.value = false
-  handleInput()
-  emits('compositionend', e)
+  isComposing.value = false;
+  handleInput();
+  emits('compositionend', e);
 }
 
 // 保持其他事件处理简单
 function handleKeyDown(e: KeyboardEvent) {
-  emits('keydown', e)
-  const element = editableElement.value
+  emits('keydown', e);
+  const element = editableElement.value;
   if (!element)
-    return
+    return;
 
-  const sel = window.getSelection()
+  const sel = window.getSelection();
 
-  console.log('sel', sel)
+  console.log('sel', sel);
 
   if (!sel || sel.rangeCount === 0)
-    return
-  const range = sel.getRangeAt(0)
+    return;
+  const range = sel.getRangeAt(0);
 
-  console.log('range', range)
+  console.log('range', range);
 
-  const targetNode = range.startContainer
+  const targetNode = range.startContainer;
 
-  console.log('targetNode', targetNode)
+  console.log('targetNode', targetNode);
 }
 
 // 观察模型值变化时同步结构化DOM
 watch(() => props.modelValue, (newVal) => {
   if (!editableElement.value)
-    return
+    return;
 
-  console.log('newVal', newVal)
+  console.log('newVal', newVal);
 
   // // 文本转结构化DOM
   // editableElement.value.innerHTML = newVal.split('\n')
   //   .map(line => `<div class="editor-line" data-line="true">${line}</div>`)
   //   .join('')
   //   .replace(/<div[^>]+><\/div>/g, '<div class="editor-line" data-line="true"><br></div>')
-})
+});
 
 // 新增方法
 function focus(e: Event) {
-  emits('handleFocus', e)
-  focusElement()
+  emits('handleFocus', e);
+  focusElement();
 }
 
 function blur(e: Event) {
-  emits('handleBlur', e)
-  blurElement()
+  emits('handleBlur', e);
+  blurElement();
 }
 
 function select() {
   if (editableElement.value) {
-    selectAll()
+    selectAll();
   }
 }
 
 function clear() {
   if (editableElement.value) {
-    deselectAll()
+    deselectAll();
   }
 }
 
@@ -214,7 +214,7 @@ defineExpose({
   moveToStart,
   moveToEnd,
   editableElement,
-})
+});
 </script>
 
 <template>

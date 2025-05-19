@@ -8,7 +8,7 @@ title: 响应式宽度
 </docs>
 
 <script setup lang="ts">
-import type { PromptsItemsProps } from 'vue-element-plus-x/types/Prompts'
+import type { PromptsItemsProps } from 'vue-element-plus-x/types/Prompts';
 
 const items = ref<PromptsItemsProps[]>([
   {
@@ -34,10 +34,10 @@ const items = ref<PromptsItemsProps[]>([
     label: '🐛 提示集组件标题',
     itemStyle: { width: 'calc(50% - 6px)' },
   },
-])
+]);
 
 function handleItemClick(item: PromptsItemsProps) {
-  ElMessage.success(`点击了 ${item.key}`)
+  ElMessage.success(`点击了 ${item.key}`);
 }
 </script>
 

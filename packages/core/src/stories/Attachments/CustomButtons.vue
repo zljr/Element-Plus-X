@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import Attachments from '@components/Attachments/index.vue'
-import { useAttachmentStubs } from './useAttachmentStubs'
 import type { AttachmentsProps } from '@components/Attachments/types';
+import Attachments from '@components/Attachments/index.vue';
+import { useAttachmentStubs } from './useAttachmentStubs';
 
 type Props = Pick<AttachmentsProps, 'items'>;
 const props = withDefaults(defineProps<Props>(), {
-  items: ()=> [],
-})
+  items: () => [],
+});
 
 const {
   files,
@@ -14,7 +14,7 @@ const {
   handleHttpRequest,
   handleUploadDrop,
   handleDeleteCard,
-} = useAttachmentStubs(props.items)
+} = useAttachmentStubs(props.items);
 </script>
 
 <template>
@@ -22,7 +22,7 @@ const {
     <div class="component-title">
       附件上传组件-自定义左右按钮
     </div>
-      <!-- :items="files"
+    <!-- :items="files"
       overflow="scrollX"
       :list-style="{
         padding: '0 12px',

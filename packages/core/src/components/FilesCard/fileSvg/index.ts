@@ -1,21 +1,21 @@
-import type { Component } from 'vue'
-import type { FilesType } from '../types.d.ts'
-import audio from './audio.vue'
-import code from './code.vue'
-import database from './database.vue'
-import excel from './excel.vue'
-import file from './file.vue'
-import image from './image.vue'
-import link from './link.vue'
-import mark from './mark.vue'
-import pdf from './pdf.vue'
-import ppt from './ppt.vue'
-import three from './three.vue'
-import txt from './txt.vue'
-import unknown from './unknown.vue'
-import video from './video.vue'
-import word from './word.vue'
-import zip from './zip.vue'
+import type { Component } from 'vue';
+import type { FilesType } from '../types.d.ts';
+import audio from './audio.vue';
+import code from './code.vue';
+import database from './database.vue';
+import excel from './excel.vue';
+import file from './file.vue';
+import image from './image.vue';
+import link from './link.vue';
+import mark from './mark.vue';
+import pdf from './pdf.vue';
+import ppt from './ppt.vue';
+import three from './three.vue';
+import txt from './txt.vue';
+import unknown from './unknown.vue';
+import video from './video.vue';
+import word from './word.vue';
+import zip from './zip.vue';
 
 export default {
   // 文档类
@@ -45,4 +45,4 @@ export default {
   file,
   // 未知文件类
   unknown,
-} as Record<FilesType, Component>
+} as Record<FilesType, Component>;

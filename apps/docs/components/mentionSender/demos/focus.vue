@@ -16,14 +16,14 @@ title: 聚焦失焦
 </docs>
 
 <script setup lang="ts">
-const senderRef = ref()
-const senderValue = ref('🐳 欢迎使用 Element Plus X')
+const senderRef = ref();
+const senderValue = ref('🐳 欢迎使用 Element Plus X');
 function blur() {
-  senderRef.value.blur()
+  senderRef.value.blur();
 }
 
 function focus(type = 'all') {
-  senderRef.value.focus(type)
+  senderRef.value.focus(type);
 }
 </script>
 

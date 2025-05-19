@@ -7,7 +7,7 @@ title: status 属性
 </docs>
 
 <script setup lang="ts">
-const senderValue = ref(false)
+const senderValue = ref(false);
 </script>
 
 <template>

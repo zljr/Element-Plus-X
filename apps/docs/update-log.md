@@ -44,7 +44,7 @@
     Components({
       resolvers: [ElementPlusResolver()],
     }),
-  ]
+  ];
   ```
 
   在项目后续的使用 h 函数中，手动引入。ElButtonGroup 暂时没有遇到有使用的地方，感觉是 unplugin-vue-components/resolvers 包没有更新对 ElButtonGroup 的处理导致的。在 elementplus 源码中都貌似没有看到有使用的地方。

@@ -1,87 +1,86 @@
 <script setup lang="ts">
-import type { MessageItem } from '@assets/mock'
-import type { BubbleListInstance } from '@components/BubbleList/types'
-import type { ThinkingStatus } from '@components/Thinking/types'
-import { Loading, Position } from '@element-plus/icons-vue'
-import { useXStream } from '../../hooks/useXStream'
-import Thinking from '@components/Thinking/index.vue'
+import type { MessageItem } from '@assets/mock';
+import type { BubbleListInstance } from '@components/BubbleList/types';
+import type { ThinkingStatus } from '@components/Thinking/types';
+import Thinking from '@components/Thinking/index.vue';
+import { Loading, Position } from '@element-plus/icons-vue';
+import { useXStream } from '../../hooks/useXStream';
 
-const { startStream, cancel, data, error, isLoading } = useXStream()
+const { startStream, cancel, data, error, isLoading } = useXStream();
 
-const BASE_URL = 'https://api.siliconflow.cn/v1/chat/completions'
+const BASE_URL = 'https://api.siliconflow.cn/v1/chat/completions';
 // 仅供测试，请勿拿去测试其他付费模型
-const API_KEY = 'sk-vfjyscildobjnrijtcllnkhtcouidcxdgjxtldzqzeowrbga'
-const MODEL = 'THUDM/GLM-Z1-9B-0414'
+const API_KEY = 'sk-vfjyscildobjnrijtcllnkhtcouidcxdgjxtldzqzeowrbga';
+const MODEL = 'THUDM/GLM-Z1-9B-0414';
 
-const inputValue = ref('帮我写一篇小米手机介绍')
-const senderRef = ref<any>(null)
-const bubbleItems = ref<MessageItem[]>([])
-const bubbleListRef = ref<BubbleListInstance | null>(null)
-const processedIndex = ref(0)
-const attrs = useAttrs()
-
+const inputValue = ref('帮我写一篇小米手机介绍');
+const senderRef = ref<any>(null);
+const bubbleItems = ref<MessageItem[]>([]);
+const bubbleListRef = ref<BubbleListInstance | null>(null);
+const processedIndex = ref(0);
+const attrs = useAttrs();
 
 // 封装数据处理逻辑
 function handleDataChunk(chunk: string) {
   if (chunk === ' [DONE]') {
-    console.log('数据接收完毕')
+    console.log('数据接收完毕');
     // 停止打字器状态
     if (bubbleItems.value.length) {
-      bubbleItems.value[bubbleItems.value.length - 1].typing = false
+      bubbleItems.value[bubbleItems.value.length - 1].typing = false;
     }
-    cancel()
-    return
+    cancel();
+    return;
   }
   try {
     // console.log('New chunk:', JSON.parse(chunk))
-    const reasoningChunk = JSON.parse(chunk).choices[0].delta.reasoning_content
+    const reasoningChunk = JSON.parse(chunk).choices[0].delta.reasoning_content;
     if (reasoningChunk) {
       // 开始思考链状态
-      bubbleItems.value[bubbleItems.value.length - 1].thinkingStatus = 'thinking'
-      bubbleItems.value[bubbleItems.value.length - 1].loading = true
+      bubbleItems.value[bubbleItems.value.length - 1].thinkingStatus = 'thinking';
+      bubbleItems.value[bubbleItems.value.length - 1].loading = true;
       if (bubbleItems.value.length) {
-        bubbleItems.value[bubbleItems.value.length - 1].reasoning_content += reasoningChunk
+        bubbleItems.value[bubbleItems.value.length - 1].reasoning_content += reasoningChunk;
       }
     }
 
-    const parsedChunk = JSON.parse(chunk).choices[0].delta.content
+    const parsedChunk = JSON.parse(chunk).choices[0].delta.content;
     if (parsedChunk) {
       // 结束 思考链状态
-      bubbleItems.value[bubbleItems.value.length - 1].thinkingStatus = 'end'
-      bubbleItems.value[bubbleItems.value.length - 1].loading = false
+      bubbleItems.value[bubbleItems.value.length - 1].thinkingStatus = 'end';
+      bubbleItems.value[bubbleItems.value.length - 1].loading = false;
 
       if (bubbleItems.value.length) {
-        bubbleItems.value[bubbleItems.value.length - 1].content += parsedChunk
+        bubbleItems.value[bubbleItems.value.length - 1].content += parsedChunk;
       }
     }
   }
   catch (err) {
-    console.error('解析数据时出错:', err)
+    console.error('解析数据时出错:', err);
   }
 }
 
 watch(data, () => {
   for (let i = processedIndex.value; i < data.value.length; i++) {
-    const chunk = data.value[i].data
-    handleDataChunk(chunk)
-    processedIndex.value++
+    const chunk = data.value[i].data;
+    handleDataChunk(chunk);
+    processedIndex.value++;
   }
-}, { deep: true })
+}, { deep: true });
 
 // 封装错误处理逻辑
 function handleError(err: any) {
-  console.error('Fetch error:', err)
+  console.error('Fetch error:', err);
 }
 
 async function startSSE() {
   try {
     // 添加用户输入的消息
-    console.log('inputValue.value', inputValue.value)
-    addMessage(inputValue.value, true)
-    addMessage('', false)
+    console.log('inputValue.value', inputValue.value);
+    addMessage(inputValue.value, true);
+    addMessage('', false);
 
     // 这里有必要调用一下 BubbleList 组件的滚动到底部 手动触发 自动滚动
-    bubbleListRef.value!.scrollToBottom()
+    bubbleListRef.value!.scrollToBottom();
 
     const response = await fetch(BASE_URL, {
       method: 'POST',
@@ -98,20 +97,20 @@ async function startSSE() {
         })),
         stream: true,
       }),
-    })
-    const readableStream = response.body!
+    });
+    const readableStream = response.body!;
     // 重置状态
-    processedIndex.value = 0
-    await startStream({ readableStream })
+    processedIndex.value = 0;
+    await startStream({ readableStream });
   }
   catch (err) {
-    handleError(err)
+    handleError(err);
   }
 }
 
 // 添加消息 - 维护聊天记录
 function addMessage(message: string, isUser: boolean) {
-  const i = bubbleItems.value.length
+  const i = bubbleItems.value.length;
   const obj: MessageItem = {
     key: i,
     avatar: isUser ? 'https://avatars.githubusercontent.com/u/76239030?v=4' : 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
@@ -128,13 +127,13 @@ function addMessage(message: string, isUser: boolean) {
     content: message || '',
     reasoning_content: '',
     thinkingStatus: 'start',
-  }
-  bubbleItems.value.push(obj)
+  };
+  bubbleItems.value.push(obj);
 }
 
 // 展开收起 事件展示
-function handleChange(payload: { value: boolean, status: ThinkingStatus }) {
-  console.log('value', payload.value, 'status', payload.status)
+function handleChange(payload: { value: boolean; status: ThinkingStatus }) {
+  console.log('value', payload.value, 'status', payload.status);
 }
 </script>
 
@@ -151,7 +150,7 @@ function handleChange(payload: { value: boolean, status: ThinkingStatus }) {
       </div>
       <BubbleList ref="bubbleListRef" :list="bubbleItems">
         <template #header="{ item }">
-          <Thinking v-if="item.reasoning_content" v-bind="attrs" :content="item.reasoning_content" :status="item.thinkingStatus" class="thinking-chain-warp" @change="handleChange"/>
+          <Thinking v-if="item.reasoning_content" v-bind="attrs" :content="item.reasoning_content" :status="item.thinkingStatus" class="thinking-chain-warp" @change="handleChange" />
         </template>
 
         <template #content="{ item }">

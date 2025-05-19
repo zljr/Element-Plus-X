@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { CircleCloseFilled, Loading, SuccessFilled } from '@element-plus/icons-vue'
-import { ElIcon } from 'element-plus'
+import { CircleCloseFilled, Loading, SuccessFilled } from '@element-plus/icons-vue';
+import { ElIcon } from 'element-plus';
 </script>
 
 <template>
@@ -8,19 +8,19 @@ import { ElIcon } from 'element-plus'
     <!-- 自定义 icon 插槽 -->
     <template #icon="{ item }">
       <span v-if="item.status === 'success'" class="slot-success">
-        <el-icon>
+        <ElIcon>
           <SuccessFilled />
-        </el-icon>
+        </ElIcon>
       </span>
       <span v-if="item.status === 'error'" class="slot-error">
-        <el-icon>
+        <ElIcon>
           <CircleCloseFilled />
-        </el-icon>
+        </ElIcon>
       </span>
       <span v-if="item.status === 'loading'" class="slot-loading">
-        <el-icon class="is-loading">
+        <ElIcon class="is-loading">
           <Loading />
-        </el-icon>
+        </ElIcon>
       </span>
     </template>
   </ThoughtChain>

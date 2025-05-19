@@ -15,16 +15,16 @@ md 渲染这一块暂时这样处理，后续有计划做成 豆包那种，目�
 </docs>
 
 <script setup lang="ts">
-import markdownItMermaid from '@jsonlee_12138/markdown-it-mermaid'
-import { ref } from 'vue'
+import markdownItMermaid from '@jsonlee_12138/markdown-it-mermaid';
+import { ref } from 'vue';
 
 // 这里是组件库内置的一个 代码高亮库 Prismjs，自定义的 hooks 例子。(仅供集成参考)代码地址：https://github.com/HeJiaYue520/Element-Plus-X/blob/main/packages/components/src/hooks/usePrism.ts
-import { usePrism } from 'vue-element-plus-x'
+import { usePrism } from 'vue-element-plus-x';
 // 这里可以引入 Prism 的核心样式，也可以自己引入其他第三方主题样式
-import 'vue-element-plus-x/styles/prism.min.css'
+import 'vue-element-plus-x/styles/prism.min.css';
 
-const mdPlugins = [markdownItMermaid({ delay: 100, forceLegacyMathML: true })]
-const highlight = usePrism()
+const mdPlugins = [markdownItMermaid({ delay: 100, forceLegacyMathML: true })];
+const highlight = usePrism();
 
 const markdownText = ref(`#### 标题 \n 这是一个 Markdown 示例。\n - 列表项 1 \n - 列表项 2 **粗体文本** 和 *斜体文本* \n \`\`\`javascript \n console.log('Hello, world!'); \n \`\`\` \n \`\`\`mermaid
  pie title Pets adopted by volunteers
@@ -44,7 +44,7 @@ const markdownText = ref(`#### 标题 \n 这是一个 Markdown 示例。\n - 列
 
  \n
 \`\`\`
-`)
+`);
 </script>
 
 <template>

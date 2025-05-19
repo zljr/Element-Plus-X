@@ -11,14 +11,14 @@ title: thinkingItems 基础使用
 </docs>
 
 <script setup lang="ts">
-import type { ThoughtChainItemProps } from 'vue-element-plus-x/types/ThoughtChain'
+import type { ThoughtChainItemProps } from 'vue-element-plus-x/types/ThoughtChain';
 
 interface DataType {
-  codeId: string
-  title?: string
-  thinkTitle?: string
-  thinkContent?: string
-  status?: 'success' | 'loading' | 'error'
+  codeId: string;
+  title?: string;
+  thinkTitle?: string;
+  thinkContent?: string;
+  status?: 'success' | 'loading' | 'error';
 }
 
 const thinkingItems: ThoughtChainItemProps<DataType>[] = [
@@ -58,7 +58,7 @@ const thinkingItems: ThoughtChainItemProps<DataType>[] = [
     thinkTitle: '思考内容标题',
     thinkContent: '进行搜索文字'.repeat(10),
   },
-]
+];
 </script>
 
 <template>

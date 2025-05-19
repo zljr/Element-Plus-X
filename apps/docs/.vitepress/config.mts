@@ -1,9 +1,9 @@
-import type { Plugin } from 'vitepress'
+import type { Plugin } from 'vitepress';
 // import { prismjsPlugin } from 'vite-plugin-prismjs'
-import { defineConfig } from 'vitepress'
+import { defineConfig } from 'vitepress';
 // 另一种 demo 插件
 // import { vitepressDemoPlugin } from 'vitepress-demo-plugin'
-import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-icons'
+import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-icons';
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -188,7 +188,7 @@ export default defineConfig({
     },
     config(md) {
       // md.use(vitepressDemoPlugin)
-      md.use(groupIconMdPlugin)
+      md.use(groupIconMdPlugin);
     },
   },
   vite: {
@@ -206,7 +206,7 @@ export default defineConfig({
       groupIconVitePlugin() as Plugin,
     ],
     ssr: {
-      noExternal: ['element-plus']
-    }
+      noExternal: ['element-plus'],
+    },
   },
-})
+});

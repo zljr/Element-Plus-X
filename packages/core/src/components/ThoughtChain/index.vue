@@ -1,13 +1,13 @@
 <script lang='ts' setup generic="T = DefaultThoughtChainItemProps">
-import type { ElTimeline } from 'element-plus'
-import type { DefaultColor, DefaultThoughtChainItemProps, ThoughtChainEmits, ThoughtChainItemBase, ThoughtChainProps } from './types.d.ts'
-import { Check, Close, Loading } from '@element-plus/icons-vue'
-import { get } from 'radash'
-import { computed, ref, watch } from 'vue'
-import { Typewriter } from '../../components'
+import type { ElTimeline } from 'element-plus';
+import type { DefaultColor, DefaultThoughtChainItemProps, ThoughtChainEmits, ThoughtChainItemBase, ThoughtChainProps } from './types.d.ts';
+import { Check, Close, Loading } from '@element-plus/icons-vue';
+import { get } from 'radash';
+import { computed, ref, watch } from 'vue';
+import { Typewriter } from '../../components';
 
 const props = withDefaults(defineProps<ThoughtChainProps<T>>(), {
-  // @ts-ignore
+  // @ts-expect-error FIXME: 暂时不做类型校验, vue类型检测问题
   thinkingItems: () => [],
   dotSize: 'default',
   maxWidth: '600px',
@@ -17,139 +17,139 @@ const props = withDefaults(defineProps<ThoughtChainProps<T>>(), {
   titleKey: 'title',
   thinkTitleKey: 'thinkTitle',
   thinkContentKey: 'thinkContent',
-})
+});
 
-const emits = defineEmits<ThoughtChainEmits<T>>()
+const emits = defineEmits<ThoughtChainEmits<T>>();
 
 const defaultDotBackgroundColor: DefaultColor = {
   loading: '#e6a23c',
   success: '#67c23a',
   error: '#f56c6c',
-}
+};
 
 const dotMargin = computed(() => {
   switch (props.dotSize) {
     case 'small':
-      return '-4px 0 0 -7px'
+      return '-4px 0 0 -7px';
     case 'large':
-      return '-11px 0 0 -15px'
+      return '-11px 0 0 -15px';
     default:
-      return '-8px 0 0 -11px'
+      return '-8px 0 0 -11px';
   }
-})
+});
 
-const timelineRef = ref<InstanceType<typeof ElTimeline>>()
+const timelineRef = ref<InstanceType<typeof ElTimeline>>();
 
 function getNodeBtnColor(item: T) {
-  const _type_ = getType(item)
+  const _type_ = getType(item);
   if (_type_) {
-    return props.dotBackgroundColor ? props.dotBackgroundColor[_type_] : defaultDotBackgroundColor[_type_]
+    return props.dotBackgroundColor ? props.dotBackgroundColor[_type_] : defaultDotBackgroundColor[_type_];
   }
-  return ''
+  return '';
 }
 
 const getLineColor = computed(() => {
   if (props.thinkingItems.length) {
     const arr = props.thinkingItems.map((item) => {
-      const _type_ = getType(item)
+      const _type_ = getType(item);
       if (_type_) {
-        return props.dotBackgroundColor ? props.dotBackgroundColor[_type_] : defaultDotBackgroundColor[_type_]
+        return props.dotBackgroundColor ? props.dotBackgroundColor[_type_] : defaultDotBackgroundColor[_type_];
       }
-      return ''
-    })
+      return '';
+    });
 
-    return arr
+    return arr;
   }
-  return []
-})
+  return [];
+});
 
 // 计算默认展开项
 const activeNamesComputed = computed(() =>
   props.thinkingItems
     .filter(item => item.isCanExpand && item.isDefaultExpand)
     .map(item => String(getId(item))),
-)
+);
 
-const defaultActiveNodes = ref<string[]>([...activeNamesComputed.value])
+const defaultActiveNodes = ref<string[]>([...activeNamesComputed.value]);
 
 function handleExpand(item: T) {
-  emits('handleExpand', item)
+  emits('handleExpand', item);
 }
 
 function setRadialGradient(colors: typeof getLineColor.value, ele: HTMLElement[]) {
-  const length = ele.length
+  const length = ele.length;
   Array.from(ele).forEach((item, index) => {
-    const line = item.children[0]
+    const line = item.children[0];
     if (line) {
       if (colors.length > 0) {
         line.setAttribute('style', `
         border: none;
         width:2px;
-        background: linear-gradient(to bottom, ${colors[index]} 0% , ${colors[index < length ? index + 1 : index]} 100%);`)
+        background: linear-gradient(to bottom, ${colors[index]} 0% , ${colors[index < length ? index + 1 : index]} 100%);`);
       }
       else {
-        line.setAttribute('style', ``)
+        line.setAttribute('style', ``);
       }
     }
-  })
+  });
 }
 
 function getEle() {
   if (getLineColor.value && timelineRef.value && props.lineGradient) {
-    const ele = timelineRef.value.$el.children[0].children
-    setRadialGradient(getLineColor.value, ele)
+    const ele = timelineRef.value.$el.children[0].children;
+    setRadialGradient(getLineColor.value, ele);
   }
   else if (getLineColor.value && timelineRef.value && !props.lineGradient) {
-    const ele = timelineRef.value.$el.children[0].children
-    setRadialGradient([], ele)
+    const ele = timelineRef.value.$el.children[0].children;
+    setRadialGradient([], ele);
   }
 }
 
 function isLoading(item: T): boolean {
-  const status = getStatus(item)
-  return status === 'loading'
+  const status = getStatus(item);
+  return status === 'loading';
 }
 
 function isError(item: T): boolean {
-  const status = getStatus(item)
-  return status === 'error'
+  const status = getStatus(item);
+  return status === 'error';
 }
 
 function getId(item: T) {
-  return get(item, props.rowKey)
+  return get(item, props.rowKey);
 }
 
 function getType(item: T) {
-  const status = getStatus(item) as ThoughtChainItemBase['status']
-  return status ?? 'success'
+  const status = getStatus(item) as ThoughtChainItemBase['status'];
+  return status ?? 'success';
 }
 
 function getTitle(item: T) {
-  return get(item, props.titleKey) as string ?? ''
+  return get(item, props.titleKey) as string ?? '';
 }
 
 function getThinkTitle(item: T) {
-  return get(item, props.thinkTitleKey) as string ?? ''
+  return get(item, props.thinkTitleKey) as string ?? '';
 }
 function getThinkContent(item: T) {
-  return get(item, props.thinkContentKey) as string ?? ''
+  return get(item, props.thinkContentKey) as string ?? '';
 }
 
 function getStatus(item: T) {
-  return get(item, props.statusKey)
+  return get(item, props.statusKey);
 }
 
 watch(() => activeNamesComputed.value, (v) => {
-  defaultActiveNodes.value = [...v]
-})
+  defaultActiveNodes.value = [...v];
+});
 
 watch(() => [getLineColor.value, props.lineGradient], () => {
-  getEle()
-})
+  getEle();
+});
 
 onMounted(() => {
-  getEle()
-})
+  getEle();
+});
 </script>
 
 <template>

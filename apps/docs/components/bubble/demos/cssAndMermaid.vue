@@ -7,7 +7,7 @@ title: 渲染 markdown 文本内容
 </docs>
 
 <script setup lang="ts">
-const avatarUser = 'https://avatars.githubusercontent.com/u/76239030?v=4'
+const avatarUser = 'https://avatars.githubusercontent.com/u/76239030?v=4';
 const markdownText = ref(`#### 标题 \n 这是一个 Markdown 示例。\n - 列表项 1 \n - 列表项 2 **粗体文本** 和 *斜体文本* \n \`\`\`javascript \n console.log('Hello, world!'); \n \`\`\` \n \`\`\`mermaid
  pie title Pets adopted by volunteers
     "Dogs" : 386
@@ -26,7 +26,7 @@ const markdownText = ref(`#### 标题 \n 这是一个 Markdown 示例。\n - 列
 
  \n
 \`\`\`
-`)
+`);
 </script>
 
 <template>

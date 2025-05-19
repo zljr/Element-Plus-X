@@ -7,41 +7,41 @@ title: 自定义列表展示
 </docs>
 
 <script setup lang="ts">
-import type { BubbleListItemProps, BubbleListProps } from 'vue-element-plus-x/types/BubbleList'
-import { DocumentCopy, Refresh, Search, Star } from '@element-plus/icons-vue'
+import type { BubbleListItemProps, BubbleListProps } from 'vue-element-plus-x/types/BubbleList';
+import { DocumentCopy, Refresh, Search, Star } from '@element-plus/icons-vue';
 
 type listType = BubbleListItemProps & {
-  key: number
-  role: 'user' | 'ai'
-}
+  key: number;
+  role: 'user' | 'ai';
+};
 
 // 示例调用
-const bubbleItems = ref<BubbleListProps<listType>['list']>(generateFakeItems(5))
-const avatar = ref('https://avatars.githubusercontent.com/u/76239030?v=4')
-const avartAi = ref('https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png')
-const switchValue = ref(false)
-const loading = ref(false)
+const bubbleItems = ref<BubbleListProps<listType>['list']>(generateFakeItems(5));
+const avatar = ref('https://avatars.githubusercontent.com/u/76239030?v=4');
+const avartAi = ref('https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png');
+const switchValue = ref(false);
+const loading = ref(false);
 
 function generateFakeItems(count: number): listType[] {
-  const messages: listType[] = []
+  const messages: listType[] = [];
   for (let i = 0; i < count; i++) {
-    const role = i % 2 === 0 ? 'ai' : 'user'
-    const placement = role === 'ai' ? 'start' : 'end'
-    const key = i + 1
+    const role = i % 2 === 0 ? 'ai' : 'user';
+    const placement = role === 'ai' ? 'start' : 'end';
+    const key = i + 1;
     messages.push({
       key,
       role,
       placement,
       noStyle: true, // 如果你不想用默认的气泡样式
-    })
+    });
   }
-  return messages
+  return messages;
 }
 
 // 设置某个 item 的 loading
 function setLoading(loading: boolean) {
-  bubbleItems.value[bubbleItems.value.length - 1].loading = loading
-  bubbleItems.value[bubbleItems.value.length - 2].loading = loading
+  bubbleItems.value[bubbleItems.value.length - 1].loading = loading;
+  bubbleItems.value[bubbleItems.value.length - 2].loading = loading;
 }
 </script>
 

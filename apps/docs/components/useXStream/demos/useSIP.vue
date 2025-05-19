@@ -7,51 +7,51 @@ title: SIP 基础使用
 </docs>
 
 <script setup lang="ts">
-import { useXStream } from 'vue-element-plus-x'
+import { useXStream } from 'vue-element-plus-x';
 
-const { startStream, cancel, data, error, isLoading } = useXStream()
+const { startStream, cancel, data, error, isLoading } = useXStream();
 
 async function startSIPStream() {
   try {
     const response = await fetch('https://node-test.element-plus-x.com/api/sip', {
       headers: { 'Content-Type': 'application/sip' },
-    })
-    const readableStream = response.body!
+    });
+    const readableStream = response.body!;
 
     // 自定义 transformStream 处理 SIP 数据
     const sipTransformStream = new TransformStream<string, any>({
       transform(chunk, controller) {
         // 这里可以添加 SIP 数据的解析逻辑
-        controller.enqueue(chunk)
+        controller.enqueue(chunk);
       },
-    })
+    });
 
-    await startStream({ readableStream, transformStream: sipTransformStream })
+    await startStream({ readableStream, transformStream: sipTransformStream });
   }
   catch (err) {
-    console.error('Fetch error:', err)
+    console.error('Fetch error:', err);
   }
 }
 
 // 计算属性
 const content = computed(() => {
   if (!data.value.length)
-    return ''
-  let text = ''
+    return '';
+  let text = '';
   for (let index = 0; index < data.value.length; index++) {
-    const chunk = data.value[index]
+    const chunk = data.value[index];
     try {
-      console.log('chunk', chunk)
-      text += chunk
+      console.log('chunk', chunk);
+      text += chunk;
     }
     catch (error) {
-      console.error('解析数据时出错:', error)
+      console.error('解析数据时出错:', error);
     }
     // console.log('New chunk:', chunk)
   }
-  console.log('Text:', text)
-  return text
-})
+  console.log('Text:', text);
+  return text;
+});
 </script>
 
 <template>

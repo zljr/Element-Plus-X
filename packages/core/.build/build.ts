@@ -1,32 +1,32 @@
-import type { BuildEnvironmentOptions } from 'vite'
-import { extname, join, relative, resolve } from 'node:path'
-import fg from 'fast-glob'
+import type { BuildEnvironmentOptions } from 'vite';
+import { extname, join, relative, resolve } from 'node:path';
+import fg from 'fast-glob';
 
-const root = resolve(__dirname, '../')
+const root = resolve(__dirname, '../');
 
 const entries = fg.globSync('src/components/*/*.(tsx|ts|vue)', {
   ignore: ['src/components/**/*.d.ts', 'src/components/**/*.types.ts'],
-})
+});
 
 const hooksEntries = fg.globSync('src/hooks/*.(ts|tsx)', {
   ignore: ['src/hooks/**/*.d.ts', 'src/hooks/**/*.types.ts'],
-})
+});
 
 const entriesObj = Object.fromEntries(entries.map((f) => {
   return [
     relative('src/components', f.slice(0, f.length - extname(f).length)),
     join(root, f),
-  ]
-}))
+  ];
+}));
 
 const hooksEntriesObj = Object.fromEntries(hooksEntries.map((f) => {
   return [
     `hooks/${relative('src/hooks', f.slice(0, f.length - extname(f).length))}`,
     join(root, f),
-  ]
-}))
+  ];
+}));
 
-console.log("index>>", resolve(__dirname, '../src/index.ts'));
+console.log('index>>', resolve(__dirname, '../src/index.ts'));
 const buildConfig: BuildEnvironmentOptions = {
   lib: {
     name: 'ElementPlusX',
@@ -37,7 +37,7 @@ const buildConfig: BuildEnvironmentOptions = {
       ...hooksEntriesObj,
     },
     fileName: (format, entryName) => {
-      return `${format}/${entryName}.js`
+      return `${format}/${entryName}.js`;
     },
     formats: ['es'],
   },
@@ -51,14 +51,14 @@ const buildConfig: BuildEnvironmentOptions = {
       },
       exports: 'named', // 确保有命名导出
       assetFileNames: ((info: any) => {
-        const srcName = info.originalFileNames[0]
+        const srcName = info.originalFileNames[0];
         if (srcName) {
           if (srcName.includes('src/components/')) {
-            const fileName = srcName.replace('src/components/', '').replace('index.vue', 'index.css')
-            return `es/${fileName}`
+            const fileName = srcName.replace('src/components/', '').replace('index.vue', 'index.css');
+            return `es/${fileName}`;
           }
         }
-        return info.name
+        return info.name;
       }) as unknown as string,
     },
   },
@@ -69,6 +69,6 @@ const buildConfig: BuildEnvironmentOptions = {
   cssCodeSplit: true,
   // 确保只生成一个CSS文件
   emptyOutDir: false,
-}
+};
 
-export default buildConfig
+export default buildConfig;

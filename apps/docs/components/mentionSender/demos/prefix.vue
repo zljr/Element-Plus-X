@@ -7,30 +7,30 @@ title: 前缀插槽
 </docs>
 
 <script setup lang="ts">
-import { CircleClose, Link } from '@element-plus/icons-vue'
+import { CircleClose, Link } from '@element-plus/icons-vue';
 
-const senderRef = ref()
-const senderValue = ref('')
-const showHeaderFlog = ref(false)
+const senderRef = ref();
+const senderValue = ref('');
+const showHeaderFlog = ref(false);
 
 onMounted(() => {
-  showHeaderFlog.value = true
-  senderRef.value.openHeader()
-})
+  showHeaderFlog.value = true;
+  senderRef.value.openHeader();
+});
 
 function openCloseHeader() {
   if (!showHeaderFlog.value) {
-    senderRef.value.openHeader()
+    senderRef.value.openHeader();
   }
   else {
-    senderRef.value.closeHeader()
+    senderRef.value.closeHeader();
   }
-  showHeaderFlog.value = !showHeaderFlog.value
+  showHeaderFlog.value = !showHeaderFlog.value;
 }
 
 function closeHeader() {
-  showHeaderFlog.value = false
-  senderRef.value.closeHeader()
+  showHeaderFlog.value = false;
+  senderRef.value.closeHeader();
 }
 </script>
 

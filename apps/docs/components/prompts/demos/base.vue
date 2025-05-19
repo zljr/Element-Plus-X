@@ -7,7 +7,7 @@ title: 基础用法
 </docs>
 
 <script setup lang="ts">
-import type { PromptsItemsProps } from 'vue-element-plus-x/types/Prompts'
+import type { PromptsItemsProps } from 'vue-element-plus-x/types/Prompts';
 
 const items = ref<PromptsItemsProps[]>([
   {
@@ -27,10 +27,10 @@ const items = ref<PromptsItemsProps[]>([
     key: '4',
     label: '🐛 提示集组件标题',
   },
-])
+]);
 
 function handleItemClick(item: PromptsItemsProps) {
-  ElMessage.success(`点击了 ${item.key}`)
+  ElMessage.success(`点击了 ${item.key}`);
 }
 </script>
 

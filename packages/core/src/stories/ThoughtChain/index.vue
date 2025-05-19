@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import { ElMessage } from 'element-plus';
 
-const handleOnExpand = () => {
-  ElMessage.success('展开')
+function handleOnExpand() {
+  ElMessage.success('展开');
 }
 </script>
 
 <template>
-  <ThoughtChain v-bind="$attrs" @handleExpand="handleOnExpand" />
+  <ThoughtChain v-bind="$attrs" @handle-expand="handleOnExpand" />
 </template>
-
 
 <style lang="scss" scoped></style>

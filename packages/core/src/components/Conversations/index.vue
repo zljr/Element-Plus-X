@@ -3,13 +3,13 @@
 <script setup lang="ts"
   generic="T extends AnyObject = AnyObject, V extends string | number | boolean = string | number"
 >
-import type { ElScrollbar } from 'element-plus'
-import type { AnyObject } from 'typescript-api-pro'
-import type { ComponentPublicInstance } from 'vue'
-import type { Conversation, ConversationItem, ConversationItemUseOptions, ConversationMenuCommand, GroupableOptions, GroupItem } from './types'
-import { Delete, Edit, Loading, Top } from '@element-plus/icons-vue'
-import { get } from 'radash'
-import Item from './components/item.vue'
+import type { ElScrollbar } from 'element-plus';
+import type { AnyObject } from 'typescript-api-pro';
+import type { ComponentPublicInstance } from 'vue';
+import type { Conversation, ConversationItem, ConversationItemUseOptions, ConversationMenuCommand, GroupableOptions, GroupItem } from './types';
+import { Delete, Edit, Loading, Top } from '@element-plus/icons-vue';
+import { get } from 'radash';
+import Item from './components/item.vue';
 
 const props = withDefaults(defineProps<Conversation<T>>(), {
   items: () => [],
@@ -54,15 +54,15 @@ const props = withDefaults(defineProps<Conversation<T>>(), {
   showToTopBtn: false,
   labelKey: 'label',
   rowKey: 'id',
-})
+});
 
 const emits = defineEmits<{
-    (e: 'menuCommand', command: ConversationMenuCommand, item: ConversationItem<T>): void,
-    (e: 'change', item: ConversationItem<T>): void
-    // (e: 'update:active', v: V): void
-  }>()
+  (e: 'menuCommand', command: ConversationMenuCommand, item: ConversationItem<T>): void;
+  (e: 'change', item: ConversationItem<T>): void;
+  // (e: 'update:active', v: V): void
+}>();
 
-const activeKey = defineModel<V>('active', { required: false })
+const activeKey = defineModel<V>('active', { required: false });
 
 // const getKey = (item: ConversationItem<T>, index: number) => {
 //   return props.rowKey ? get(item, props.rowKey as string) as string : index.toString()
@@ -73,8 +73,8 @@ const itemsUse = computed<ConversationItemUseOptions<T>[]>(() => {
     ...item,
     uniqueKey: props.rowKey ? get(item, props.rowKey as string) as string : index.toString(),
     label: get(item, props.labelKey as string),
-  }))
-})
+  }));
+});
 
 // const key = computed(() => {
 //   return (item: ConversationItem<T>, index: number) => {
@@ -90,9 +90,9 @@ const mergedStyle = computed(() => {
     borderRadius: '8px',
     width: '280px',
     height: '0',
-  }
-  return { ...defaultStyle, ...props.style }
-})
+  };
+  return { ...defaultStyle, ...props.style };
+});
 
 // const activeKey = computed<V>({
 //   get(){
@@ -121,46 +121,46 @@ const mergedStyle = computed(() => {
 function handleClick(item: ConversationItemUseOptions<T>) {
   // 如果是disabled状态，则不允许选中
   if (item.disabled)
-    return
-  emits('change', item)
-  activeKey.value = item.uniqueKey as V
+    return;
+  emits('change', item);
+  activeKey.value = item.uniqueKey as V;
 }
 
 // 判断是否需要使用分组
 const shouldUseGrouping = computed(() => {
   // groupable为true/对象/空字符串时启用分组
-  return !!props.groupable
-})
+  return !!props.groupable;
+});
 
 // 根据搜索值过滤项目
 const filteredItems = computed(() => {
-  return itemsUse.value
-})
+  return itemsUse.value;
+});
 
 // 根据分组方式进行分组
 const groups = computed(() => {
   // 如果不需要分组，则返回空数组
   if (!shouldUseGrouping.value)
-    return []
+    return [];
 
   // 检查filteredItems是否有值
   if (!filteredItems.value || filteredItems.value.length === 0) {
-    return []
+    return [];
   }
 
   // 用于存储每个组的项目
-  const groupMap: Record<string, GroupItem> = {}
+  const groupMap: Record<string, GroupItem> = {};
 
   // 使用过滤后的项目进行分组
   filteredItems.value.forEach((item) => {
-    let groupName: string | null = null
+    let groupName: string | null = null;
 
     // 优先使用item中的group字段
     if (item.group) {
-      groupName = item.group
+      groupName = item.group;
     }
     // 如果没有找到分组，使用未分组
-    const finalGroupName = groupName || props.ungroupedTitle
+    const finalGroupName = groupName || props.ungroupedTitle;
 
     // 若该组尚未创建，则创建一个新组
     if (!groupMap[finalGroupName]) {
@@ -169,126 +169,126 @@ const groups = computed(() => {
         key: finalGroupName,
         children: [],
         isUngrouped: !groupName, // 如果没有找到组名，则标记为未分组
-      }
+      };
     }
 
     // 将项目添加到相应的组中
-    groupMap[finalGroupName].children.push(item)
-  })
+    groupMap[finalGroupName].children.push(item);
+  });
 
   // 将分组转换为数组
-  const groupArray = Object.values(groupMap)
+  const groupArray = Object.values(groupMap);
 
   // 如果有自定义排序函数，使用它排序
   if (typeof props.groupable === 'object' && props.groupable.sort) {
     return groupArray.sort((a, b) => {
       // 确保未分组总是在最后
       if (a.isUngrouped)
-        return 1
+        return 1;
       if (b.isUngrouped)
-        return -1
+        return -1;
 
-      const sortFn = (props.groupable as GroupableOptions).sort
-      return sortFn ? sortFn(a.key, b.key) : 0
-    })
+      const sortFn = (props.groupable as GroupableOptions).sort;
+      return sortFn ? sortFn(a.key, b.key) : 0;
+    });
   }
 
   // 否则只确保未分组在最后，不做其他排序
   return groupArray.sort((a, b) => {
     // 确保未分组总是在最后
     if (a.isUngrouped)
-      return 1
+      return 1;
     if (b.isUngrouped)
-      return -1
+      return -1;
 
     // 不做其他排序
-    return 0
-  })
-})
+    return 0;
+  });
+});
 
 // 添加滚动相关的状态
-const scrollbarRef = ref<InstanceType<typeof ElScrollbar> | null>(null)
-const showScrollTop = ref(false)
-const groupRefs = ref<Record<string, HTMLDivElement>>({})
+const scrollbarRef = ref<InstanceType<typeof ElScrollbar> | null>(null);
+const showScrollTop = ref(false);
+const groupRefs = ref<Record<string, HTMLDivElement>>({});
 
 // 记录吸顶状态的组
-const stickyGroupKeys = ref<Set<string>>(new Set())
+const stickyGroupKeys = ref<Set<string>>(new Set());
 
 // 监听滚动事件
 function handleScroll(e: any) {
   // 显示/隐藏回到顶部按钮
-  const scrollTop = e.scrollTop
-  showScrollTop.value = scrollTop > 200
+  const scrollTop = e.scrollTop;
+  showScrollTop.value = scrollTop > 200;
 
   // 获取当前滚动容器
-  const scrollbar = scrollbarRef.value
+  const scrollbar = scrollbarRef.value;
   if (!scrollbar)
-    return
+    return;
 
   // 使用scrollbar的wrapRef获取真实DOM以获取正确的尺寸
-  const wrap = scrollbar.wrapRef
+  const wrap = scrollbar.wrapRef;
   if (!wrap)
-    return
+    return;
 
   // 检查是否需要加载更多
   // 当滚动到距离底部20px时触发加载
-  const bottomOffset = 20
-  const scrollHeight = wrap.scrollHeight
-  const clientHeight = wrap.clientHeight
+  const bottomOffset = 20;
+  const scrollHeight = wrap.scrollHeight;
+  const clientHeight = wrap.clientHeight;
 
   // 计算是否接近底部
-  const isNearBottom = scrollHeight - scrollTop - clientHeight < bottomOffset
+  const isNearBottom = scrollHeight - scrollTop - clientHeight < bottomOffset;
 
   if (isNearBottom) {
-    loadMoreData()
+    loadMoreData();
   }
 
   // 更新吸顶状态
-  updateStickyStatus(e)
+  updateStickyStatus(e);
 }
 
 // 更新标题吸顶状态
 function updateStickyStatus(_e: any) {
   if (!shouldUseGrouping.value || groups.value.length === 0)
-    return
+    return;
 
   // 先清空当前的吸顶组
-  stickyGroupKeys.value.clear()
+  stickyGroupKeys.value.clear();
 
   // 获取滚动容器
-  const scrollContainer = scrollbarRef.value?.wrapRef
+  const scrollContainer = scrollbarRef.value?.wrapRef;
   if (!scrollContainer)
-    return
+    return;
 
   // 如果只有一个分组，直接设置为吸顶状态
   if (groups.value.length === 1) {
-    stickyGroupKeys.value.add(groups.value[0].key)
-    return
+    stickyGroupKeys.value.add(groups.value[0].key);
+    return;
   }
 
-  const scrollContainerTop = scrollContainer.getBoundingClientRect().top
-  const containerHeight = scrollContainer.clientHeight
-  const scrollHeight = scrollContainer.scrollHeight
-  const scrollTop = scrollContainer.scrollTop
+  const scrollContainerTop = scrollContainer.getBoundingClientRect().top;
+  const containerHeight = scrollContainer.clientHeight;
+  const scrollHeight = scrollContainer.scrollHeight;
+  const scrollTop = scrollContainer.scrollTop;
 
   // 判断是否已经滚动到底部
-  const isNearBottom = scrollHeight - scrollTop - containerHeight < 20
+  const isNearBottom = scrollHeight - scrollTop - containerHeight < 20;
 
   // 如果已接近底部，直接使最后一个分组吸顶
   if (isNearBottom && groups.value.length > 0) {
-    stickyGroupKeys.value.add(groups.value[groups.value.length - 1].key)
-    return
+    stickyGroupKeys.value.add(groups.value[groups.value.length - 1].key);
+    return;
   }
 
   // 检查每个分组的位置
-  const visibleGroups = []
+  const visibleGroups = [];
 
   // 收集所有可见的分组
   for (const group of groups.value) {
-    const groupElement = groupRefs.value[group.key]
+    const groupElement = groupRefs.value[group.key];
     if (groupElement) {
-      const groupRect = groupElement.getBoundingClientRect()
-      const relativeTop = groupRect.top - scrollContainerTop
+      const groupRect = groupElement.getBoundingClientRect();
+      const relativeTop = groupRect.top - scrollContainerTop;
 
       // 分组至少部分可见
       if ((relativeTop < containerHeight && relativeTop + groupRect.height > 0)) {
@@ -296,54 +296,54 @@ function updateStickyStatus(_e: any) {
           group,
           relativeTop,
           height: groupRect.height,
-        })
+        });
       }
     }
   }
 
   // 对可见分组按相对位置排序
-  visibleGroups.sort((a, b) => a.relativeTop - b.relativeTop)
+  visibleGroups.sort((a, b) => a.relativeTop - b.relativeTop);
 
   // 如果有可见分组
   if (visibleGroups.length > 0) {
     // 寻找第一个完全进入视口的分组
-    const fullyVisibleGroup = visibleGroups.find(g => g.relativeTop >= 0)
+    const fullyVisibleGroup = visibleGroups.find(g => g.relativeTop >= 0);
 
     if (fullyVisibleGroup) {
       // 如果有完全进入视口的分组，选择它
-      stickyGroupKeys.value.add(fullyVisibleGroup.group.key)
+      stickyGroupKeys.value.add(fullyVisibleGroup.group.key);
     }
     else {
       // 否则选择第一个部分可见的分组（通常是标题已经滚出但内容还可见的）
-      stickyGroupKeys.value.add(visibleGroups[0].group.key)
+      stickyGroupKeys.value.add(visibleGroups[0].group.key);
     }
   }
   else if (groups.value.length > 0) {
     // 如果没有可见分组，则选择第一个分组
-    stickyGroupKeys.value.add(groups.value[0].key)
+    stickyGroupKeys.value.add(groups.value[0].key);
   }
 }
 
 // 加载更多数据
 function loadMoreData() {
   if (!props.loadMore)
-    return
-  props.loadMore()
+    return;
+  props.loadMore();
 }
 
 // 滚动到顶部
 function scrollToTop() {
-  scrollbarRef.value?.setScrollTop(0)
+  scrollbarRef.value?.setScrollTop(0);
 }
 
 // 菜单 item 点击事件
 function handleMenuItemClick(command: ConversationMenuCommand, item: ConversationItem<T>) {
-  emits('menuCommand', command, item)
+  emits('menuCommand', command, item);
 }
 
 function bindGroupRef(el: Element | ComponentPublicInstance | null, item: GroupItem) {
   if (el) {
-    groupRefs.value[item.key] = el as HTMLDivElement
+    groupRefs.value[item.key] = el as HTMLDivElement;
   }
 }
 
@@ -352,9 +352,9 @@ onMounted(() => {
   // 如果有分组，默认将第一个分组设置为吸顶状态
   if (shouldUseGrouping.value && groups.value.length > 0) {
     // 添加第一个组的key到吸顶状态集合中
-    stickyGroupKeys.value.add(groups.value[0].key)
+    stickyGroupKeys.value.add(groups.value[0].key);
   }
-})
+});
 </script>
 
 <template>

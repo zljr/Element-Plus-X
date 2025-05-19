@@ -1,23 +1,23 @@
 <script setup lang="ts">
-import Attachments from '@components/Attachments/index.vue'
-import { useAttachmentStubs } from './useAttachmentStubs'
-import 'element-plus/theme-chalk/el-message.css'
-import type { AttachmentsProps } from '@components/Attachments/types'
+import type { AttachmentsProps } from '@components/Attachments/types';
+import Attachments from '@components/Attachments/index.vue';
+import { useAttachmentStubs } from './useAttachmentStubs';
+import 'element-plus/theme-chalk/el-message.css';
 
 type Props = Pick<AttachmentsProps, 'items'>;
 
 const props = withDefaults(defineProps<Props>(), {
-  items: ()=> [],
-})
+  items: () => [],
+});
 
-const attrs = useAttrs()
+const attrs = useAttrs();
 
 const {
   files,
   handleBeforeUpload,
   handleHttpRequest,
   handleUploadDrop,
-} = useAttachmentStubs(props.items)
+} = useAttachmentStubs(props.items);
 </script>
 
 <template>
@@ -30,8 +30,10 @@ const {
       overflow="scrollX"
       :list-style="{ padding: '0 12px' }"
       :hide-upload="false" -->
-      <Attachments v-bind="attrs" :items="files" :before-upload="handleBeforeUpload" :http-request="handleHttpRequest"
-        @upload-drop="handleUploadDrop">
+      <Attachments
+        v-bind="attrs" :items="files" :before-upload="handleBeforeUpload" :http-request="handleHttpRequest"
+        @upload-drop="handleUploadDrop"
+      >
         <template #file-list="{ items }">
           <div class="custom-list">
             <div v-for="(item, idx) in items" :key="idx" class="custom-item">

@@ -23,7 +23,7 @@ pnpm install # 推荐使用 PNPM 管理依赖
   // 在 playground/src/components/XXXDemo.vue 文件中
   // 例如，这样用绝对路经引入就不需要构建，直接访问，每次热更新都能立马看到效果，方便你本地调试开发
 
-  import Bubble from 'vue-element-plus-x/src/components/Bubble/index.vue'
+  import Bubble from 'vue-element-plus-x/src/components/Bubble/index.vue';
   ```
 
 以下是主要的 **`项目目录结构`** 请先对照查看，方便你对项目目录有所了解

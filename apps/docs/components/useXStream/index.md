@@ -22,11 +22,11 @@ sseEventPart
 
 ```ts
 // 数据流默认分隔符（使用两个换行符，分割一条流数据）
-const DEFAULT_STREAM_SEPARATOR = '\n\n'
+const DEFAULT_STREAM_SEPARATOR = '\n\n';
 // 分段默认分隔符（使用单个换行符，换行当前数据）
-const DEFAULT_PART_SEPARATOR = '\n'
+const DEFAULT_PART_SEPARATOR = '\n';
 // 键值对默认分隔符（使用冒号）
-const DEFAULT_KV_SEPARATOR = ':'
+const DEFAULT_KV_SEPARATOR = ':';
 ```
 :::
 

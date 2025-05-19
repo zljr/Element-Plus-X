@@ -1,41 +1,41 @@
 <script setup lang="ts">
-import type { Component, CSSProperties } from 'vue'
-import type { ConversationItem, ConversationMenu, ConversationMenuCommand } from '../types'
-import { MoreFilled } from '@element-plus/icons-vue'
-import { h } from 'vue'
+import type { Component, CSSProperties } from 'vue';
+import type { ConversationItem, ConversationMenu, ConversationMenuCommand } from '../types';
+import { MoreFilled } from '@element-plus/icons-vue';
+import { h } from 'vue';
 
 interface Props {
-  item: ConversationItem
-  itemsStyle?: CSSProperties
-  itemsHoverStyle?: CSSProperties
-  itemsActiveStyle?: CSSProperties
-  itemsMenuOpenedStyle?: CSSProperties
-  prefixIcon?: Component | null
-  suffixIcon?: Component | null
-  showTooltip?: boolean
-  labelMaxWidth?: number
-  menu?: ConversationMenu[]
-  showBuiltInMenu?: boolean
-  tooltipPlacement?: 'top' | 'bottom' | 'left' | 'right' | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end' | 'left-start' | 'left-end' | 'right-start' | 'right-end'
-  tooltipOffset?: number
-  menuPlacement?: 'top' | 'bottom' | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end'
-  menuOffset?: number
-  menuMaxHeight?: number
-  menuStyle?: CSSProperties
-  menuShowArrow?: boolean
-  menuClassName?: string
-  menuTeleported?: boolean
-  active?: boolean
+  item: ConversationItem;
+  itemsStyle?: CSSProperties;
+  itemsHoverStyle?: CSSProperties;
+  itemsActiveStyle?: CSSProperties;
+  itemsMenuOpenedStyle?: CSSProperties;
+  prefixIcon?: Component | null;
+  suffixIcon?: Component | null;
+  showTooltip?: boolean;
+  labelMaxWidth?: number;
+  menu?: ConversationMenu[];
+  showBuiltInMenu?: boolean;
+  tooltipPlacement?: 'top' | 'bottom' | 'left' | 'right' | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end' | 'left-start' | 'left-end' | 'right-start' | 'right-end';
+  tooltipOffset?: number;
+  menuPlacement?: 'top' | 'bottom' | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end';
+  menuOffset?: number;
+  menuMaxHeight?: number;
+  menuStyle?: CSSProperties;
+  menuShowArrow?: boolean;
+  menuClassName?: string;
+  menuTeleported?: boolean;
+  active?: boolean;
 }
 
-const props = defineProps<Props>()
+const props = defineProps<Props>();
 
 const emit = defineEmits<{
-  (e: 'click', key: string): void
-  (e: 'menuCommand', command: ConversationMenuCommand, item: ConversationItem): void
-}>()
+  (e: 'click', key: string): void;
+  (e: 'menuCommand', command: ConversationMenuCommand, item: ConversationItem): void;
+}>();
 
-const slots = defineSlots()
+const slots = defineSlots();
 
 const {
   item,
@@ -56,59 +56,59 @@ const {
   menuShowArrow,
   menuClassName,
   menuTeleported,
-} = toRefs(props)
+} = toRefs(props);
 
 function renderIcon(icon: Component | null | undefined) {
   if (!icon)
-    return null
-  return h(icon)
+    return null;
+  return h(icon);
 }
 
 const prefixIconRender = computed(() => {
-  return renderIcon(props.prefixIcon)
-})
+  return renderIcon(props.prefixIcon);
+});
 
 const suffixIconRender = computed(() => {
-  return renderIcon(props.suffixIcon)
-})
+  return renderIcon(props.suffixIcon);
+});
 
 // 添加hover状态跟踪
-const isHovered = ref(false)
+const isHovered = ref(false);
 
 function handleMouseEnter() {
-  isHovered.value = true
+  isHovered.value = true;
 }
 
 function handleMouseLeave() {
-  isHovered.value = false
+  isHovered.value = false;
 }
 
 function handleClick(key: string) {
-  emit('click', key)
+  emit('click', key);
 }
 
 const isTextOverflow = computed(() => {
   return (label: string = '') => {
     // 如果没有设置labelMaxWidth，直接返回false
     if (!labelMaxWidth.value)
-      return false
+      return false;
 
     // 创建一个临时的span元素来测量文本宽度
-    const span = document.createElement('span')
-    span.style.visibility = 'hidden'
-    span.style.position = 'absolute'
-    span.style.whiteSpace = 'nowrap'
-    span.style.fontSize = '14px' // 与CSS中定义的字体大小一致
-    span.textContent = label
+    const span = document.createElement('span');
+    span.style.visibility = 'hidden';
+    span.style.position = 'absolute';
+    span.style.whiteSpace = 'nowrap';
+    span.style.fontSize = '14px'; // 与CSS中定义的字体大小一致
+    span.textContent = label;
 
-    document.body.appendChild(span)
-    const textWidth = span.offsetWidth
-    document.body.removeChild(span)
+    document.body.appendChild(span);
+    const textWidth = span.offsetWidth;
+    document.body.removeChild(span);
 
     // 如果文本宽度大于最大宽度，则返回true表示溢出
-    return textWidth > labelMaxWidth.value
-  }
-})
+    return textWidth > labelMaxWidth.value;
+  };
+});
 
 // 计算标签样式
 const labelStyle = computed(() => {
@@ -117,75 +117,75 @@ const labelStyle = computed(() => {
     return {
       maxWidth: `${labelMaxWidth.value}px`,
       overflow: 'hidden',
-    }
+    };
   }
   // 否则返回空对象
-  return {}
-})
+  return {};
+});
 
-const isShowMenuBtn = ref(false)
+const isShowMenuBtn = ref(false);
 
 // 判断是否显示菜单
 const shouldShowMenu = computed(() => {
   // return isHovered.value || item.value.key === activeKey.value || isShowMenuBtn.value
-  return isHovered.value || props.active || isShowMenuBtn.value
-})
+  return isHovered.value || props.active || isShowMenuBtn.value;
+});
 
 /* 内置菜单 开始 */
-const menuButtonRef = ref<any>(null)
+const menuButtonRef = ref<any>(null);
 
 // 合并菜单样式
 const mergedMenuStyle = computed(() => {
   return {
     ...menuStyle.value,
-  }
-})
+  };
+});
 
 // 辅助函数：驼峰式转短横线格式
 function camelToKebab(str: string) {
-  return str.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase()
+  return str.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
 }
 
 // 当菜单显示、隐藏时候触发
 function updateMenuStatus(isOpen: boolean) {
-  isShowMenuBtn.value = isOpen
+  isShowMenuBtn.value = isOpen;
   if (isOpen) {
     // 延迟执行，确保菜单已经渲染完成
     // 展开菜单时候 决定隐藏箭头
     nextTick(() => {
       // 获取页面的所有 conversation-dropdown-menu 组件
-      const dropdownMenu = document.querySelectorAll('.conversation-dropdown-menu')
+      const dropdownMenu = document.querySelectorAll('.conversation-dropdown-menu');
       if (dropdownMenu.length === 0) {
-        return
+        return;
       }
       dropdownMenu.forEach((dropdownMenuItem) => {
         // 将它子元素中所有 el-popper__arrow 元素的 display 设置为 none
         // 如果 dropdownMenuItem 存在，且display 不为 none
         if (dropdownMenuItem && (dropdownMenuItem as HTMLElement).style.display !== 'none') {
           // 隐藏箭头
-          const arrows = dropdownMenuItem.querySelectorAll('.el-popper__arrow')
+          const arrows = dropdownMenuItem.querySelectorAll('.el-popper__arrow');
           if (arrows.length === 0) {
-            return
+            return;
           }
           arrows.forEach((arrow) => {
-            (arrow as HTMLElement).style.display = menuShowArrow.value ? 'block' : 'none'
-          })
+            (arrow as HTMLElement).style.display = menuShowArrow.value ? 'block' : 'none';
+          });
 
           // 设置 .el-dropdown-menu__item 悬停样式
-          const items = dropdownMenuItem.querySelectorAll('.el-dropdown-menu__item:not(.is-disabled)')
+          const items = dropdownMenuItem.querySelectorAll('.el-dropdown-menu__item:not(.is-disabled)');
           if (items.length === 0) {
-            return
+            return;
           }
           items.forEach((item, index) => {
             if (!menu.value || menu.value.length === 0) {
-              return
+              return;
             }
-            const menuItemHoverStyle = menu.value[index].menuItemHoverStyle || {}
+            const menuItemHoverStyle = menu.value[index].menuItemHoverStyle || {};
             // 生成固定类名（基于索引）
-            const className = `custom-hover-${index}`
-            item.classList.add(className)
+            const className = `custom-hover-${index}`;
+            item.classList.add(className);
             // 动态插入样式规则
-            const style = document.createElement('style')
+            const style = document.createElement('style');
             style.textContent = `
               .${className}:hover,
               .${className}:focus {
@@ -193,12 +193,12 @@ function updateMenuStatus(isOpen: boolean) {
                   .map(([prop, val]) => `${camelToKebab(prop)}: ${val} !important;`)
                   .join(' ')}
               }
-            `
-            document.head.appendChild(style)
-          })
+            `;
+            document.head.appendChild(style);
+          });
         }
-      })
-    })
+      });
+    });
   }
 }
 
@@ -207,9 +207,9 @@ function menuCommand(command: string | number | object, item: ConversationItem) 
   // 如果已经有自定义插槽，则不执行这个函数
   // 菜单的所有内容由开发者自行处理
   if (slots.menu) {
-    return false
+    return false;
   }
-  emit('menuCommand', command, item)
+  emit('menuCommand', command, item);
 }
 /* 内置菜单 结束 */
 </script>
@@ -219,9 +219,9 @@ function menuCommand(command: string | number | object, item: ConversationItem) 
     :key="item.key"
     class="conversation-item"
     :class="{
-      disabled: item.disabled,
-      active: active,
-      hovered: item.disabled ? false : isHovered,
+      'disabled': item.disabled,
+      'active': active,
+      'hovered': item.disabled ? false : isHovered,
       'menu-opened': isShowMenuBtn,
     }"
     :style="{

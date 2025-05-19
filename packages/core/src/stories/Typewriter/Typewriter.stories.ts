@@ -1,12 +1,10 @@
+import type TypewriterSource from '@components/Typewriter/index.vue';
 // import { fn } from '@storybook/test';
 import type { Meta, StoryObj } from '@storybook/vue3';
 import Typewriter from './index.vue';
-import TypewriterSource from '@components/Typewriter/index.vue'
-import 'prismjs/components/prism-java'
-import 'prismjs/components/prism-go'
-import 'prismjs/themes/prism.min.css'
-
-
+import 'prismjs/components/prism-java';
+import 'prismjs/components/prism-go';
+import 'prismjs/themes/prism.min.css';
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories
 const meta = {
@@ -18,17 +16,17 @@ const meta = {
     content: { control: 'text' },
     isMarkdown: { control: 'boolean' },
     typing: { control: 'object' },
-    isFog: { control: 'boolean' }
+    isFog: { control: 'boolean' },
   },
   args: {
     typing: {
       step: 20,
       interval: 100,
       suffix: '',
-      isRequestEnd: true
+      isRequestEnd: true,
     },
     isFog: true,
-    isMarkdown: true
+    isMarkdown: true,
     // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
   },
 } satisfies Meta<typeof TypewriterSource>;
@@ -50,7 +48,7 @@ export const BaseRender: Story = {
 - 列表项 1
 - 列表项 2
 **粗体文本** 和 *斜体文本*
-      `.trim()
+      `.trim(),
   } as Story['args'],
 };
 
@@ -80,7 +78,7 @@ export const CodeRender: Story = {
         fmt.Println("Hello, world!")
     }
   \`\`\`
-      `.trim()
+      `.trim(),
   } as Story['args'],
 };
 
@@ -97,7 +95,7 @@ export const PieRender: Story = {
     "VR/AR开发" : 5
     "其他" : 15
    \`\`\`
-      `.trim()
+      `.trim(),
   } as Story['args'],
 };
 
@@ -113,6 +111,6 @@ export const MathRender: Story = {
           2-->>1: Answer: $$2$$
           Note right of 2: $$sqrt{2+2}=sqrt{4}=2$$
 \`\`\`
-    `.trim()
+    `.trim(),
   } as Story['args'],
 };

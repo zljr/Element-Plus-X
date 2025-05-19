@@ -56,13 +56,13 @@ yarn add vue-element-plus-x --save
 
 ```vue
 <script>
-import { BubbleList, Sender } from 'vue-element-plus-x'
+import { BubbleList, Sender } from 'vue-element-plus-x';
 const list = [
   {
     content: 'Hello, Element Plus X',
     role: 'user',
   },
-]
+];
 </script>
 
 <template>

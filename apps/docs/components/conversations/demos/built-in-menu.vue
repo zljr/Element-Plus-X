@@ -9,7 +9,7 @@ title: 内置下拉菜单
 </docs>
 
 <script setup lang="ts">
-import type { ConversationItem, ConversationMenuCommand } from 'vue-element-plus-x/types/Conversations'
+import type { ConversationItem, ConversationMenuCommand } from 'vue-element-plus-x/types/Conversations';
 
 const menuTestItems = ref([
   {
@@ -69,27 +69,27 @@ const menuTestItems = ref([
     key: 'm14',
     label: '菜单测试项目 14',
   },
-])
+]);
 
-const activeKey4 = ref('m1')
+const activeKey4 = ref('m1');
 
 // 内置菜单点击方法
 function handleMenuCommand(command: ConversationMenuCommand, item: ConversationItem) {
-  console.log('内置菜单点击事件：', command, item)
+  console.log('内置菜单点击事件：', command, item);
   // 直接修改 item 是否生效
   if (command === 'delete') {
-    const index = menuTestItems.value.findIndex(itemSlef => itemSlef.key === item.key)
+    const index = menuTestItems.value.findIndex(itemSlef => itemSlef.key === item.key);
 
     if (index !== -1) {
-      menuTestItems.value.splice(index, 1)
-      console.log('删除成功')
-      ElMessage.success('删除成功')
+      menuTestItems.value.splice(index, 1);
+      console.log('删除成功');
+      ElMessage.success('删除成功');
     }
   }
   if (command === 'rename') {
-    item.label = '已修改'
-    console.log('重命名成功')
-    ElMessage.success('重命名成功')
+    item.label = '已修改';
+    console.log('重命名成功');
+    ElMessage.success('重命名成功');
   }
 }
 </script>

@@ -47,15 +47,15 @@
 **`PromptsItemsProps` 结构说明**（单个提示项属性）：
 ```typescript
 interface PromptsItemsProps {
-  key: string | number // 唯一标识（用于状态关联）
-  label?: string // 提示项标签文本
-  icon?: ComponentVNode // 提示项图标（Vue组件形式）
-  description?: string // 提示项描述文本
-  disabled?: boolean // 是否禁用（禁用时不响应交互）
-  itemStyle?: CSSProperties // 提示项自定义基础样式
-  itemHoverStyle?: CSSProperties // 提示项悬停状态自定义样式
-  itemActiveStyle?: CSSProperties // 提示项激活状态自定义样式
-  children?: PromptsItemsProps[] // 子提示项数组（用于嵌套展示）
+  key: string | number; // 唯一标识（用于状态关联）
+  label?: string; // 提示项标签文本
+  icon?: ComponentVNode; // 提示项图标（Vue组件形式）
+  description?: string; // 提示项描述文本
+  disabled?: boolean; // 是否禁用（禁用时不响应交互）
+  itemStyle?: CSSProperties; // 提示项自定义基础样式
+  itemHoverStyle?: CSSProperties; // 提示项悬停状态自定义样式
+  itemActiveStyle?: CSSProperties; // 提示项激活状态自定义样式
+  children?: PromptsItemsProps[]; // 子提示项数组（用于嵌套展示）
 }
 ```
 

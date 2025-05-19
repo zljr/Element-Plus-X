@@ -11,57 +11,57 @@ title: 拖拽上传
 </docs>
 
 <script setup lang="ts">
-import type { FilesCardProps } from 'vue-element-plus-x/types/FilesCard'
+import type { FilesCardProps } from 'vue-element-plus-x/types/FilesCard';
 
 type SelfFilesCardProps = FilesCardProps & {
-  id?: number
-}
+  id?: number;
+};
 
-const files = ref<SelfFilesCardProps[]>([])
-const isFull = ref(false)
+const files = ref<SelfFilesCardProps[]>([]);
+const isFull = ref(false);
 
-const dragArea = ref()
+const dragArea = ref();
 
 watch(() => isFull.value, () => {
-  console.log('isFull.value', isFull.value)
+  console.log('isFull.value', isFull.value);
 
   if (isFull.value) {
-    dragArea.value = document.body
+    dragArea.value = document.body;
   }
   else {
-    dragArea.value = 'drag-area'
+    dragArea.value = 'drag-area';
   }
-}, { immediate: true, deep: true })
+}, { immediate: true, deep: true });
 
 function handleBeforUpload(file: any) {
-  console.log('befor', file)
+  console.log('befor', file);
   if (file.size > 1024 * 1024 * 2) {
-    ElMessage.error('文件大小不能超过 2MB!')
-    return false
+    ElMessage.error('文件大小不能超过 2MB!');
+    return false;
   }
 }
 
 async function handleUploadDrop(files: any, props: any) {
-  console.log('drop', files)
-  console.log('props', props)
+  console.log('drop', files);
+  console.log('props', props);
 
   if (files && files.length > 0) {
     if (files[0].type === '') {
-      ElMessage.error('禁止上传文件夹！')
-      return false
+      ElMessage.error('禁止上传文件夹！');
+      return false;
     }
 
     for (let index = 0; index < files.length; index++) {
-      const file = files[index]
-      await handleHttpRequest({ file })
+      const file = files[index];
+      await handleHttpRequest({ file });
     }
   }
 }
 
 async function handleHttpRequest(options: any) {
-  const formData = new FormData()
-  formData.append('file', options.file)
-  ElMessage.info('上传中...')
+  const formData = new FormData();
+  formData.append('file', options.file);
+  ElMessage.info('上传中...');
 
   setTimeout(() => {
     const res = {
@@ -70,7 +70,7 @@ async function handleHttpRequest(options: any) {
       uid: options.file.uid,
       fileSize: options.file.size,
       imgFile: options.file,
-    }
+    };
     files.value.push({
       id: files.value.length,
       uid: res.uid,
@@ -79,15 +79,15 @@ async function handleHttpRequest(options: any) {
       imgFile: res.imgFile,
       showDelIcon: true,
       imgVariant: 'square',
-    })
-    ElMessage.success('上传成功')
-  }, 1000)
+    });
+    ElMessage.success('上传成功');
+  }, 1000);
 }
 
 function handleDeleteCard(item: SelfFilesCardProps) {
-  files.value = files.value.filter((items: any) => items.id !== item.id)
-  console.log('delete', item)
-  ElMessage.success('删除成功')
+  files.value = files.value.filter((items: any) => items.id !== item.id);
+  console.log('delete', item);
+  ElMessage.success('删除成功');
 }
 </script>
 

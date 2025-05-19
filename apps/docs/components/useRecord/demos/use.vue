@@ -7,8 +7,8 @@ title: useRecord 调用浏览器内置 语音识别
 </docs>
 
 <script setup lang="ts">
-import { Eleme, Loading, Mic, Microphone, RefreshRight, Service } from '@element-plus/icons-vue'
-import { useRecord } from 'vue-element-plus-x'
+import { Eleme, Loading, Mic, Microphone, RefreshRight, Service } from '@element-plus/icons-vue';
+import { useRecord } from 'vue-element-plus-x';
 
 // useRecord 这是常规 写法
 // const { start, value, loading, stop } = useRecord({ onEnd: handleEnd })
@@ -16,27 +16,27 @@ import { useRecord } from 'vue-element-plus-x'
 // useRecord 下面的写法是对 value 的解构赋值，将 value 取名为 text 并赋值给 text，让他和下面的 value 变量名不冲突
 const { start, value: text, loading, stop } = useRecord({
   onEnd: handleEnd,
-})
+});
 
-const value = ref('')
-const senderRef = ref()
+const value = ref('');
+const senderRef = ref();
 
 function handleStart() {
-  start()
+  start();
 }
 
 function handleEnd(res: string) {
-  console.log('end:', res)
+  console.log('end:', res);
 }
 
 function submit() {
-  console.log('submit:', text)
+  console.log('submit:', text);
 }
 
 watch(text, (val) => {
-  console.log('text:', val)
-  value.value = val
-}, { deep: true })
+  console.log('text:', val);
+  value.value = val;
+}, { deep: true });
 </script>
 
 <template>

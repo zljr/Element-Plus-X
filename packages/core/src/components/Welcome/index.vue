@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import type { WelcomeProps } from './types.d.ts'
+import type { WelcomeProps } from './types.d.ts';
 
 const props = withDefaults(defineProps<WelcomeProps>(), {
   variant: 'filled' as const,
   direction: 'ltr' as const,
-})
+});
 
-const solts = defineSlots()
-const { prefixCls, className, rootClassName, variant, direction, classNames, icon, title, extra, description, style, styles } = toRefs(props)
+const solts = defineSlots();
+const { prefixCls, className, rootClassName, variant, direction, classNames, icon, title, extra, description, style, styles } = toRefs(props);
 // 提取计算逻辑到独立函数
 function getContainerClass() {
   return [
@@ -18,24 +18,24 @@ function getContainerClass() {
     {
       'welcome-rtl': direction.value === 'rtl',
     },
-  ]
+  ];
 }
 
-const getIconClass = () => classNames.value?.icon
-const getTitleClass = () => classNames.value?.title
-const getExtraClass = () => classNames.value?.extra
-const getDescriptionClass = () => classNames.value?.description
+const getIconClass = () => classNames.value?.icon;
+const getTitleClass = () => classNames.value?.title;
+const getExtraClass = () => classNames.value?.extra;
+const getDescriptionClass = () => classNames.value?.description;
 
-const hasIcon = computed(() => !!icon.value)
-const hasTitleOrExtra = computed(() => !!title.value || !!extra.value)
-const hasExtraOrSlot = computed(() => !!extra.value || !!solts.extra)
-const hasDescription = computed(() => !!description.value)
+const hasIcon = computed(() => !!icon.value);
+const hasTitleOrExtra = computed(() => !!title.value || !!extra.value);
+const hasExtraOrSlot = computed(() => !!extra.value || !!solts.extra);
+const hasDescription = computed(() => !!description.value);
 
-const containerClass = computed(getContainerClass)
-const iconClass = computed(getIconClass)
-const titleClass = computed(getTitleClass)
-const extraClass = computed(getExtraClass)
-const descriptionClass = computed(getDescriptionClass)
+const containerClass = computed(getContainerClass);
+const iconClass = computed(getIconClass);
+const titleClass = computed(getTitleClass);
+const extraClass = computed(getExtraClass);
+const descriptionClass = computed(getDescriptionClass);
 </script>
 
 <template>

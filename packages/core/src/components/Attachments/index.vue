@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import type { FilesCardProps } from '../FilesCard/types.d.ts'
-import type { FileListProps } from './types'
-import { ArrowLeftBold, ArrowRightBold, Plus, UploadFilled } from '@element-plus/icons-vue'
-import { debounce } from 'radash'
-import FilesCard from '../FilesCard/index.vue'
+import type { FilesCardProps } from '../FilesCard/types.d.ts';
+import type { FileListProps } from './types';
+import { ArrowLeftBold, ArrowRightBold, Plus, UploadFilled } from '@element-plus/icons-vue';
+import { debounce } from 'radash';
+import FilesCard from '../FilesCard/index.vue';
 
 const props = withDefaults(defineProps<FileListProps>(), {
   items: () => [],
@@ -12,202 +12,202 @@ const props = withDefaults(defineProps<FileListProps>(), {
   uploadIconSize: '64px',
   dragTarget: undefined,
   hideUpload: false,
-})
+});
 
-const emits = defineEmits(['uploadChange', 'uploadSuccess', 'uploadError', 'uploadDrop', 'deleteCard'])
+const emits = defineEmits(['uploadChange', 'uploadSuccess', 'uploadError', 'uploadDrop', 'deleteCard']);
 
 /* 列表相关 开始 */
-const containerRef = ref<HTMLDivElement | null>(null)
-const wrapperRef = ref<HTMLDivElement | null>(null)
-const firstMount = ref(false)
-const pingStart = ref(false)
-const pingEnd = ref(false)
-const TOLERANCE = 1
+const containerRef = ref<HTMLDivElement | null>(null);
+const wrapperRef = ref<HTMLDivElement | null>(null);
+const firstMount = ref(false);
+const pingStart = ref(false);
+const pingEnd = ref(false);
+const TOLERANCE = 1;
 function checkPing() {
-  const containerEle = containerRef.value
+  const containerEle = containerRef.value;
   if (!containerEle)
-    return
+    return;
 
   if (props.overflow === 'scrollX') {
-    pingStart.value = Math.abs(containerEle.scrollLeft) >= TOLERANCE
-    pingEnd.value = containerEle.scrollWidth - containerEle.clientWidth - Math.abs(containerEle.scrollLeft) >= TOLERANCE
+    pingStart.value = Math.abs(containerEle.scrollLeft) >= TOLERANCE;
+    pingEnd.value = containerEle.scrollWidth - containerEle.clientWidth - Math.abs(containerEle.scrollLeft) >= TOLERANCE;
   }
   else if (props.overflow === 'scrollY') {
-    pingStart.value = containerEle.scrollTop !== 0
-    pingEnd.value = containerEle.scrollHeight - containerEle.clientHeight !== containerEle.scrollTop
+    pingStart.value = containerEle.scrollTop !== 0;
+    pingEnd.value = containerEle.scrollHeight - containerEle.clientHeight !== containerEle.scrollTop;
   }
   else {
-    pingStart.value = false
-    pingEnd.value = false
+    pingStart.value = false;
+    pingEnd.value = false;
   }
 }
 function onScrollOffset(offset: -1 | 1) {
-  const containerEle = containerRef.value
+  const containerEle = containerRef.value;
   if (containerEle) {
     containerEle.scrollTo({
       left: props.overflow === 'scrollX' ? containerEle.scrollLeft + offset * containerEle.clientWidth : containerEle.scrollLeft,
       top: props.overflow === 'scrollY' ? containerEle.scrollTop + offset * containerEle.clientHeight : containerEle.scrollTop,
       behavior: 'smooth',
-    })
+    });
   }
 }
 function onScrollLeft() {
-  onScrollOffset(-1)
+  onScrollOffset(-1);
 }
 function onScrollRight() {
-  onScrollOffset(1)
+  onScrollOffset(1);
 }
-const debouncedCheckPing = debounce({ delay: 100 }, checkPing)
+const debouncedCheckPing = debounce({ delay: 100 }, checkPing);
 /* 列表相关 结束 */
 
 /* 上传相关 开始 */
-const targetElement = ref<HTMLElement | null>(null)
+const targetElement = ref<HTMLElement | null>(null);
 // 是否在 targetElement 上进行了拖拽
-const isTargetDrag = ref(false)
-const debouncedStyle = debounce({ delay: 100 }, toggleDragStyle)
+const isTargetDrag = ref(false);
+const debouncedStyle = debounce({ delay: 100 }, toggleDragStyle);
 // 是否超过上传长度限制
 const _isOverLimit = computed(() => {
   if (props.limit && props.items.length >= props.limit) {
-    return true
+    return true;
   }
-  return false
-})
+  return false;
+});
 
 // 添加/移除 拖拽类名和定位信息
-const dropAreaRef = ref()
+const dropAreaRef = ref();
 function toggleDragStyle(isDrag: boolean) {
-  isTargetDrag.value = isDrag
+  isTargetDrag.value = isDrag;
   if (targetElement.value) {
-    const isBodyTarget = targetElement.value === document.body // 判断是否为body
+    const isBodyTarget = targetElement.value === document.body; // 判断是否为body
 
     if (isDrag) {
       // 针对body特殊处理：使用fixed定位并铺满视口
       // 有滚动条就会有问题，所以这么处理，后续再看看这个怎么优化
       if (isBodyTarget && dropAreaRef.value) {
-        dropAreaRef.value.style.position = 'fixed'
-        dropAreaRef.value.style.width = '100vw' // 视口宽度
-        dropAreaRef.value.style.height = '100vh' // 视口高度
-        dropAreaRef.value.style.left = '0'
-        dropAreaRef.value.style.top = '0'
+        dropAreaRef.value.style.position = 'fixed';
+        dropAreaRef.value.style.width = '100vw'; // 视口宽度
+        dropAreaRef.value.style.height = '100vh'; // 视口高度
+        dropAreaRef.value.style.left = '0';
+        dropAreaRef.value.style.top = '0';
       }
       else {
         // 其他元素保持原逻辑
-        targetElement.value.style.position = 'relative'
+        targetElement.value.style.position = 'relative';
       }
     }
     else {
-      targetElement.value.style.position = ''
+      targetElement.value.style.position = '';
     }
   }
 }
 
 function handleUploadChange(file: File, fileList: FileListProps) {
-  emits('uploadChange', file, fileList)
+  emits('uploadChange', file, fileList);
 }
 
 function handleUploadSuccess(response: any, file: File, fileList: FileListProps) {
-  emits('uploadSuccess', response, file, fileList)
+  emits('uploadSuccess', response, file, fileList);
 }
 
 function handleUploadError(error: any, file: File, fileList: FileListProps) {
-  emits('uploadError', error, file, fileList)
+  emits('uploadError', error, file, fileList);
 }
 
 function getTargetElement() {
   if (!props.dragTarget)
-    return wrapperRef.value
+    return wrapperRef.value;
   // 新增：处理原生 DOM 元素（如 document.body）
   if (props.dragTarget instanceof HTMLElement) {
-    return props.dragTarget
+    return props.dragTarget;
   }
   if (typeof props.dragTarget === 'string') {
-    return document.getElementById(props.dragTarget)
+    return document.getElementById(props.dragTarget);
   }
   if (isRef(props.dragTarget)) {
-    return props.dragTarget.value as HTMLElement
+    return props.dragTarget.value as HTMLElement;
   }
   // 兜底返回 wrapperRef（保持原有逻辑）
-  return wrapperRef.value
+  return wrapperRef.value;
 }
 
 function targetDragEnter(event: DragEvent) {
-  event.preventDefault()
-  debouncedStyle(true)
+  event.preventDefault();
+  debouncedStyle(true);
 }
 
 function targetDropLeave(event: DragEvent) {
-  event.preventDefault()
+  event.preventDefault();
   // 新增逻辑：若离开后进入的元素仍在目标元素内部，不执行样式移除
-  const relatedTarget = event.relatedTarget as Node
+  const relatedTarget = event.relatedTarget as Node;
   if (targetElement.value && targetElement.value.contains(relatedTarget)) {
-    return
+    return;
   }
-  debouncedStyle(false)
+  debouncedStyle(false);
 }
 
 function targetDrop(event: DragEvent) {
-  event.preventDefault()
-  debouncedStyle(false)
+  event.preventDefault();
+  debouncedStyle(false);
   if (event.dataTransfer) {
-    const files = event.dataTransfer.files
+    const files = event.dataTransfer.files;
     if (files.length) {
-      emits('uploadDrop', [...files], { ...props })
+      emits('uploadDrop', [...files], { ...props });
     }
   }
 }
 
 function targetDragOver(event: DragEvent) {
-  event.preventDefault()
+  event.preventDefault();
 }
 
 /* 上传相关 结束 */
 
 /* 卡片相关 开始 */
 function handleDelete(item: FilesCardProps, index: number) {
-  emits('deleteCard', item, index)
-  nextTick(() => debouncedCheckPing())
+  emits('deleteCard', item, index);
+  nextTick(() => debouncedCheckPing());
 }
 
 /* 卡片相关 结束 */
 
 onMounted(() => {
-  firstMount.value = true
-  nextTick(() => debouncedCheckPing())
-  window.addEventListener('resize', debouncedCheckPing)
+  firstMount.value = true;
+  nextTick(() => debouncedCheckPing());
+  window.addEventListener('resize', debouncedCheckPing);
 
   // 如果有拖拽目标元素，则监听拖拽事件
   if (wrapperRef.value) {
-    console.log('wrapperRef===>', getTargetElement())
-    targetElement.value = getTargetElement() || wrapperRef.value
+    console.log('wrapperRef===>', getTargetElement());
+    targetElement.value = getTargetElement() || wrapperRef.value;
     // 监听拖拽事件
-    targetElement.value.addEventListener('dragenter', targetDragEnter, false)
-    targetElement.value.addEventListener('dragleave', targetDropLeave, false)
-    targetElement.value.addEventListener('drop', targetDrop, false)
-    targetElement.value.addEventListener('dragover', targetDragOver, false)
+    targetElement.value.addEventListener('dragenter', targetDragEnter, false);
+    targetElement.value.addEventListener('dragleave', targetDropLeave, false);
+    targetElement.value.addEventListener('drop', targetDrop, false);
+    targetElement.value.addEventListener('dragover', targetDragOver, false);
   }
-})
+});
 
 onUnmounted(() => {
-  window.removeEventListener('resize', debouncedCheckPing)
+  window.removeEventListener('resize', debouncedCheckPing);
   if (targetElement.value) {
-    targetElement.value.removeEventListener('dragenter', targetDragEnter, false)
-    targetElement.value.removeEventListener('dragleave', targetDropLeave, false)
-    targetElement.value.removeEventListener('drop', targetDrop, false)
-    targetElement.value.removeEventListener('dragover', targetDragOver, false)
+    targetElement.value.removeEventListener('dragenter', targetDragEnter, false);
+    targetElement.value.removeEventListener('dragleave', targetDropLeave, false);
+    targetElement.value.removeEventListener('drop', targetDrop, false);
+    targetElement.value.removeEventListener('dragover', targetDragOver, false);
   }
-})
+});
 
 watch(
   () => [props.overflow, props.items.length],
   () => {
     // 确保 DOM 更新后再调用 checkPing
-    nextTick(() => debouncedCheckPing())
+    nextTick(() => debouncedCheckPing());
   },
   {
     immediate: true, // 组件初始化时立即调用一次
     deep: true, // 如果 items 是对象或数组，需要深度监听
   },
-)
+);
 
 // 监听 props.dragTarget
 watch(
@@ -218,26 +218,26 @@ watch(
     nextTick(() => {
       // 如果有拖拽目标元素，则监听拖拽事件
       if (wrapperRef.value) {
-        targetElement.value = getTargetElement() || wrapperRef.value
+        targetElement.value = getTargetElement() || wrapperRef.value;
         // 监听拖拽事件
-        targetElement.value.addEventListener('dragenter', targetDragEnter, false)
-        targetElement.value.addEventListener('dragleave', targetDropLeave, false)
-        targetElement.value.addEventListener('drop', targetDrop, false)
-        targetElement.value.addEventListener('dragover', targetDragOver, false)
+        targetElement.value.addEventListener('dragenter', targetDragEnter, false);
+        targetElement.value.addEventListener('dragleave', targetDropLeave, false);
+        targetElement.value.addEventListener('drop', targetDrop, false);
+        targetElement.value.addEventListener('dragover', targetDragOver, false);
       }
-    })
+    });
   },
   {
     immediate: true, // 组件初始化时立即调用一次
     deep: true,
   },
-)
+);
 
 defineExpose({
   onScrollLeft,
   onScrollRight,
   debouncedCheckPing,
-})
+});
 </script>
 
 <template>

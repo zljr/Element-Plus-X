@@ -1,24 +1,23 @@
 <script setup lang="ts">
-import { DocumentCopy, Refresh, Search, Star } from '@element-plus/icons-vue'
-import AppConfig from '@components/AppConfig/index.vue'
-import Bubble from '@components/Bubble/index.vue'
-import type { BubbleProps } from '@components/Bubble/types'
-import markdownItMermaid from '@jsonlee_12138/markdown-it-mermaid'
-import 'prismjs/components/prism-java'
-import 'prismjs/components/prism-go'
-import 'prismjs/themes/prism.min.css'
+import type { BubbleProps } from '@components/Bubble/types';
+import AppConfig from '@components/AppConfig/index.vue';
+import Bubble from '@components/Bubble/index.vue';
+import { DocumentCopy, Refresh, Search, Star } from '@element-plus/icons-vue';
+import markdownItMermaid from '@jsonlee_12138/markdown-it-mermaid';
+import 'prismjs/components/prism-java';
+import 'prismjs/components/prism-go';
+import 'prismjs/themes/prism.min.css';
 
+defineProps<BubbleProps>();
+const loading = ref(true);
 
-defineProps<BubbleProps>()
-const loading = ref(true)
-
-const mdPlugins = [markdownItMermaid({ delay: 100, forceLegacyMathML: true })]
+const mdPlugins = [markdownItMermaid({ delay: 100, forceLegacyMathML: true })];
 
 onMounted(() => {
   setTimeout(() => {
-    loading.value = false
-  }, 2000)
-})
+    loading.value = false;
+  }, 2000);
+});
 </script>
 
 <template>
@@ -26,8 +25,10 @@ onMounted(() => {
     <div class="component-container">
       <p>新版本支持 打字器 雾化效果 使用 Mermaid.js 支持简单的图表和函数公式 </p>
       <div class="component-1">
-        <Bubble :placement="placement" :content="content" :shape="shape" :variant="variant" :loading="loading"
-          :typing="typing" :is-markdown="isMarkdown" :is-fog="{ bgColor: '#FFFFFF' }">
+        <Bubble
+          :placement="placement" :content="content" :shape="shape" :variant="variant" :loading="loading"
+          :typing="typing" :is-markdown="isMarkdown" :is-fog="{ bgColor: '#FFFFFF' }"
+        >
           <template #avatar>
             <el-avatar :size="32" :src="avatar" />
           </template>

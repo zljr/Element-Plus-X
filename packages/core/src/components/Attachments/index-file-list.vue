@@ -1,91 +1,91 @@
 <script lang="ts" setup>
-import type { FileListProps } from './types'
-import { ArrowLeftBold, ArrowRightBold } from '@element-plus/icons-vue'
-import { debounce } from 'radash'
+import type { FileListProps } from './types';
+import { ArrowLeftBold, ArrowRightBold } from '@element-plus/icons-vue';
+import { debounce } from 'radash';
 
 const props = withDefaults(defineProps<FileListProps>(), {
   items: () => [],
   overflow: 'scrollX',
   listStyle: () => ({}),
-})
+});
 
-const containerRef = ref<HTMLDivElement | null>(null)
-const wrapperRef = ref<HTMLDivElement | null>(null)
-const firstMount = ref(false)
-const pingStart = ref(false)
-const pingEnd = ref(false)
+const containerRef = ref<HTMLDivElement | null>(null);
+const wrapperRef = ref<HTMLDivElement | null>(null);
+const firstMount = ref(false);
+const pingStart = ref(false);
+const pingEnd = ref(false);
 
-const TOLERANCE = 1
+const TOLERANCE = 1;
 
 function checkPing() {
-  const containerEle = containerRef.value
+  const containerEle = containerRef.value;
   if (!containerEle)
-    return
+    return;
 
   if (props.overflow === 'scrollX') {
-    pingStart.value = Math.abs(containerEle.scrollLeft) >= TOLERANCE
-    pingEnd.value = containerEle.scrollWidth - containerEle.clientWidth - Math.abs(containerEle.scrollLeft) >= TOLERANCE
+    pingStart.value = Math.abs(containerEle.scrollLeft) >= TOLERANCE;
+    pingEnd.value = containerEle.scrollWidth - containerEle.clientWidth - Math.abs(containerEle.scrollLeft) >= TOLERANCE;
   }
   else if (props.overflow === 'scrollY') {
-    pingStart.value = containerEle.scrollTop !== 0
-    pingEnd.value = containerEle.scrollHeight - containerEle.clientHeight !== containerEle.scrollTop
+    pingStart.value = containerEle.scrollTop !== 0;
+    pingEnd.value = containerEle.scrollHeight - containerEle.clientHeight !== containerEle.scrollTop;
   }
   else {
-    pingStart.value = false
-    pingEnd.value = false
+    pingStart.value = false;
+    pingEnd.value = false;
   }
 }
 
 function onScrollOffset(offset: -1 | 1) {
-  const containerEle = containerRef.value
+  const containerEle = containerRef.value;
   if (containerEle) {
     containerEle.scrollTo({
       left: props.overflow === 'scrollX' ? containerEle.scrollLeft + offset * containerEle.clientWidth : containerEle.scrollLeft,
       top: props.overflow === 'scrollY' ? containerEle.scrollTop + offset * containerEle.clientHeight : containerEle.scrollTop,
       behavior: 'smooth',
-    })
+    });
   }
 }
 
 function onScrollLeft() {
-  onScrollOffset(-1)
+  onScrollOffset(-1);
 }
 
 function onScrollRight() {
-  onScrollOffset(1)
+  onScrollOffset(1);
 }
 
 // 使用 debounce 对 checkPing 进行防抖处理
-const debouncedCheckPing = debounce({ delay: 100 }, checkPing)
+const debouncedCheckPing = debounce({ delay: 100 }, checkPing);
 
 onMounted(() => {
-  firstMount.value = true
+  firstMount.value = true;
   nextTick(() => {
-    checkPing()
-  })
+    checkPing();
+  });
   // 监听窗口大小改变事件
-  window.addEventListener('resize', debouncedCheckPing)
-})
+  window.addEventListener('resize', debouncedCheckPing);
+});
 
 onUnmounted(() => {
-  firstMount.value = false
+  firstMount.value = false;
   // 移除窗口大小改变事件监听
-  window.removeEventListener('resize', debouncedCheckPing)
-})
+  window.removeEventListener('resize', debouncedCheckPing);
+});
 
 watch(
   () => [props.overflow, props.items.length],
   () => {
     // 确保 DOM 更新后再调用 checkPing
     nextTick(() => {
-      checkPing()
-    })
+      checkPing();
+    });
   },
   {
     immediate: true, // 组件初始化时立即调用一次
     deep: true, // 如果 items 是对象或数组，需要深度监听
   },
-)
+);
 </script>
 
 <template>

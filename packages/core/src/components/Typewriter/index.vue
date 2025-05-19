@@ -1,36 +1,36 @@
 <script setup lang="ts">
-import type { ComputedRef } from 'vue'
-import type { TypewriterEmits, TypewriterInstance, TypewriterProps, TypingConfig } from './types.d.ts'
-import DOMPurify from 'dompurify' // 新增安全过滤
-import MarkdownIt from 'markdown-it'
-import { usePrism } from '../../hooks/usePrism'
-import { useAppConfig } from '../AppConfig/hooks.ts'
+import type { ComputedRef } from 'vue';
+import type { TypewriterEmits, TypewriterInstance, TypewriterProps, TypingConfig } from './types.d.ts';
+import DOMPurify from 'dompurify'; // 新增安全过滤
+import MarkdownIt from 'markdown-it';
+import { usePrism } from '../../hooks/usePrism';
+import { useAppConfig } from '../AppConfig/hooks.ts';
 
 const props = withDefaults(defineProps<TypewriterProps>(), {
   content: '',
   isMarkdown: false,
   typing: false,
-  isFog: false
-})
+  isFog: false,
+});
 
-const emits = defineEmits<TypewriterEmits>()
+const emits = defineEmits<TypewriterEmits>();
 
 const appConfig = useAppConfig();
 
 const highlight = computed(() => {
   if (!props.highlight) {
-    return appConfig.highlight ?? usePrism()
+    return appConfig.highlight ?? usePrism();
   }
-  return props.highlight
-})
+  return props.highlight;
+});
 
-const markdownContentRef = ref<HTMLElement | null>(null)
-const typeWriterRef = ref<HTMLElement | null>(null)
+const markdownContentRef = ref<HTMLElement | null>(null);
+const typeWriterRef = ref<HTMLElement | null>(null);
 
 onMounted(() => {
   // 初始化雾化背景色
-  updateFogColor()
-})
+  updateFogColor();
+});
 
 const md = new MarkdownIt({
   html: true,
@@ -38,29 +38,29 @@ const md = new MarkdownIt({
   typographer: true,
   breaks: true,
   highlight: (code, language) => {
-    return highlight.value?.(code, language)
+    return highlight.value?.(code, language);
   },
-})
+});
 
 function initMarkdownPlugins() {
-  if(appConfig.mdPlugins?.length){
+  if (appConfig.mdPlugins?.length) {
     appConfig.mdPlugins.forEach((plugin) => {
-      md.use(plugin)
-    })
+      md.use(plugin);
+    });
   }
   if (props.mdPlugins?.length) {
     props.mdPlugins.forEach((plugin) => {
-      md.use(plugin)
-    })
+      md.use(plugin);
+    });
   }
 }
 
-initMarkdownPlugins()
+initMarkdownPlugins();
 
-const typingIndex = ref(0)
-const isTyping = ref(false)
-let timer: ReturnType<typeof setTimeout> | null = null
-const contentCache = ref('') // 添加缓存变量
+const typingIndex = ref(0);
+const isTyping = ref(false);
+let timer: ReturnType<typeof setTimeout> | null = null;
+const contentCache = ref(''); // 添加缓存变量
 
 // 配置合并逻辑修改
 const mergedConfig: ComputedRef<TypingConfig> = computed(() => {
@@ -69,13 +69,13 @@ const mergedConfig: ComputedRef<TypingConfig> = computed(() => {
     interval: typeof props.typing === 'object' ? props.typing.interval ?? 50 : 50,
     // 根据条件动态设置后缀
     suffix: props.isMarkdown ? '' : typeof props.typing === 'object' ? props.typing.suffix ?? '|' : '|',
-  }
+  };
 
   // 处理打字配置
   if (props.typing === true) {
     return {
       ...defaultConfig,
-    }
+    };
   }
 
   if (typeof props.typing === 'object') {
@@ -84,45 +84,45 @@ const mergedConfig: ComputedRef<TypingConfig> = computed(() => {
       ...props.typing,
       // 强制覆盖后缀设置
       suffix: props.isMarkdown ? '' : props.typing.suffix ?? '|',
-    }
+    };
   }
 
-  return defaultConfig
-})
+  return defaultConfig;
+});
 
 // 修改内容处理逻辑
 const processedContent = computed(() => {
   if (!props.content)
-    return ''
+    return '';
 
   // 非打字模式直接渲染完整内容
   if (!props.typing) {
-    return props.content
+    return props.content;
   }
 
   // 打字模式处理截断内容
-  const displayed = contentCache.value.slice(0, typingIndex.value)
-  return displayed
-})
+  const displayed = contentCache.value.slice(0, typingIndex.value);
+  return displayed;
+});
 
 // 计算属性
 const typingProgress = computed(() => {
   return contentCache.value
     ? Math.min((typingIndex.value / contentCache.value.length) * 100, 100)
-    : 0
-})
+    : 0;
+});
 
 // 修改渲染内容计算属性
 const renderedContent = computed(() => {
   // 非Markdown模式直接返回
   if (!props.isMarkdown) {
-    return processedContent.value
+    return processedContent.value;
   }
   // Markdown模式添加安全过滤和样式类
   return DOMPurify.sanitize(
     md.render(processedContent.value),
-  )
-})
+  );
+});
 
 const instance: TypewriterInstance = {
   interrupt,
@@ -132,126 +132,126 @@ const instance: TypewriterInstance = {
   renderedContent: computed(() => renderedContent.value),
   isTyping: toRef(isTyping),
   progress: computed(() => typingProgress.value),
-}
+};
 
 // 打字逻辑
 watch(
   () => props.content,
   (newVal, oldVal) => {
     if (!props.typing) {
-      typingIndex.value = newVal?.length || 0
-      isTyping.value = false
-      contentCache.value = newVal || ''
-      return
+      typingIndex.value = newVal?.length || 0;
+      isTyping.value = false;
+      contentCache.value = newVal || '';
+      return;
     }
 
-    const shouldReset = !oldVal || !newVal?.startsWith(oldVal)
+    const shouldReset = !oldVal || !newVal?.startsWith(oldVal);
 
     if (shouldReset) {
-      typingIndex.value = 0
-      contentCache.value = newVal || ''
+      typingIndex.value = 0;
+      contentCache.value = newVal || '';
     }
     else {
-      contentCache.value = newVal || ''
+      contentCache.value = newVal || '';
     }
 
     if (!isTyping.value) {
-      startTyping()
+      startTyping();
     }
   },
   { immediate: true },
-)
+);
 
 function startTyping() {
-  clearTimeout(timer!)
+  clearTimeout(timer!);
   if (!props.typing || !contentCache.value)
-    return
+    return;
 
-  isTyping.value = true
-  emits('start', instance)
+  isTyping.value = true;
+  emits('start', instance);
 
   const typeNext = () => {
-    typingIndex.value += mergedConfig.value.step!
-    emits('writing', instance)
+    typingIndex.value += mergedConfig.value.step!;
+    emits('writing', instance);
 
     if (typingIndex.value >= contentCache.value.length) {
-      finishTyping()
-      return
+      finishTyping();
+      return;
     }
 
-    timer = setTimeout(typeNext, mergedConfig.value.interval)
-  }
+    timer = setTimeout(typeNext, mergedConfig.value.interval);
+  };
 
-  timer = setTimeout(typeNext, mergedConfig.value.interval)
+  timer = setTimeout(typeNext, mergedConfig.value.interval);
 }
 
 function finishTyping() {
-  isTyping.value = false
-  typingIndex.value = contentCache.value.length
-  if((props.typing as TypingConfig)?.isRequestEnd ?? true){
-    emits('finish', instance)
+  isTyping.value = false;
+  typingIndex.value = contentCache.value.length;
+  if ((props.typing as TypingConfig)?.isRequestEnd ?? true) {
+    emits('finish', instance);
   }
 }
 
 // 公共方法
 function interrupt() {
-  clearTimeout(timer!)
-  isTyping.value = false
+  clearTimeout(timer!);
+  isTyping.value = false;
 }
 
 function continueTyping() {
   if (typingIndex.value < contentCache.value.length) {
-    startTyping()
+    startTyping();
   }
 }
 
 function restart() {
-  typingIndex.value = 0
-  startTyping()
+  typingIndex.value = 0;
+  startTyping();
 }
 
 function destroy() {
-  clearTimeout(timer!)
-  timer = null
-  typingIndex.value = 0
-  isTyping.value = false
+  clearTimeout(timer!);
+  timer = null;
+  typingIndex.value = 0;
+  isTyping.value = false;
 }
 
 // 辅助函数：获取元素背景色并检查是否透明
 function getBackgroundColor(element: HTMLElement | null) {
   if (!element)
-    return null
-  const color = getComputedStyle(element).backgroundColor
-  const isTransparent = color === 'rgba(0, 0, 0, 0)' || color === 'transparent' || color === 'initial'
-  return isTransparent ? null : color
+    return null;
+  const color = getComputedStyle(element).backgroundColor;
+  const isTransparent = color === 'rgba(0, 0, 0, 0)' || color === 'transparent' || color === 'initial';
+  return isTransparent ? null : color;
 }
 
 // 雾化颜色跟随背景色
 function updateFogColor() {
   if (markdownContentRef.value) {
-    let bgColor = getBackgroundColor(markdownContentRef.value)
+    let bgColor = getBackgroundColor(markdownContentRef.value);
     if (!bgColor) {
-      bgColor = getBackgroundColor(typeWriterRef.value)
+      bgColor = getBackgroundColor(typeWriterRef.value);
       if (!bgColor) {
-        const bubbleContent = document.querySelector('.el-bubble-content') as HTMLElement | null
-        bgColor = getBackgroundColor(bubbleContent)
+        const bubbleContent = document.querySelector('.el-bubble-content') as HTMLElement | null;
+        bgColor = getBackgroundColor(bubbleContent);
         if (!bgColor) {
-          const bubble = document.querySelector('.el-bubble') as HTMLElement | null
-          bgColor = getBackgroundColor(bubble)
+          const bubble = document.querySelector('.el-bubble') as HTMLElement | null;
+          bgColor = getBackgroundColor(bubble);
         }
       }
     }
     if (bgColor) {
-      markdownContentRef.value.style.setProperty('--el-fill-color', bgColor)
+      markdownContentRef.value.style.setProperty('--el-fill-color', bgColor);
     }
   }
 }
 
 // 生命周期
-onUnmounted(destroy)
+onUnmounted(destroy);
 
 // 暴露方法
-defineExpose(instance)
+defineExpose(instance);
 </script>
 
 <template>

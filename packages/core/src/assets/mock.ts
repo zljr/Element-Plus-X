@@ -1,19 +1,18 @@
-import type { BubbleProps } from '@components/Bubble/types'
-import type { BubbleListProps } from '@components/BubbleList/types'
-import type { FilesType } from '@components/FilesCard/types'
-import type { ThinkingStatus } from '@components/Thinking/types'
-
+import type { BubbleProps } from '@components/Bubble/types';
+import type { BubbleListProps } from '@components/BubbleList/types';
+import type { FilesType } from '@components/FilesCard/types';
+import type { ThinkingStatus } from '@components/Thinking/types';
 
 const avatar
-  = 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
+  = 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png';
 
 export type MessageItem = BubbleProps & {
-  key: number
-  role: 'ai' | 'user' | 'system'
-  avatar: string
-  thinkingStatus?: ThinkingStatus
-  expanded?: boolean
-}
+  key: number;
+  role: 'ai' | 'user' | 'system';
+  avatar: string;
+  thinkingStatus?: ThinkingStatus;
+  expanded?: boolean;
+};
 
 export const messageArr: BubbleListProps<MessageItem>['list'] = [
   {
@@ -112,8 +111,7 @@ export const messageArr: BubbleListProps<MessageItem>['list'] = [
     isMarkdown: false,
     avatar,
   },
-]
-
+];
 
 // 模拟自定义文件卡片数据
 // 内置样式
@@ -134,7 +132,7 @@ export const colorMap: Record<FilesType, string> = {
   zip: '#673AB7',
   file: '#FFC757',
   unknown: '#6E9DA4',
-}
+};
 
 // 自己定义文件颜色
 export const colorMap1: Record<FilesType, string> = {
@@ -154,7 +152,7 @@ export const colorMap1: Record<FilesType, string> = {
   zip: '#8B5E3C',
   file: '#AAB2BF',
   unknown: '#888888',
-}
+};
 
 // 自己定义文件颜色1
 export const colorMap2: Record<FilesType, string> = {
@@ -174,4 +172,4 @@ export const colorMap2: Record<FilesType, string> = {
   zip: '#888888',
   file: '#F0D9B5',
   unknown: '#D8D8D8',
-}
+};

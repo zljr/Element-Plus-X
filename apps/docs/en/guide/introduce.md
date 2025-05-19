@@ -62,13 +62,13 @@ yarn add vue-element-plus-x --save
 
 ```vue
 <script>
-import { BubbleList, Sender } from 'vue-element-plus-x'
+import { BubbleList, Sender } from 'vue-element-plus-x';
 const list = [
   {
     content: 'Hello, Element Plus X',
     role: 'user',
   },
-]
+];
 </script>
 
 <template>
@@ -83,14 +83,14 @@ const list = [
 
 ```ts
 // main.ts
-import { createApp } from 'vue'
-import ElementPlusX from 'vue-element-plus-x'
-import App from './App.vue'
+import { createApp } from 'vue';
+import ElementPlusX from 'vue-element-plus-x';
+import App from './App.vue';
 
-const app = createApp(App)
+const app = createApp(App);
 // Globally import using app.use()
-app.use(ElementPlusX)
-app.mount('#app')
+app.use(ElementPlusX);
+app.mount('#app');
 ```
 
 3. **CDN Import**

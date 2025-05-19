@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { ThinkingProps, ThinkingStatus } from './types.d.ts'
-import { ArrowUpBold, CircleCloseFilled, Loading, Opportunity, SuccessFilled } from '@element-plus/icons-vue'
+import type { ThinkingProps, ThinkingStatus } from './types.d.ts';
+import { ArrowUpBold, CircleCloseFilled, Loading, Opportunity, SuccessFilled } from '@element-plus/icons-vue';
 
 const props = withDefaults(defineProps<ThinkingProps>(), {
   content: '',
@@ -13,43 +13,43 @@ const props = withDefaults(defineProps<ThinkingProps>(), {
   maxWidth: '500px',
   backgroundColor: '#fcfcfc',
   color: 'var(--el-color-info)',
-})
+});
 
 // 定义组件 Emits
 const emit = defineEmits<{
-  (e: 'change', value: { value: boolean, status: ThinkingStatus }): void
-  (e: 'update:expanded', value: boolean): void
-}>()
+  (e: 'change', value: { value: boolean; status: ThinkingStatus }): void;
+  (e: 'update:expanded', value: boolean): void;
+}>();
 
-const isExpanded = ref(props.modelValue)
+const isExpanded = ref(props.modelValue);
 
 // 监听 modelValue 变化
 watch(() => props.modelValue, (newVal) => {
-  isExpanded.value = newVal
-})
+  isExpanded.value = newVal;
+});
 
 // 处理展开/收起
 function changeExpand() {
   if (props.disabled)
-    return
-  isExpanded.value = !isExpanded.value
-  emit('change', { value: isExpanded.value, status: props.status })
-  emit('update:expanded', isExpanded.value)
+    return;
+  isExpanded.value = !isExpanded.value;
+  emit('change', { value: isExpanded.value, status: props.status });
+  emit('update:expanded', isExpanded.value);
 }
 
 // 显示内容（带错误状态处理）
 const displayedContent = computed(() => {
   return props.status === 'error'
     ? '思考过程中出现错误'
-    : props.content
-})
+    : props.content;
+});
 
 // 自动收起逻辑
 watch(() => props.status, (newVal) => {
   if (newVal === 'end' && props.autoCollapse) {
-    isExpanded.value = false
+    isExpanded.value = false;
   }
-})
+});
 </script>
 
 <template>

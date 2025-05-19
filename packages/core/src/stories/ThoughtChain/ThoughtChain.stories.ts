@@ -1,10 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
-import ThoughtChainSource from '@components/ThoughtChain/index.vue'
-import ThoughtChain from './index.vue'
-import './index.scss'
-import ThoughtChainWithCustomIcon from './CustomIcon.vue'
-import type { ThoughtChainProps } from '@components/ThoughtChain/types'
-import { pick } from 'radash'
+import type ThoughtChainSource from '@components/ThoughtChain/index.vue';
+import type { ThoughtChainProps } from '@components/ThoughtChain/types';
+import type { Meta, StoryObj } from '@storybook/vue3';
+import { pick } from 'radash';
+import ThoughtChainWithCustomIcon from './CustomIcon.vue';
+import ThoughtChain from './index.vue';
+import './index.scss';
 
 const mockItems: ThoughtChainProps['thinkingItems'] = [
   {
@@ -36,7 +36,7 @@ const mockItems: ThoughtChainProps['thinkingItems'] = [
     isCanExpand: false,
     isMarkdown: true,
   },
-]
+];
 
 const meta: Meta<typeof ThoughtChainSource> = {
   title: 'Example/ThoughtChain',
@@ -95,27 +95,27 @@ const meta: Meta<typeof ThoughtChainSource> = {
       success: '#2ecc71',
       error: '#e74c3c',
     },
-  }
-} satisfies Meta<typeof ThoughtChainSource>
+  },
+} satisfies Meta<typeof ThoughtChainSource>;
 
-export default meta
+export default meta;
 
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof meta>;
 
 export const ThoughtChainDemo: Story = {
   args: {
     lineGradient: false,
-  }
-}
+  },
+};
 
 export const CustomIconDemo: Story = {
   args: {
     thinkingItems: mockItems,
     lineGradient: false,
   },
-  render: (args) => ({
+  render: args => ({
     components: {
-      ThoughtChainWithCustomIcon
+      ThoughtChainWithCustomIcon,
     },
     setup() {
       const attrs = pick(args, [
@@ -128,9 +128,9 @@ export const CustomIconDemo: Story = {
         'thinkTitleKey',
         'thinkContentKey',
         'statusKey',
-      ] as (keyof Story['args'])[])
-      return { attrs }
+      ] as (keyof Story['args'])[]);
+      return { attrs };
     },
-    template: `<ThoughtChainWithCustomIcon v-bind="attrs" />`
+    template: `<ThoughtChainWithCustomIcon v-bind="attrs" />`,
   }),
-}
+};
