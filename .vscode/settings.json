@@ -12,10 +12,10 @@
     // 我们这里是指定自定义的修复
     "source.fixAll.eslint": "explicit",
     // 来源导入我们不需要给关闭掉
-    "source.organizeImports": "never",
+    // "source.organizeImports": "never",
     // 使用 stylelint 来修复样式问题
     "source.fixAll.stylelint": "explicit",
-    "source.fixAll.oxc": "always"
+    "source.fixAll.oxc": "explicit"
   },
 
   // 静默样式规则自动修复

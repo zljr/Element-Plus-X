@@ -21,6 +21,7 @@
     "lint": "turbo run lint",
     "lint:fix": "oxlint ./packages --fix && eslint . --fix",
     "lint:ic": "eslint --inspect-config",
+    "eslint": "eslint .",
     "eslint:fix": "eslint --fix"
   },
   "devDependencies": {
