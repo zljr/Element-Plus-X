@@ -1,9 +1,9 @@
 import type ThoughtChainSource from '@components/ThoughtChain/index.vue';
 import type { ThoughtChainProps } from '@components/ThoughtChain/types';
 import type { Meta, StoryObj } from '@storybook/vue3';
+import ThoughtChain from './index.vue';
 import { pick } from 'radash';
 import ThoughtChainWithCustomIcon from './CustomIcon.vue';
-import ThoughtChain from './index.vue';
 import './index.scss';
 
 const mockItems: ThoughtChainProps['thinkingItems'] = [
