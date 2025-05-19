@@ -23,11 +23,13 @@
     "lint:ic": "eslint --inspect-config",
     "eslint": "eslint .",
     "eslint:fix": "eslint --fix",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^4.13.1",
     "@changesets/cli": "^2.28.1",
+    "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.0",
     "cz-git": "^1.11.1",
     "eslint": "^9.23.0",
