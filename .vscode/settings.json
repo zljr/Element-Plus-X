@@ -60,7 +60,11 @@
     "aeac",
     "esno",
     "Groupable",
+    "jsonlee",
     "radash",
-    "unplugin"
+    "shiki",
+    "shikijs",
+    "unplugin",
+    "vueuse"
   ]
 }
