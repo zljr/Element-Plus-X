@@ -22,7 +22,8 @@
     "lint:fix": "oxlint ./packages --fix && eslint . --fix",
     "lint:ic": "eslint --inspect-config",
     "eslint": "eslint .",
-    "eslint:fix": "eslint --fix"
+    "eslint:fix": "eslint --fix",
+    "lint-staged": "lint-staged"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^4.13.1",
@@ -32,6 +33,7 @@
     "eslint": "^9.23.0",
     "eslint-plugin-format": "^1.0.1",
     "eslint-plugin-oxlint": "^0.16.2",
+    "lint-staged": "^16.0.0",
     "oxlint": "^0.16.3",
     "prettier": "^3.5.3",
     "turbo": "^2.4.4",

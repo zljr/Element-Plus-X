@@ -1,7 +1,7 @@
 import type ThoughtChainSource from '@components/ThoughtChain/index.vue';
 import type { ThoughtChainProps } from '@components/ThoughtChain/types';
-import type { Meta, StoryObj } from '@storybook/vue3';
 import ThoughtChain from './index.vue';
+import type { Meta, StoryObj } from '@storybook/vue3';
 import { pick } from 'radash';
 import ThoughtChainWithCustomIcon from './CustomIcon.vue';
 import './index.scss';
@@ -15,7 +15,7 @@ const mockItems: ThoughtChainProps['thinkingItems'] = [
     status: 'success',
     isCanExpand: true,
     isDefaultExpand: false,
-    isMarkdown: true,
+    isMarkdown: true
   },
   {
     id: 2,
@@ -25,7 +25,7 @@ const mockItems: ThoughtChainProps['thinkingItems'] = [
     status: 'loading',
     isCanExpand: true,
     isDefaultExpand: true,
-    isMarkdown: false,
+    isMarkdown: false
   },
   {
     id: 3,
@@ -34,8 +34,8 @@ const mockItems: ThoughtChainProps['thinkingItems'] = [
     thinkContent: 'This is the **final step** of the process',
     status: 'error',
     isCanExpand: false,
-    isMarkdown: true,
-  },
+    isMarkdown: true
+  }
 ];
 
 const meta: Meta<typeof ThoughtChainSource> = {
@@ -44,41 +44,39 @@ const meta: Meta<typeof ThoughtChainSource> = {
   argTypes: {
     dotSize: {
       control: { type: 'select' },
-      options: ['small', 'default', 'large'],
+      options: ['small', 'default', 'large']
     },
     maxWidth: {
-      control: { type: 'text' },
+      control: { type: 'text' }
     },
     lineGradient: {
-      control: { type: 'boolean' },
+      control: { type: 'boolean' }
     },
     rowKey: {
       control: { type: 'text' },
       defaultValue: 'id',
-      description: 'id字段名',
+      description: 'id字段名'
     },
     titleKey: {
       control: { type: 'text' },
       defaultValue: 'title',
-      description: '标题字段名',
+      description: '标题字段名'
     },
     statusKey: {
       control: { type: 'text' },
       defaultValue: 'status',
-      description: '状态字段名',
-
+      description: '状态字段名'
     },
     thinkContentKey: {
       control: { type: 'text' },
       defaultValue: 'content',
-      description: '思考内容字段名',
-
+      description: '思考内容字段名'
     },
     thinkTitleKey: {
       control: { type: 'text' },
       defaultValue: 'title',
-      description: '思考标题字段名',
-    },
+      description: '思考标题字段名'
+    }
   },
   args: {
     thinkingItems: mockItems,
@@ -93,9 +91,9 @@ const meta: Meta<typeof ThoughtChainSource> = {
     dotBackgroundColor: {
       loading: '#f39c12',
       success: '#2ecc71',
-      error: '#e74c3c',
-    },
-  },
+      error: '#e74c3c'
+    }
+  }
 } satisfies Meta<typeof ThoughtChainSource>;
 
 export default meta;
@@ -104,18 +102,18 @@ type Story = StoryObj<typeof meta>;
 
 export const ThoughtChainDemo: Story = {
   args: {
-    lineGradient: false,
-  },
+    lineGradient: false
+  }
 };
 
 export const CustomIconDemo: Story = {
   args: {
     thinkingItems: mockItems,
-    lineGradient: false,
+    lineGradient: false
   },
-  render: args => ({
+  render: (args) => ({
     components: {
-      ThoughtChainWithCustomIcon,
+      ThoughtChainWithCustomIcon
     },
     setup() {
       const attrs = pick(args, [
@@ -127,10 +125,10 @@ export const CustomIconDemo: Story = {
         'titleKey',
         'thinkTitleKey',
         'thinkContentKey',
-        'statusKey',
+        'statusKey'
       ] as (keyof Story['args'])[]);
       return { attrs };
     },
-    template: `<ThoughtChainWithCustomIcon v-bind="attrs" />`,
-  }),
+    template: `<ThoughtChainWithCustomIcon v-bind="attrs" />`
+  })
 };
