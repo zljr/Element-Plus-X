@@ -56,15 +56,17 @@ export const CustomListDemo: Story = {
   name: 'CustomList',
   args: {
     items: files,
-    hideUpload: true,
     listStyle: {
       padding: '0 12px'
-    }
+    },
+    hideUpload: false,
+    overflow:'scrollX',
+    drag: true
   },
   render: (args) => ({
     components: { CustomList },
     setup() {
-      const attrs = pick(args, ['items', 'hideUpload', 'listStyle'] as (keyof Story['args'])[])
+      const attrs = pick(args, ['items', 'hideUpload', 'listStyle', 'hideUpload', 'overflow', 'drag'] as (keyof Story['args'])[])
       return {
         attrs,
       }
@@ -104,8 +106,8 @@ export const DefaultScrollXDemo: Story = {
     },
     hideUpload: false,
     overflow:'scrollX',
-    drag: true
-  } as Story['args'],
+    drag: true,	
+  },
   render: (args) => ({
     components: { DefaultScrollX },
     setup() {
