@@ -14,30 +14,30 @@ title: 头部插槽
 </docs>
 
 <script setup lang="ts">
-import { CircleClose } from '@element-plus/icons-vue'
+import { CircleClose } from '@element-plus/icons-vue';
 
-const senderRef = ref()
-const senderValue = ref('')
-const showHeaderFlog = ref(false)
+const senderRef = ref();
+const senderValue = ref('');
+const showHeaderFlog = ref(false);
 
 onMounted(() => {
-  showHeaderFlog.value = true
-  senderRef.value.openHeader()
-})
+  showHeaderFlog.value = true;
+  senderRef.value.openHeader();
+});
 
 function openCloseHeader() {
   if (!showHeaderFlog.value) {
-    senderRef.value.openHeader()
+    senderRef.value.openHeader();
   }
   else {
-    senderRef.value.closeHeader()
+    senderRef.value.closeHeader();
   }
-  showHeaderFlog.value = !showHeaderFlog.value
+  showHeaderFlog.value = !showHeaderFlog.value;
 }
 
 function closeHeader() {
-  showHeaderFlog.value = false
-  senderRef.value.closeHeader()
+  showHeaderFlog.value = false;
+  senderRef.value.closeHeader();
 }
 </script>
 
@@ -71,26 +71,26 @@ function closeHeader() {
 
 <style scoped lang="less">
 .header-self-wrap {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  height: 200px;
+  .header-self-title {
+    width: 100%;
     display: flex;
-    flex-direction: column;
-    padding: 16px;
-    height: 200px;
-    .header-self-title {
-        width: 100%;
-        display: flex;
-        height: 30px;
-        align-items: center;
-        justify-content: space-between;
-        padding-bottom: 8px;
-    }
-    .header-self-content {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 20px;
-        color: #626aef;
-        font-weight: 600;
-    }
+    height: 30px;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 8px;
+  }
+  .header-self-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: #626aef;
+    font-weight: 600;
+  }
 }
 </style>

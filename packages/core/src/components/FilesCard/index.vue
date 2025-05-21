@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import type { FilesCardProps } from './types.d.ts'
-import { CircleCloseFilled, View } from '@element-plus/icons-vue'
-import { getFileType, getSize, previewImage } from '../../utils/index.ts'
-import useFileNameParser from '../../utils/useFileNameParser.ts'
-import svgIconMap from './fileSvg/index.ts'
-import { colorMap } from './options.ts'
+import type { FilesCardProps } from './types.d.ts';
+import { CircleCloseFilled, View } from '@element-plus/icons-vue';
+import { getFileType, getSize, previewImage } from '../../utils/index.ts';
+import useFileNameParser from '../../utils/useFileNameParser.ts';
+import svgIconMap from './fileSvg/index.ts';
+import { colorMap } from './options.ts';
 
 const props = withDefaults(defineProps<FilesCardProps>(), {
   uid: undefined,
@@ -27,105 +27,105 @@ const props = withDefaults(defineProps<FilesCardProps>(), {
   status: undefined,
   percent: undefined,
   errorTip: undefined,
-})
+});
 
-const emits = defineEmits(['delete', 'imagePreview']) // 新增自定义事件
-const { name, fileType, description, url, thumbUrl, fileSize, imgVariant } = toRefs(props)
+const emits = defineEmits(['delete', 'imagePreview']); // 新增自定义事件
+const { name, fileType, description, url, thumbUrl, fileSize, imgVariant } = toRefs(props);
 
-const { namePrefix, nameSuffix } = useFileNameParser(name)
-const isHovered = ref(false)
-const imageHovered = ref(false) // 新增图片悬停状态
+const { namePrefix, nameSuffix } = useFileNameParser(name);
+const isHovered = ref(false);
+const imageHovered = ref(false); // 新增图片悬停状态
 
 /* 图片类型文件预览 开始 */
-const _previewImg = ref<string | undefined>(undefined)
+const _previewImg = ref<string | undefined>(undefined);
 /* 图片类型文件预览 结束 */
 
 const _fileType = computed(() => {
   if (fileType.value)
-    return fileType.value
+    return fileType.value;
   if (!name.value)
-    return undefined
+    return undefined;
   if (!nameSuffix.value) {
-    return 'unknown'
+    return 'unknown';
   }
-  return getFileType(nameSuffix.value).lowerCase
-})
+  return getFileType(nameSuffix.value).lowerCase;
+});
 
 const _fileTypeUpperCase = computed(() => {
   if (fileType.value)
-    return fileType.value
+    return fileType.value;
   if (!name.value)
-    return ''
+    return '';
   if (!nameSuffix.value) {
-    return 'Unknown'
+    return 'Unknown';
   }
-  return getFileType(nameSuffix.value).upperCase
-})
+  return getFileType(nameSuffix.value).upperCase;
+});
 
 const _description = computed(() => {
   if (description.value) {
-    return description.value
+    return description.value;
   }
-  const typeStr = _fileTypeUpperCase.value
-  const sizeStr = fileSize.value ? `・${getSize(fileSize.value)}` : ''
+  const typeStr = _fileTypeUpperCase.value;
+  const sizeStr = fileSize.value ? `・${getSize(fileSize.value)}` : '';
   if (props.status === 'uploading') {
-    return `上传中...${`・${props.percent || 0}`}%${sizeStr}`
+    return `上传中...${`・${props.percent || 0}`}%${sizeStr}`;
   }
   if (props.status === 'error') {
-    return props.errorTip || '上传失败'
+    return props.errorTip || '上传失败';
   }
-  return `${typeStr}${sizeStr}`
-})
+  return `${typeStr}${sizeStr}`;
+});
 
-const isImageFile = computed(() => _fileType.value === 'image')
-const isSquareVariant = computed(() => imgVariant.value === 'square')
+const isImageFile = computed(() => _fileType.value === 'image');
+const isSquareVariant = computed(() => imgVariant.value === 'square');
 const _previewImgUrl = computed(() => {
   if (!isImageFile.value)
-    return undefined
+    return undefined;
   if (thumbUrl.value)
-    return thumbUrl.value
+    return thumbUrl.value;
   if (url.value)
-    return url.value
-  return _previewImg.value
-})
+    return url.value;
+  return _previewImg.value;
+});
 
 const _iconSize = computed(() => {
   if ((isSquareVariant.value && isImageFile.value && !props.iconSize) || (isSquareVariant.value && isImageFile.value && props.iconSize === '42px'))
-    return '64px'
-  return props.iconSize
-})
+    return '64px';
+  return props.iconSize;
+});
 
 watch(
   () => props.imgFile,
   async (newFile) => {
     if (newFile) {
       try {
-        const url = await previewImage(newFile)
-        _previewImg.value = url
+        const url = await previewImage(newFile);
+        _previewImg.value = url;
       }
       catch (error) {
-        console.error('Preview failed:', error)
+        console.error('Preview failed:', error);
       }
     }
     else {
-      _previewImg.value = undefined
+      _previewImg.value = undefined;
     }
   },
   { deep: true, immediate: true },
-)
+);
 
 function handleDelete() {
-  emits('delete', { ...props })
+  emits('delete', { ...props });
 }
 
 // 遮罩展开时触发预览
-const imgRef = ref()
+const imgRef = ref();
 function handlePreviewAction(type: 'self' | 'mask') {
   if (props.imgPreview && imgRef.value && _previewImgUrl && type === 'mask') {
-    imgRef.value!.showPreview()
+    imgRef.value!.showPreview();
   }
   if (type === 'self') {
-    emits('imagePreview', { ...props })
+    emits('imagePreview', { ...props });
   }
 }
 
@@ -133,7 +133,7 @@ defineExpose({
   namePrefix,
   nameSuffix,
   colorMap,
-})
+});
 </script>
 
 <template>
@@ -433,7 +433,7 @@ defineExpose({
         width: calc(100% - 12px) !important;
         height: calc(100% - 12px) !important;
 
-        svg>path:nth-child(1) {
+        svg > path:nth-child(1) {
           stroke: rgba(255, 255, 255, 0.2);
           stroke-width: 8px;
         }

@@ -17,21 +17,21 @@ title: 操作列表插槽
 </docs>
 
 <script setup lang="ts">
-import { Delete, Loading, Operation, Position, Promotion, Right, Setting } from '@element-plus/icons-vue'
+import { Delete, Loading, Operation, Position, Promotion, Right, Setting } from '@element-plus/icons-vue';
 
-const senderRef = ref()
-const senderValue = ref('')
-const loading = ref(false)
+const senderRef = ref();
+const senderValue = ref('');
+const loading = ref(false);
 
 function handleSubmit() {
-  console.log('submit', senderValue.value)
-  senderRef.value.submit()
-  loading.value = true
+  console.log('submit', senderValue.value);
+  senderRef.value.submit();
+  loading.value = true;
 }
 
 function handleCancel() {
-  console.log('cancel')
-  loading.value = false
+  console.log('cancel');
+  loading.value = false;
 }
 </script>
 

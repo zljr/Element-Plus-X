@@ -9,34 +9,34 @@ title: SSE 基础使用
 </docs>
 
 <script setup lang="ts">
-import { useXStream } from 'vue-element-plus-x'
+import { useXStream } from 'vue-element-plus-x';
 
-const { startStream, cancel, data, error, isLoading } = useXStream()
+const { startStream, cancel, data, error, isLoading } = useXStream();
 
 // 默认支持 SSE 协议
 async function startSSE() {
   try {
     const response = await fetch('https://node-test.element-plus-x.com/api/sse', {
       headers: { 'Content-Type': 'text/event-stream' },
-    })
-    const readableStream = response.body!
-    await startStream({ readableStream })
+    });
+    const readableStream = response.body!;
+    await startStream({ readableStream });
   }
   catch (err) {
-    console.error('Fetch error:', err)
+    console.error('Fetch error:', err);
   }
 }
 
 // 机器人的 content 计算属性
 const content = computed(() => {
   if (!data.value.length)
-    return ''
-  let text = ''
+    return '';
+  let text = '';
   for (let index = 0; index < data.value.length; index++) {
-    const chunk = data.value[index].data
+    const chunk = data.value[index].data;
     try {
-      const parsedChunk = JSON.parse(chunk).content
-      text += parsedChunk
+      const parsedChunk = JSON.parse(chunk).content;
+      text += parsedChunk;
     }
     catch (error) {
       // 这个 结束标识 是后端给的，所以这里这样判断
@@ -46,14 +46,14 @@ const content = computed(() => {
         // console.log('数据接收完毕')
       }
       else {
-        console.error('解析数据时出错:', error)
+        console.error('解析数据时出错:', error);
       }
     }
     // console.log('New chunk:', chunk)
   }
-  console.log('Text:', text)
-  return text
-})
+  console.log('Text:', text);
+  return text;
+});
 </script>
 
 <template>

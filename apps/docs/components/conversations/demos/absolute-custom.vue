@@ -7,7 +7,7 @@ title: 绝对自定义样式与分组标题
 </docs>
 
 <script setup lang="ts">
-import type { GroupableOptions } from 'vue-element-plus-x/types/Conversations'
+import type { GroupableOptions } from 'vue-element-plus-x/types/Conversations';
 
 const menuTestItems1 = ref([
   {
@@ -78,7 +78,7 @@ const menuTestItems1 = ref([
     key: 'm14',
     label: '菜单测试项目 14',
   },
-])
+]);
 const conversationMenuItems1 = [
   {
     key: 'edit',
@@ -103,38 +103,38 @@ const conversationMenuItems1 = [
     icon: '🍆',
     command: 'share',
   },
-]
+];
 
-const activeKey5 = ref('m1')
+const activeKey5 = ref('m1');
 
 // 自定义分组选项
 const customGroupOptions: GroupableOptions = {
   // 自定义分组排序，学习 > 工作 > 个人 > 未分组
   sort: (a: any, b: any) => {
-    const order: Record<string, number> = { 学习: 0, 工作: 1, 个人: 2, 未分组: 3 }
-    const orderA = order[a] !== undefined ? order[a] : 999
-    const orderB = order[b] !== undefined ? order[b] : 999
-    return orderA - orderB
+    const order: Record<string, number> = { 学习: 0, 工作: 1, 个人: 2, 未分组: 3 };
+    const orderA = order[a] !== undefined ? order[a] : 999;
+    const orderB = order[b] !== undefined ? order[b] : 999;
+    return orderA - orderB;
   },
-}
+};
 
 // 处理菜单点击
 function handleMenuClick(menuKey: string, item: any) {
-  console.log('菜单点击', menuKey, item)
+  console.log('菜单点击', menuKey, item);
 
   switch (menuKey) {
     case 'edit':
-      console.log(`编辑: ${item.label}`)
-      ElMessage.warning(`编辑: ${item.label}`)
-      break
+      console.log(`编辑: ${item.label}`);
+      ElMessage.warning(`编辑: ${item.label}`);
+      break;
     case 'delete':
-      console.log(`删除: ${item.label}`)
-      ElMessage.error(`删除: ${item.label}`)
-      break
+      console.log(`删除: ${item.label}`);
+      ElMessage.error(`删除: ${item.label}`);
+      break;
     case 'share':
-      console.log(`分享: ${item.label}`)
-      ElMessage.success(`分享: ${item.label}`)
-      break
+      console.log(`分享: ${item.label}`);
+      ElMessage.success(`分享: ${item.label}`);
+      break;
   }
 }
 </script>
@@ -241,7 +241,7 @@ function handleMenuClick(menuKey: string, item: any) {
   display: flex;
   align-items: center;
   font-weight: 500;
-  color: #409EFF;
+  color: #409eff;
 }
 
 .menu-buttons {
@@ -273,7 +273,7 @@ function handleMenuClick(menuKey: string, item: any) {
 
     &:hover {
       background-color: #f5f7fa;
-      color: #409EFF;
+      color: #409eff;
     }
   }
 }

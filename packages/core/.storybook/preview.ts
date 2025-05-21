@@ -1,5 +1,5 @@
+import type { Preview } from '@storybook/vue3';
 import { themes } from '@storybook/theming';
-import type { Preview } from '@storybook/vue3'
 
 const preview: Preview = {
   parameters: {
@@ -13,8 +13,8 @@ const preview: Preview = {
       // Override the default dark theme
       dark: { ...themes.dark },
       // Override the default light theme
-      light: { ...themes.normal }
-    }
+      light: { ...themes.normal },
+    },
   },
 };
 

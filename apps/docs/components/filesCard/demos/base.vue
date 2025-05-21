@@ -7,16 +7,16 @@ title: 基础用法
 </docs>
 
 <script setup lang="ts">
-import type { FilesType } from 'vue-element-plus-x/types/FilesCard'
+import type { FilesType } from 'vue-element-plus-x/types/FilesCard';
 
-const filesCardRef = ref()
-const colorMap = ref({}) as Ref<Record<FilesType, string>>
+const filesCardRef = ref();
+const colorMap = ref({}) as Ref<Record<FilesType, string>>;
 
 onMounted(() => {
   // 获取内置颜色
-  colorMap.value = filesCardRef.value?.colorMap
-  console.log(colorMap.value)
-})
+  colorMap.value = filesCardRef.value?.colorMap;
+  console.log(colorMap.value);
+});
 </script>
 
 <template>

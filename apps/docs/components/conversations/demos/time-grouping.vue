@@ -7,9 +7,9 @@ title: 时间分组与吸顶效果
 </docs>
 
 <script setup lang="ts">
-import type { ConversationItem } from 'vue-element-plus-x/types/Conversations'
+import type { ConversationItem } from 'vue-element-plus-x/types/Conversations';
 
-const timeBasedItems = ref<ConversationItem<{ id: string, label: string }>[]>([
+const timeBasedItems = ref<ConversationItem<{ id: string; label: string }>[]>([
   {
     id: '1',
     label: '今天的会话111111111111111111111111111',
@@ -42,9 +42,9 @@ const timeBasedItems = ref<ConversationItem<{ id: string, label: string }>[]>([
     id: '7',
     label: '很久以前的会话',
   },
-])
+]);
 
-const activeKey1 = ref('1')
+const activeKey1 = ref('1');
 </script>
 
 <template>

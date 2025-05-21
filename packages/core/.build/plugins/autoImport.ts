@@ -1,7 +1,7 @@
-import type { PluginOption } from 'vite'
-import AutoImport from 'unplugin-auto-import/vite'
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
-import Components from 'unplugin-vue-components/vite'
+import type { PluginOption } from 'vite';
+import AutoImport from 'unplugin-auto-import/vite';
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
+import Components from 'unplugin-vue-components/vite';
 
 const plugins: PluginOption[] = [
   AutoImport({
@@ -13,6 +13,6 @@ const plugins: PluginOption[] = [
   Components({
     resolvers: [ElementPlusResolver()],
   }) as PluginOption,
-]
+];
 
-export default plugins
+export default plugins;

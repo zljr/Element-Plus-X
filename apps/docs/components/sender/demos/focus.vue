@@ -16,14 +16,14 @@ title: 聚焦失焦
 </docs>
 
 <script setup lang="ts">
-const senderRef = ref()
-const senderValue = ref('🐳 欢迎使用 Element Plus X')
+const senderRef = ref();
+const senderValue = ref('🐳 欢迎使用 Element Plus X');
 function blur() {
-  senderRef.value.blur()
+  senderRef.value.blur();
 }
 
 function focus(type = 'all') {
-  senderRef.value.focus(type)
+  senderRef.value.focus(type);
 }
 </script>
 
@@ -49,26 +49,26 @@ function focus(type = 'all') {
 
 <style scoped lang="less">
 .header-self-wrap {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  height: 200px;
+  .header-self-title {
+    width: 100%;
     display: flex;
-    flex-direction: column;
-    padding: 16px;
-    height: 200px;
-    .header-self-title {
-        width: 100%;
-        display: flex;
-        height: 30px;
-        align-items: center;
-        justify-content: space-between;
-        padding-bottom: 8px;
-    }
-    .header-self-content {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 20px;
-        color: #626aef;
-        font-weight: 600;
-    }
+    height: 30px;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 8px;
+  }
+  .header-self-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: #626aef;
+    font-weight: 600;
+  }
 }
 </style>

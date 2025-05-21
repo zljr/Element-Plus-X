@@ -9,20 +9,20 @@ title: 雾化效果
 </docs>
 
 <script setup lang="ts">
-const avatarUser = 'https://avatars.githubusercontent.com/u/76239030?v=4'
-const content = ref(`## 🔥Element-Plus-X \n 🥰 感谢使用 Element-Plus-X! \n - 列表项 1 \n - 列表项 2 **粗体文本** 和 *斜体文本* \n \`\`\`javascript \n console.log('Hello, world!'); \n \`\`\` \n`)
+const avatarUser = 'https://avatars.githubusercontent.com/u/76239030?v=4';
+const content = ref(`## 🔥Element-Plus-X \n 🥰 感谢使用 Element-Plus-X! \n - 列表项 1 \n - 列表项 2 **粗体文本** 和 *斜体文本* \n \`\`\`javascript \n console.log('Hello, world!'); \n \`\`\` \n`);
 
 function changeContent(type: number) {
-  content.value = ''
+  content.value = '';
 
   setTimeout(() => {
     if (type === 1) {
-      content.value = `## 🔥Element-Plus-X \n 🥰 感谢使用 Element-Plus-X! \n - 列表项 1 \n - 列表项 2 **粗体文本** 和 *斜体文本* \n \`\`\`javascript \n console.log('Hello, world!'); \n \`\`\` \n`
+      content.value = `## 🔥Element-Plus-X \n 🥰 感谢使用 Element-Plus-X! \n - 列表项 1 \n - 列表项 2 **粗体文本** 和 *斜体文本* \n \`\`\`javascript \n console.log('Hello, world!'); \n \`\`\` \n`;
     }
     else if (type === 2) {
-      content.value = `🔥Element-Plus-X `.repeat(10)
+      content.value = `🔥Element-Plus-X `.repeat(10);
     }
-  }, 80)
+  }, 80);
 }
 </script>
 

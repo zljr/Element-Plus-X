@@ -7,11 +7,11 @@ title: 基础用法
 </docs>
 
 <script setup lang="ts">
-import type { PromptsItemsProps } from 'vue-element-plus-x/types/Prompts'
+import type { PromptsItemsProps } from 'vue-element-plus-x/types/Prompts';
 
-const items = ref<PromptsItemsProps[]>([])
+const items = ref<PromptsItemsProps[]>([]);
 
-onMounted(()=>{
+onMounted(() => {
   for (let index = 0; index < 3; index++) {
     items.value.push({
       key: index,
@@ -100,12 +100,12 @@ onMounted(()=>{
           },
         },
       ],
-    })
+    });
   }
-})
+});
 
 function handleItemClick(item: PromptsItemsProps) {
-  ElMessage.success(`点击了 ${item.key}`)
+  ElMessage.success(`点击了 ${item.key}`);
 }
 </script>
 

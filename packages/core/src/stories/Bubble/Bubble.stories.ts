@@ -1,8 +1,7 @@
+import type BubbleSource from '@components/Bubble/index.vue';
 // import { fn } from '@storybook/test';
 import type { Meta, StoryObj } from '@storybook/vue3';
 import Bubble from './index.vue';
-import BubbleSource from '@components/Bubble/index.vue'
-
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories
 const meta = {
@@ -31,9 +30,9 @@ const meta = {
       step: 2,
       suffix: '💗',
       interval: 100,
-      isRequestEnd: true
+      isRequestEnd: true,
     },
-  }
+  },
 } satisfies Meta<typeof BubbleSource>;
 
 export default meta;
@@ -100,6 +99,6 @@ sequenceDiagram
     Note right of 2: $$\sqrt{2+2}=\sqrt{4}=2$$
 \`\`\`
 `.trim(),
-    avatar: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
-  }
+    avatar: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
+  },
 };

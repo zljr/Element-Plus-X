@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import Attachments from '@components/Attachments/index.vue'
-import { useAttachmentStubs } from './useAttachmentStubs'
+import Attachments from '@components/Attachments/index.vue';
+import { useAttachmentStubs } from './useAttachmentStubs';
 
 const {
   files,
@@ -8,7 +8,7 @@ const {
   handleHttpRequest,
   handleUploadDrop,
   handleDeleteCard,
-} = useAttachmentStubs()
+} = useAttachmentStubs();
 </script>
 
 <template>
@@ -63,7 +63,7 @@ const {
       height: 75%;
       border-radius: 15px;
       left: 0;
-      background-color: #409EFF;
+      background-color: #409eff;
     }
   }
 }

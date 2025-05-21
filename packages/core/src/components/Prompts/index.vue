@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { PromptsItemsProps, PromptsProps } from './types'
+import type { PromptsItemsProps, PromptsProps } from './types';
 
 const props = withDefaults(defineProps<PromptsProps>(), {
   items: () => [],
@@ -7,43 +7,43 @@ const props = withDefaults(defineProps<PromptsProps>(), {
   wrap: false,
   vertical: false,
   style: () => ({}),
-})
+});
 
-const emits = defineEmits(['itemClick'])
+const emits = defineEmits(['itemClick']);
 
-const hoveredKeys = ref(new Set())
-const activeKeys = ref(new Set())
+const hoveredKeys = ref(new Set());
+const activeKeys = ref(new Set());
 
 function handleItemClick(item: PromptsItemsProps) {
   if (item.disabled)
-    return
+    return;
   if (item.children && item.children.length > 0)
-    return
-  emits('itemClick', item)
+    return;
+  emits('itemClick', item);
 }
 
 function handleMouseEnter(key: string | number) {
-  hoveredKeys.value.add(key)
+  hoveredKeys.value.add(key);
 }
 
 function handleMouseLeave(key: string | number) {
-  hoveredKeys.value.delete(key)
+  hoveredKeys.value.delete(key);
 }
 
 function handleMouseDown(key: string | number) {
-  activeKeys.value.add(key)
+  activeKeys.value.add(key);
 }
 
 function handleMouseUp(key: string | number) {
-  activeKeys.value.delete(key)
+  activeKeys.value.delete(key);
 }
 
 function isHovered(key: string | number) {
-  return hoveredKeys.value.has(key)
+  return hoveredKeys.value.has(key);
 }
 
 function isActive(key: string | number) {
-  return activeKeys.value.has(key)
+  return activeKeys.value.has(key);
 }
 </script>
 
@@ -130,8 +130,9 @@ function isActive(key: string | number) {
     line-height: 1.5;
     box-sizing: border-box;
     word-break: break-word;
-    font-family: BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
-      sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    font-family:
+      BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji',
+      'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   }
 
   .el-prompts-items {
@@ -165,7 +166,9 @@ function isActive(key: string | number) {
     justify-content: flex-start;
     background: #ffffff;
     border-radius: 8px;
-    transition: border 0.3s, background 0.3s;
+    transition:
+      border 0.3s,
+      background 0.3s;
     border: 1px solid #f0f0f0;
   }
 

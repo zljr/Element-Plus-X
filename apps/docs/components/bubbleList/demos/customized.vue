@@ -7,41 +7,41 @@ title: 自定义列表展示
 </docs>
 
 <script setup lang="ts">
-import type { BubbleListItemProps, BubbleListProps } from 'vue-element-plus-x/types/BubbleList'
-import { DocumentCopy, Refresh, Search, Star } from '@element-plus/icons-vue'
+import type { BubbleListItemProps, BubbleListProps } from 'vue-element-plus-x/types/BubbleList';
+import { DocumentCopy, Refresh, Search, Star } from '@element-plus/icons-vue';
 
 type listType = BubbleListItemProps & {
-  key: number
-  role: 'user' | 'ai'
-}
+  key: number;
+  role: 'user' | 'ai';
+};
 
 // 示例调用
-const bubbleItems = ref<BubbleListProps<listType>['list']>(generateFakeItems(5))
-const avatar = ref('https://avatars.githubusercontent.com/u/76239030?v=4')
-const avartAi = ref('https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png')
-const switchValue = ref(false)
-const loading = ref(false)
+const bubbleItems = ref<BubbleListProps<listType>['list']>(generateFakeItems(5));
+const avatar = ref('https://avatars.githubusercontent.com/u/76239030?v=4');
+const avartAi = ref('https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png');
+const switchValue = ref(false);
+const loading = ref(false);
 
 function generateFakeItems(count: number): listType[] {
-  const messages: listType[] = []
+  const messages: listType[] = [];
   for (let i = 0; i < count; i++) {
-    const role = i % 2 === 0 ? 'ai' : 'user'
-    const placement = role === 'ai' ? 'start' : 'end'
-    const key = i + 1
+    const role = i % 2 === 0 ? 'ai' : 'user';
+    const placement = role === 'ai' ? 'start' : 'end';
+    const key = i + 1;
     messages.push({
       key,
       role,
       placement,
       noStyle: true, // 如果你不想用默认的气泡样式
-    })
+    });
   }
-  return messages
+  return messages;
 }
 
 // 设置某个 item 的 loading
 function setLoading(loading: boolean) {
-  bubbleItems.value[bubbleItems.value.length - 1].loading = loading
-  bubbleItems.value[bubbleItems.value.length - 2].loading = loading
+  bubbleItems.value[bubbleItems.value.length - 1].loading = loading;
+  bubbleItems.value[bubbleItems.value.length - 2].loading = loading;
 }
 </script>
 
@@ -115,56 +115,56 @@ function setLoading(loading: boolean) {
 
 <style scoped lang="less">
 .avatar-wrapper {
-    width: 40px;
-    height: 40px;
-    img {
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-    }
-}
-
-.header-wrapper {
-    .header-name {
-        font-size: 14px;
-        color: #979797;
-    }
-}
-
-.content-wrapper {
-    .content-text {
-        font-size: 14px;
-        color: #333;
-        padding: 12px;
-        background: linear-gradient(to right, #fdfcfb 0%, #ffd1ab 100%);
-        border-radius: 15px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-}
-
-.footer-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    .footer-time {
-        font-size: 12px;
-        margin-top: 3px;
-    }
-}
-
-.footer-container {
-  :deep(.el-button+.el-button) {
-    margin-left: 8px;
+  width: 40px;
+  height: 40px;
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
   }
 }
 
-.loading-container {
+.header-wrapper {
+  .header-name {
+    font-size: 14px;
+    color: #979797;
+  }
+}
+
+.content-wrapper {
+  .content-text {
     font-size: 14px;
     color: #333;
     padding: 12px;
     background: linear-gradient(to right, #fdfcfb 0%, #ffd1ab 100%);
     border-radius: 15px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.footer-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  .footer-time {
+    font-size: 12px;
+    margin-top: 3px;
+  }
+}
+
+.footer-container {
+  :deep(.el-button + .el-button) {
+    margin-left: 8px;
+  }
+}
+
+.loading-container {
+  font-size: 14px;
+  color: #333;
+  padding: 12px;
+  background: linear-gradient(to right, #fdfcfb 0%, #ffd1ab 100%);
+  border-radius: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .loading-container span {
@@ -173,7 +173,8 @@ function setLoading(loading: boolean) {
 }
 
 @keyframes bounce {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(5px);
   }
   50% {
@@ -184,16 +185,16 @@ function setLoading(loading: boolean) {
 .loading-container span:nth-child(4n) {
   animation: bounce 1.2s ease infinite;
 }
-.loading-container span:nth-child(4n+1) {
+.loading-container span:nth-child(4n + 1) {
   animation: bounce 1.2s ease infinite;
-  animation-delay: .3s;
+  animation-delay: 0.3s;
 }
-.loading-container span:nth-child(4n+2) {
+.loading-container span:nth-child(4n + 2) {
   animation: bounce 1.2s ease infinite;
-  animation-delay: .6s;
+  animation-delay: 0.6s;
 }
-.loading-container span:nth-child(4n+3) {
+.loading-container span:nth-child(4n + 3) {
   animation: bounce 1.2s ease infinite;
-  animation-delay: .9s;
+  animation-delay: 0.9s;
 }
 </style>

@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import type { TypewriterInstance, TypingConfig } from '../Typewriter/types.d.ts'
+import type { TypewriterInstance, TypingConfig } from '../Typewriter/types.d.ts';
 
-import type { BubbleProps } from './types.d.ts'
-import Typewriter from '../Typewriter/index.vue'
+import type { BubbleProps } from './types.d.ts';
+import Typewriter from '../Typewriter/index.vue';
 
-interface Emits{
-  (start: 'start', instance: TypewriterInstance): void
-  (finish: 'finish', instance: TypewriterInstance): void
-  (writing: 'writing', instance: TypewriterInstance): void
-  (avatarError: 'avatarError', e: Event): void
+interface Emits {
+  (start: 'start', instance: TypewriterInstance): void;
+  (finish: 'finish', instance: TypewriterInstance): void;
+  (writing: 'writing', instance: TypewriterInstance): void;
+  (avatarError: 'avatarError', e: Event): void;
 }
 
 const props = withDefaults(defineProps<BubbleProps>(), {
@@ -25,24 +25,24 @@ const props = withDefaults(defineProps<BubbleProps>(), {
   avatarSrcSet: '',
   avatarAlt: '',
   avatarFit: 'cover',
-  noStyle: false
-})
+  noStyle: false,
+});
 
 // const emits = defineEmits(['start', 'finish', 'writing', 'avatarError'])
-const emits = defineEmits<Emits>()
+const emits = defineEmits<Emits>();
 
-const internalDestroyed = ref(false) // 内部销毁状态
+const internalDestroyed = ref(false); // 内部销毁状态
 // 新增：响应式变量跟踪打字状态
-const isTypingClass = ref(false)
+const isTypingClass = ref(false);
 
 // 监听内容变化自动重置
 watch(() => props.content, (newVal, oldVal) => {
   if (newVal !== oldVal && internalDestroyed.value) {
-    restart() // 内容变化时自动重置
+    restart(); // 内容变化时自动重置
   }
-})
+});
 
-const typewriterRef = ref<TypewriterInstance>()
+const typewriterRef = ref<TypewriterInstance>();
 const instance: TypewriterInstance = {
   interrupt,
   continue: continueTyping,
@@ -55,69 +55,69 @@ const instance: TypewriterInstance = {
   progress: computed(() =>
     internalDestroyed.value ? 0 : typewriterRef.value?.progress.value || 0,
   ),
-}
+};
 
-const DEFAULT_TYPING:  TypingConfig = {
+const DEFAULT_TYPING: TypingConfig = {
   step: 2,
   suffix: '|',
   interval: 50,
-  isRequestEnd: true
-}
+  isRequestEnd: true,
+};
 
 const _typing = computed(() => {
   if (typeof props.typing === 'undefined') {
-    return false
+    return false;
   }
   else if (typeof props.typing === 'boolean') {
-    return props.typing
+    return props.typing;
   }
   else {
-    return Object.assign({}, DEFAULT_TYPING, props.typing)
+    return Object.assign({}, DEFAULT_TYPING, props.typing);
   }
-}) as boolean | TypingConfig
+}) as boolean | TypingConfig;
 
 function onStart(instance: TypewriterInstance) {
-  emits('start', instance)
+  emits('start', instance);
 }
 
 function onFinish(instance: TypewriterInstance) {
-  isTypingClass.value = false
-  emits('finish', instance)
+  isTypingClass.value = false;
+  emits('finish', instance);
 }
 
 function onWriting(instance: TypewriterInstance) {
-  isTypingClass.value = true
-  emits('writing', instance)
+  isTypingClass.value = true;
+  emits('writing', instance);
 }
 
 function avatarError(e: Event) {
-  emits('avatarError', e)
+  emits('avatarError', e);
 }
 
 function interrupt() {
-  typewriterRef.value?.interrupt()
+  typewriterRef.value?.interrupt();
 }
 
 function continueTyping() {
-  typewriterRef.value?.continue()
+  typewriterRef.value?.continue();
 }
 
 function restart() {
-  internalDestroyed.value = false
-  typewriterRef.value?.restart()
+  internalDestroyed.value = false;
+  typewriterRef.value?.restart();
 }
 
 function destroy() {
-  typewriterRef.value?.destroy()
-  internalDestroyed.value = true
+  typewriterRef.value?.destroy();
+  internalDestroyed.value = true;
 }
 
 // 定义三个点-加载中样式
-const dots = [1, 2, 3]
+const dots = [1, 2, 3];
 
 // 组件卸载时自动销毁
-onUnmounted(instance.destroy)
-defineExpose(instance)
+onUnmounted(instance.destroy);
+defineExpose(instance);
 </script>
 
 <template>
@@ -348,7 +348,6 @@ defineExpose(instance)
 
     /* 波浪动画 */
     @keyframes wave {
-
       0%,
       100% {
         transform: translateY(-2px);

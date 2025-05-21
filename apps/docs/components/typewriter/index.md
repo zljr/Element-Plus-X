@@ -78,35 +78,35 @@
 
 ## 属性
 
-| 属性名       | 类型    | 是否必填 | 默认值  | 描述                                           |
-| ------------ | ------- |-------| ------- | ---------------------------------------------- |
-| `content`    | String  | 否 | `''`    | 要展示的文本内容，支持纯文本或 Markdown 格式。 |
-| `isMarkdown` | Boolean | 否 | `false` | 是否启用 Markdown 渲染模式。                   |
-| `typing`     | Boolean \|  `{ step?: number, interval?: number, suffix?: string }` |否 | `false` | 是否启用打字机效果。 |
-| `typing.step` | Number  | 否 | `2`     | 每次打字吐多少字符。 |
-| `typing.interval` | Number |  否 | `50`    | 每次打字的间隔时间  单位( `ms` )。                 |
-| `typing.suffix` | String | 否 |`'\|'` | 打字器后缀光标字符（仅在非 Markdown 模式下生效）。 |
-| `isFog`      | Boolean \|  `{ bgColor?: string, width?: string }`  | 否 | `false` | 是否启用雾化效果，可以设置背景色和宽度。   |
+| 属性名            | 类型                                                               | 是否必填 | 默认值  | 描述                                               |
+| ----------------- | ------------------------------------------------------------------ | -------- | ------- | -------------------------------------------------- |
+| `content`         | String                                                             | 否       | `''`    | 要展示的文本内容，支持纯文本或 Markdown 格式。     |
+| `isMarkdown`      | Boolean                                                            | 否       | `false` | 是否启用 Markdown 渲染模式。                       |
+| `typing`          | Boolean \| `{ step?: number, interval?: number, suffix?: string }` | 否       | `false` | 是否启用打字机效果。                               |
+| `typing.step`     | Number                                                             | 否       | `2`     | 每次打字吐多少字符。                               |
+| `typing.interval` | Number                                                             | 否       | `50`    | 每次打字的间隔时间 单位( `ms` )。                  |
+| `typing.suffix`   | String                                                             | 否       | `'\|'`  | 打字器后缀光标字符（仅在非 Markdown 模式下生效）。 |
+| `isFog`           | Boolean \| `{ bgColor?: string, width?: string }`                  | 否       | `false` | 是否启用雾化效果，可以设置背景色和宽度。           |
 
 ## 事件
 
-| 事件名       | 参数  | 类型       | 描述                                         |
-| ------------ | ------------ |--- | -------------------------------------------- |
-| `@start` | `ref` 实例 | Function | 当打字效果开始时触发 |
-| `@finish` | `ref` 实例 | Function | 当打字效果完成时触发 |
+| 事件名     | 参数       | 类型     | 描述                     |
+| ---------- | ---------- | -------- | ------------------------ |
+| `@start`   | `ref` 实例 | Function | 当打字效果开始时触发     |
+| `@finish`  | `ref` 实例 | Function | 当打字效果完成时触发     |
 | `@writing` | `ref` 实例 | Function | 当打字效果进行中不断触发 |
 
 ## Ref 实例方法
 
-| 属性名       | 类型         | 描述                                         |
-| ----------- | ------------ | -------------------------------------------- |
-| `interrupt` | Function | 中断打字。                               |
-| `continue`   | Function | 继续未完成的打字。                               |
-| `restart`   | Function | 重新开始打字。                               |
-| `destroy`   | Function | 主动销毁打字组件。                               |
-| `renderedContent` | String | 获取打字组件渲染的内容。                    |
-| `isTyping`  | Boolean |  是否正在打字。                             |
-| `progress`  | Number | 打字进度，取值范围 0 - 100。                     |
+| 属性名            | 类型     | 描述                         |
+| ----------------- | -------- | ---------------------------- |
+| `interrupt`       | Function | 中断打字。                   |
+| `continue`        | Function | 继续未完成的打字。           |
+| `restart`         | Function | 重新开始打字。               |
+| `destroy`         | Function | 主动销毁打字组件。           |
+| `renderedContent` | String   | 获取打字组件渲染的内容。     |
+| `isTyping`        | Boolean  | 是否正在打字。               |
+| `progress`        | Number   | 打字进度，取值范围 0 - 100。 |
 
 ## 功能特性
 

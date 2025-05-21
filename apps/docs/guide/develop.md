@@ -23,7 +23,7 @@ pnpm install # 推荐使用 PNPM 管理依赖
   // 在 playground/src/components/XXXDemo.vue 文件中
   // 例如，这样用绝对路经引入就不需要构建，直接访问，每次热更新都能立马看到效果，方便你本地调试开发
 
-  import Bubble from 'vue-element-plus-x/src/components/Bubble/index.vue'
+  import Bubble from 'vue-element-plus-x/src/components/Bubble/index.vue';
   ```
 
 以下是主要的 **`项目目录结构`** 请先对照查看，方便你对项目目录有所了解
@@ -53,11 +53,11 @@ pnpm install # 推荐使用 PNPM 管理依赖
 
 **请先构建好组件在执行预览**
 
-| 命令                | 说明                 |
-| ------------------- | -------------------- |
-| `pnpm build:components` | 在本地构建生产版本   |
-| `pnpm dev:playground` | 启动组件测试使用预览 |
-| `pnpm dev:docs` | 本地预览文档 (文档暂未集成在开源中... 预计在 5月中旬会优化好项目架构，开源出来) |
+| 命令                    | 说明                                                                            |
+| ----------------------- | ------------------------------------------------------------------------------- |
+| `pnpm build:components` | 在本地构建生产版本                                                              |
+| `pnpm dev:playground`   | 启动组件测试使用预览                                                            |
+| `pnpm dev:docs`         | 本地预览文档 (文档暂未集成在开源中... 预计在 5月中旬会优化好项目架构，开源出来) |
 
 #### **五、成为贡献者**
 
@@ -77,9 +77,9 @@ pnpm install # 推荐使用 PNPM 管理依赖
 
 2. **代码规范**：
 
-   请在执行完开发命令后，安装并打开 **Vs Code 的  `ESLint`  插件**  使用  `ESLint.9x`  格式化代码（保存代码时自动检查）
+   请在执行完开发命令后，安装并打开 **Vs Code 的 `ESLint` 插件** 使用 `ESLint.9x` 格式化代码（保存代码时自动检查）
 
-   - 组件命名遵循  `PascalCase`  规范
+   - 组件命名遵循 `PascalCase` 规范
 
    - 每个组件包含：
 

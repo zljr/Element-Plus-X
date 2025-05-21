@@ -1,8 +1,8 @@
+import type BubbleListSource from '@components/BubbleList/index.vue';
 // import { fn } from '@storybook/test';
 import type { Meta, StoryObj } from '@storybook/vue3';
+import { messageArr } from '@assets/mock';
 import BubbleList from './index.vue';
-import BubbleListSource from '@components/BubbleList/index.vue'
-import { messageArr } from '@assets/mock'
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories
 const meta = {
@@ -17,7 +17,7 @@ const meta = {
     backButtonThreshold: { control: 'number' },
     btnLoading: { control: 'boolean' },
     btnColor: { control: 'color' },
-    btnIconSize: { control: 'number' }
+    btnIconSize: { control: 'number' },
   },
   args: {
     // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
@@ -28,7 +28,7 @@ const meta = {
     backButtonThreshold: 80,
     btnLoading: true,
     btnColor: '#409EFF',
-    btnIconSize: 24
+    btnIconSize: 24,
   },
 } satisfies Meta<typeof BubbleListSource>;
 
@@ -47,6 +47,6 @@ export const BubbleListDemo: Story = {
     backButtonThreshold: 80,
     btnLoading: true,
     btnColor: '#409EFF',
-    btnIconSize: 24
+    btnIconSize: 24,
   } as Story['args'],
 };

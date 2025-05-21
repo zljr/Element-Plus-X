@@ -1,8 +1,8 @@
 <!-- LoadingButton loading 按钮 -->
 <script setup lang="ts">
-import loading from './loading.vue'
+import loading from './loading.vue';
 
-const emits = defineEmits(['cancel'])
+const emits = defineEmits(['cancel']);
 </script>
 
 <template>

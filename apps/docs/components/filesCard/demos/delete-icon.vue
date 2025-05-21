@@ -8,7 +8,7 @@ title: 删除图标、删除事件
 
 <script setup lang="ts">
 function handleDel() {
-  ElMessage.success('删除成功')
+  ElMessage.success('删除成功');
 }
 </script>
 

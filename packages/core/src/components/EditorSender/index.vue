@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import type { SenderProps } from './types.d.ts'
-import EditorInput from '../EditorInput/index.vue'
+import type { SenderProps } from './types.d.ts';
+import EditorInput from '../EditorInput/index.vue';
 import {
   ClearButton,
   LoadingButton,
   SendButton,
   SpeechButton,
   SpeechLoadingButton,
-} from './components'
+} from './components';
 
 const props = withDefaults(defineProps<SenderProps>(), {
   placeholder: '请输入内容',
@@ -32,7 +32,7 @@ const props = withDefaults(defineProps<SenderProps>(), {
   triggerPopoverLeft: '0px',
   triggerPopoverOffset: 8,
   triggerPopoverPlacement: 'top-start',
-})
+});
 
 const emits = defineEmits([
   'update:modelValue',
@@ -44,79 +44,79 @@ const emits = defineEmits([
   'recordingChange',
 
   'trigger',
-])
+]);
 
-const slots = defineSlots()
+const slots = defineSlots();
 
 // 获取当前组件实例
-const instance = getCurrentInstance()
+const instance = getCurrentInstance();
 // 判断是否存在 submit 监听器
 const hasOnRecordingChangeListener = computed(() => {
-  return !!instance?.vnode.props?.onRecordingChange
-})
-const senderRef = ref()
-const inputRef = ref()
-const contentRef = ref()
+  return !!instance?.vnode.props?.onRecordingChange;
+});
+const senderRef = ref();
+const inputRef = ref();
+const contentRef = ref();
 const internalValue = computed({
   get() {
-    return props.modelValue
+    return props.modelValue;
   },
   set(val) {
     if (props.readOnly || props.disabled)
-      return
-    emits('update:modelValue', val)
+      return;
+    emits('update:modelValue', val);
   },
-})
+});
 
 // 处理输入法组合状态
-const isComposing = ref(false)
-const popoverRef = ref()
+const isComposing = ref(false);
+const popoverRef = ref();
 // 判断是否存在 trigger 监听器
 const hasOnTriggerListener = computed(() => {
-  return !!instance?.vnode.props?.onTrigger
-})
+  return !!instance?.vnode.props?.onTrigger;
+});
 
 const popoverVisible = computed({
   get() {
-    return props.triggerPopoverVisible
+    return props.triggerPopoverVisible;
   },
   set(value) {
     if (props.readOnly || props.disabled)
-      return
-    emits('update:triggerPopoverVisible', value)
+      return;
+    emits('update:triggerPopoverVisible', value);
   },
-})
+});
 
 // 当前触发 指令的 字符
-const triggerString = ref('')
+const triggerString = ref('');
 
 // 监听输入值变化
 watch(
   () => internalValue.value,
   (newVal, oldVal) => {
     if (isComposing.value)
-      return
+      return;
     // 触发逻辑：当输入值等于数组中的任意一个指令字符时触发
     // 确保 oldVal 是字符串类型
-    const triggerStrings = props.triggerStrings || [] // 如果为 undefined，就使用空数组
-    const validOldVal = typeof oldVal === 'string' ? oldVal : ''
-    const wasOldValTrigger = triggerStrings.includes(validOldVal)
-    const isNewValTrigger = triggerStrings.includes(newVal)
+    const triggerStrings = props.triggerStrings || []; // 如果为 undefined，就使用空数组
+    const validOldVal = typeof oldVal === 'string' ? oldVal : '';
+    const wasOldValTrigger = triggerStrings.includes(validOldVal);
+    const isNewValTrigger = triggerStrings.includes(newVal);
 
     // 触发显示：从空变为触发字符
     if (oldVal === '' && isNewValTrigger) {
-      triggerString.value = newVal
+      triggerString.value = newVal;
       if (hasOnTriggerListener.value) {
         emits('trigger', {
           oldValue: oldVal, // 关闭时返回之前触发的字符
           newValue: newVal,
           triggerString: newVal,
           isOpen: true,
-        })
-        popoverVisible.value = true
+        });
+        popoverVisible.value = true;
       }
       else {
-        popoverVisible.value = true
+        popoverVisible.value = true;
       }
     }
     // 关闭：从触发字符变为非触发字符
@@ -127,116 +127,116 @@ watch(
           newValue: newVal,
           triggerString: undefined,
           isOpen: false,
-        })
-        popoverVisible.value = false
+        });
+        popoverVisible.value = false;
       }
       else {
-        popoverVisible.value = false
+        popoverVisible.value = false;
       }
     }
     // 触发显示：从非空且非触发字符变为触发字符
     else if (oldVal !== '' && isNewValTrigger && !wasOldValTrigger) {
-      triggerString.value = newVal
+      triggerString.value = newVal;
       if (hasOnTriggerListener.value) {
         emits('trigger', {
           oldValue: oldVal, // 关闭时返回之前触发的字符
           newValue: newVal,
           triggerString: newVal,
           isOpen: true,
-        })
-        popoverVisible.value = true
+        });
+        popoverVisible.value = true;
       }
       else {
-        popoverVisible.value = true
+        popoverVisible.value = true;
       }
     }
   },
   { deep: true, immediate: true },
-)
+);
 
 /* 内容容器聚焦 开始 */
 function onContentMouseDown(e: MouseEvent) {
   // 点击容器后设置输入框的聚焦，会触发 &:focus-within 样式
   if (e.target !== senderRef.value.querySelector(`.el-textarea__inner`)) {
-    e.preventDefault()
+    e.preventDefault();
   }
-  inputRef.value.focus()
+  inputRef.value.focus();
 }
 /* 内容容器聚焦 结束 */
 
 /* 头部显示隐藏 开始 */
-const visiableHeader = ref(false)
+const visiableHeader = ref(false);
 function openHeader() {
   if (!slots.header)
-    return false
+    return false;
 
   if (props.readOnly)
-    return false
+    return false;
 
-  visiableHeader.value = true
+  visiableHeader.value = true;
 }
 function closeHeader() {
   if (!slots.header)
-    return
+    return;
   if (props.readOnly)
-    return
-  visiableHeader.value = false
+    return;
+  visiableHeader.value = false;
 }
 /* 头部显示隐藏 结束 */
 
 /* 使用浏览器自带的语音转文字功能 开始 */
-const recognition = ref<SpeechRecognition | null>(null)
-const speechLoading = ref<boolean>(false)
+const recognition = ref<SpeechRecognition | null>(null);
+const speechLoading = ref<boolean>(false);
 
 function startRecognition() {
   if (props.readOnly)
-    return // 直接返回，不执行后续逻辑
+    return; // 直接返回，不执行后续逻辑
   if (hasOnRecordingChangeListener.value) {
-    speechLoading.value = true
-    emits('recordingChange', true)
-    return
+    speechLoading.value = true;
+    emits('recordingChange', true);
+    return;
   }
   if ('webkitSpeechRecognition' in window) {
-    recognition.value = new webkitSpeechRecognition()
-    recognition.value!.continuous = true
-    recognition.value.interimResults = true
-    recognition.value.lang = 'zh-CN'
+    recognition.value = new webkitSpeechRecognition();
+    recognition.value!.continuous = true;
+    recognition.value.interimResults = true;
+    recognition.value.lang = 'zh-CN';
     recognition.value.onresult = (event: SpeechRecognitionEvent) => {
-      let results = ''
+      let results = '';
       for (let i = 0; i <= event.resultIndex; i++) {
-        results += event.results[i][0].transcript
+        results += event.results[i][0].transcript;
       }
       if (!props.readOnly) {
-        internalValue.value = results
+        internalValue.value = results;
       }
-    }
+    };
     recognition.value.onstart = () => {
-      speechLoading.value = true
-    }
+      speechLoading.value = true;
+    };
     recognition.value.onend = () => {
-      speechLoading.value = false
-    }
+      speechLoading.value = false;
+    };
     recognition.value.onerror = (event: SpeechRecognitionError) => {
-      console.error('语音识别出错:', event.error)
-      speechLoading.value = false
-    }
-    recognition.value.start()
+      console.error('语音识别出错:', event.error);
+      speechLoading.value = false;
+    };
+    recognition.value.start();
   }
   else {
-    console.error('浏览器不支持 Web Speech API')
+    console.error('浏览器不支持 Web Speech API');
   }
 }
 
 function stopRecognition() {
   // 如果有自定义处理函数
   if (hasOnRecordingChangeListener.value) {
-    speechLoading.value = false
-    emits('recordingChange', false)
-    return
+    speechLoading.value = false;
+    emits('recordingChange', false);
+    return;
   }
   if (recognition.value) {
-    recognition.value.stop()
-    speechLoading.value = false
+    recognition.value.stop();
+    speechLoading.value = false;
   }
 }
 /* 使用浏览器自带的语音转文字功能 结束 */
@@ -244,21 +244,21 @@ function stopRecognition() {
 /* 输入框事件 开始 */
 function submit() {
   if (props.readOnly || props.loading || props.disabled || !internalValue.value)
-    return
-  emits('submit', internalValue.value)
+    return;
+  emits('submit', internalValue.value);
 }
 // 取消按钮
 function cancel() {
   if (props.readOnly)
-    return
-  emits('cancel', internalValue.value)
+    return;
+  emits('cancel', internalValue.value);
 }
 
 function clear() {
   if (props.readOnly)
-    return // 直接返回，不执行后续逻辑
-  inputRef.value.clear()
-  internalValue.value = ''
+    return; // 直接返回，不执行后续逻辑
+  inputRef.value.clear();
+  internalValue.value = '';
 }
 
 // 在这判断组合键的回车键 (目前支持两种模式)
@@ -305,34 +305,34 @@ function clear() {
 /* 焦点 事件 开始 */
 function blur() {
   if (props.readOnly) {
-    return false
+    return false;
   }
-  inputRef.value.blur()
+  inputRef.value.blur();
 }
 
 function focus(type = 'all') {
   if (props.readOnly) {
-    return false
+    return false;
   }
   if (type === 'all') {
-    inputRef.value.select()
+    inputRef.value.select();
   }
   else if (type === 'start') {
-    inputRef.value.moveToStart()
+    inputRef.value.moveToStart();
   }
   else if (type === 'end') {
-    inputRef.value.moveToEnd()
+    inputRef.value.moveToEnd();
   }
 }
 /* 焦点 事件 结束 */
 
 // 处理输入法开始/结束 (此方法是拼音输入法的时候用)
 function handleCompositionStart() {
-  isComposing.value = true
+  isComposing.value = true;
 }
 
 function handleCompositionEnd() {
-  isComposing.value = false
+  isComposing.value = false;
 }
 
 defineExpose({
@@ -346,7 +346,7 @@ defineExpose({
   cancel,
   startRecognition,
   stopRecognition,
-})
+});
 </script>
 
 <template>
@@ -518,7 +518,7 @@ defineExpose({
   transition: width var(--el-sender-header-animation-duration);
 
   &:after {
-    content: "";
+    content: '';
     position: absolute;
     inset: 0;
     pointer-events: none;

@@ -1,15 +1,15 @@
 import antfu from '@antfu/eslint-config'
 
 export default antfu({
+  formatters: true,
   vue: {
     'vue/block-order': ['error', { // 块顺序
       order: ['script', 'template', 'style'],
     }],
   },
-  typescript: true,
   stylistic: {
     indent: 2, // 缩进
-    semi: false, // 语句分号
+    semi: true, // 语句分号
     quotes: 'single', // 单引号
   },
   rules: {
@@ -27,5 +27,5 @@ export default antfu({
     '**/public/**',
     '**/vite.config.ts',
     '**/eslint.config.js',
-  ],
+  ]
 })

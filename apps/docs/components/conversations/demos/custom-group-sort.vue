@@ -7,7 +7,7 @@ title: 自定义分组排序
 </docs>
 
 <script setup lang="ts">
-import type { GroupableOptions } from 'vue-element-plus-x/types/Conversations'
+import type { GroupableOptions } from 'vue-element-plus-x/types/Conversations';
 
 const groupBasedItems = ref([
   {
@@ -59,20 +59,20 @@ const groupBasedItems = ref([
     key: 'g10',
     label: '未分组项目',
   },
-])
+]);
 
 // 自定义分组选项
 const customGroupOptions: GroupableOptions = {
   // 自定义分组排序，学习 > 工作 > 个人 > 未分组
   sort: (a: any, b: any) => {
-    const order: Record<string, number> = { 学习: 0, 工作: 1, 个人: 2, 未分组: 3 }
-    const orderA = order[a] !== undefined ? order[a] : 999
-    const orderB = order[b] !== undefined ? order[b] : 999
-    return orderA - orderB
+    const order: Record<string, number> = { 学习: 0, 工作: 1, 个人: 2, 未分组: 3 };
+    const orderA = order[a] !== undefined ? order[a] : 999;
+    const orderB = order[b] !== undefined ? order[b] : 999;
+    return orderA - orderB;
   },
-}
+};
 
-const activeKey2 = ref('g1')
+const activeKey2 = ref('g1');
 </script>
 
 <template>
@@ -105,6 +105,6 @@ const activeKey2 = ref('g1')
   display: flex;
   align-items: center;
   font-weight: 500;
-  color: #409EFF;
+  color: #409eff;
 }
 </style>

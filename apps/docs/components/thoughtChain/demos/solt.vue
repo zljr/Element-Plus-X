@@ -7,15 +7,15 @@ title: #icon 插槽
 </docs>
 
 <script setup lang="ts">
-import type { ThoughtChainItemProps } from 'vue-element-plus-x/types/ThoughtChain'
-import { CircleCloseFilled, Loading, SuccessFilled } from '@element-plus/icons-vue'
+import type { ThoughtChainItemProps } from 'vue-element-plus-x/types/ThoughtChain';
+import { CircleCloseFilled, Loading, SuccessFilled } from '@element-plus/icons-vue';
 
 interface DataType {
-  codeId: string
-  self_title?: string
-  self_thinkTitle?: string
-  self_thinkContent?: string
-  status?: 'success' | 'loading' | 'error'
+  codeId: string;
+  self_title?: string;
+  self_thinkTitle?: string;
+  self_thinkContent?: string;
+  status?: 'success' | 'loading' | 'error';
 }
 
 const thinkingItems: ThoughtChainItemProps<DataType>[] = [
@@ -55,7 +55,7 @@ const thinkingItems: ThoughtChainItemProps<DataType>[] = [
     self_thinkTitle: '思考内容标题',
     self_thinkContent: '进行搜索文字'.repeat(10),
   },
-]
+];
 </script>
 
 <template>

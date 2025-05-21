@@ -7,7 +7,7 @@ title: 自定义菜单交互
 </docs>
 
 <script setup lang="ts">
-import { Delete, Edit, EditPen, Share } from '@element-plus/icons-vue'
+import { Delete, Edit, EditPen, Share } from '@element-plus/icons-vue';
 
 const menuTestItems = ref([
   {
@@ -67,7 +67,7 @@ const menuTestItems = ref([
     key: 'm14',
     label: '菜单测试项目 14',
   },
-])
+]);
 
 const conversationMenuItems = [
   {
@@ -93,27 +93,27 @@ const conversationMenuItems = [
     icon: Share,
     command: 'share',
   },
-]
+];
 
-const activeKey4 = ref('m1')
+const activeKey4 = ref('m1');
 
 // 处理菜单点击
 function handleMenuClick(menuKey: string, item: any) {
-  console.log('菜单点击', menuKey, item)
+  console.log('菜单点击', menuKey, item);
 
   switch (menuKey) {
     case 'edit':
-      console.log(`编辑: ${item.label}`)
-      ElMessage.warning(`编辑: ${item.label}`)
-      break
+      console.log(`编辑: ${item.label}`);
+      ElMessage.warning(`编辑: ${item.label}`);
+      break;
     case 'delete':
-      console.log(`删除: ${item.label}`)
-      ElMessage.error(`删除: ${item.label}`)
-      break
+      console.log(`删除: ${item.label}`);
+      ElMessage.error(`删除: ${item.label}`);
+      break;
     case 'share':
-      console.log(`分享: ${item.label}`)
-      ElMessage.success(`分享: ${item.label}`)
-      break
+      console.log(`分享: ${item.label}`);
+      ElMessage.success(`分享: ${item.label}`);
+      break;
   }
 }
 </script>

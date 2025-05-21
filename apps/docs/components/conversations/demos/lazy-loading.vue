@@ -7,7 +7,7 @@ title: 懒加载功能
 </docs>
 
 <script setup lang="ts">
-import { ChatDotRound, ChatLineRound } from '@element-plus/icons-vue'
+import { ChatDotRound, ChatLineRound } from '@element-plus/icons-vue';
 
 const lazyItems = shallowRef([
   {
@@ -55,17 +55,17 @@ const lazyItems = shallowRef([
     label: '初始项目3',
     prefixIcon: ChatLineRound,
   },
-])
+]);
 
 // 加载更多处理
-const isLoading = ref(false)
+const isLoading = ref(false);
 
 function loadMoreItems() {
   if (isLoading.value)
-    return
+    return;
 
-  isLoading.value = true
-  console.log('加载更多数据...')
+  isLoading.value = true;
+  console.log('加载更多数据...');
 
   // 模拟异步加载
   setTimeout(() => {
@@ -80,14 +80,14 @@ function loadMoreItems() {
         label: `加载的项目${lazyItems.value.length + 2}`,
         prefixIcon: markRaw(ChatDotRound),
       },
-    ]
+    ];
 
-    lazyItems.value = [...lazyItems.value, ...newItems]
-    isLoading.value = false
-  }, 2000)
+    lazyItems.value = [...lazyItems.value, ...newItems];
+    isLoading.value = false;
+  }, 2000);
 }
 
-const activeKey6 = ref('l1')
+const activeKey6 = ref('l1');
 </script>
 
 <template>
