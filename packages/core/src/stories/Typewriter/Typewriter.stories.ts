@@ -16,19 +16,19 @@ const meta = {
     content: { control: 'text' },
     isMarkdown: { control: 'boolean' },
     typing: { control: 'object' },
-    isFog: { control: 'boolean' },
+    isFog: { control: 'boolean' }
   },
   args: {
     typing: {
-      step: 20,
+      step: 2,
       interval: 100,
-      suffix: '',
-      isRequestEnd: true,
+      suffix: '|',
+      isRequestEnd: true
     },
     isFog: true,
-    isMarkdown: true,
+    isMarkdown: true
     // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
-  },
+  }
 } satisfies Meta<typeof TypewriterSource>;
 
 export default meta;
@@ -48,8 +48,8 @@ export const BaseRender: Story = {
 - 列表项 1
 - 列表项 2
 **粗体文本** 和 *斜体文本*
-      `.trim(),
-  } as Story['args'],
+      `.trim()
+  } as Story['args']
 };
 
 export const CodeRender: Story = {
@@ -78,8 +78,8 @@ export const CodeRender: Story = {
         fmt.Println("Hello, world!")
     }
   \`\`\`
-      `.trim(),
-  } as Story['args'],
+      `.trim()
+  } as Story['args']
 };
 
 export const PieRender: Story = {
@@ -95,8 +95,8 @@ export const PieRender: Story = {
     "VR/AR开发" : 5
     "其他" : 15
    \`\`\`
-      `.trim(),
-  } as Story['args'],
+      `.trim()
+  } as Story['args']
 };
 
 export const MathRender: Story = {
@@ -111,6 +111,6 @@ export const MathRender: Story = {
           2-->>1: Answer: $$2$$
           Note right of 2: $$sqrt{2+2}=sqrt{4}=2$$
 \`\`\`
-    `.trim(),
-  } as Story['args'],
+    `.trim()
+  } as Story['args']
 };
