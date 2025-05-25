@@ -8,6 +8,7 @@ import ScrollY from './ScrollY.vue';
 import { genDefaultFiles } from './useAttachmentStubs';
 import Wrap from './Wrap.vue';
 
+//
 const files = genDefaultFiles();
 
 const meta: Meta = {
