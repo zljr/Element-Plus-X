@@ -11,7 +11,6 @@ export default antfu({
     'indent': 2, // 缩进
     'semi': true, // 语句分号
     'quotes': 'single', // 单引号
-    'arrow-parens': 'always'
   },
   rules: {
     'new-cap': ['off', { newIsCap: true, capIsNew: false }],
@@ -20,7 +19,9 @@ export default antfu({
     '@typescript-eslint/comma-dangle': 'off',
     'comma-dangle': 'off',
     'style/comma-dangle': 'off',
-    'style/arrow-parens': 'error'
+    'style/arrow-parens': 'off',
+    'style/quote-props': 'off',
+    'style/operator-linebreak': 'off',
   },
   ignores: [
     '**/dist/**',
