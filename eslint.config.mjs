@@ -1,4 +1,4 @@
-import antfu from '@antfu/eslint-config'
+import antfu from '@antfu/eslint-config';
 
 export default antfu({
   formatters: true,
@@ -8,13 +8,20 @@ export default antfu({
     }],
   },
   stylistic: {
-    indent: 2, // 缩进
-    semi: true, // 语句分号
-    quotes: 'single', // 单引号
+    'indent': 2, // 缩进
+    'semi': true, // 语句分号
+    'quotes': 'single', // 单引号
   },
   rules: {
     'new-cap': ['off', { newIsCap: true, capIsNew: false }],
     'no-console': 'off', // 忽略console
+    'vue/comma-dangle': 'off',
+    '@typescript-eslint/comma-dangle': 'off',
+    'comma-dangle': 'off',
+    'style/comma-dangle': 'off',
+    'style/arrow-parens': 'off',
+    'style/quote-props': 'off',
+    'style/operator-linebreak': 'off',
   },
   ignores: [
     '**/dist/**',
@@ -27,5 +34,5 @@ export default antfu({
     '**/public/**',
     '**/vite.config.ts',
     '**/eslint.config.js',
-  ]
-})
+  ],
+});
