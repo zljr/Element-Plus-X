@@ -1,4 +1,4 @@
-import antfu from '@antfu/eslint-config'
+import antfu from '@antfu/eslint-config';
 
 export default antfu({
   formatters: true,
@@ -27,5 +27,5 @@ export default antfu({
     '**/public/**',
     '**/vite.config.ts',
     '**/eslint.config.js',
-  ]
-})
+  ],
+});
