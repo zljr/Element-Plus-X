@@ -35,7 +35,7 @@ const ElementPlusX: Plugin = {
     app.component('ThoughtChain', ThoughtChain);
     app.component('Typewriter', Typewriter);
     app.component('Welcome', Welcome);
-  },
+  }
 };
 
 export default ElementPlusX;
