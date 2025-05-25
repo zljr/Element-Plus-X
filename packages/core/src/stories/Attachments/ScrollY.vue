@@ -1,35 +1,33 @@
 <script setup lang="ts">
+import type { AttachmentsProps } from '@components/Attachments/types';
 import Attachments from '@components/Attachments/index.vue';
 import { useAttachmentStubs } from './useAttachmentStubs';
 
+type Props = Pick<AttachmentsProps, 'items'>;
+
+const props = withDefaults(defineProps<Props>(), {
+  items: () => []
+});
+
+const attrs = useAttrs();
 const {
   files,
   handleBeforeUpload,
   handleHttpRequest,
   handleUploadDrop,
-  handleDeleteCard,
-} = useAttachmentStubs();
+  handleDeleteCard
+} = useAttachmentStubs(props.items);
 </script>
 
 <template>
   <div>
     <div class="component-container">
-      <div class="component-title">
-        附件上传组件- scrollY
-      </div>
+      <div class="component-title">附件上传组件- scrollY</div>
       <Attachments
-        :file-list="files"
-        :http-request="handleHttpRequest"
+        v-bind="attrs"
         :items="files"
-        drag
-        overflow="scrollY"
-        :list-style="{
-          padding: '0 12px',
-          height: '200px',
-        }"
         :before-upload="handleBeforeUpload"
-        drag-target="attachmentsDemo"
-        :hide-upload="false"
+        :http-request="handleHttpRequest"
         @upload-drop="handleUploadDrop"
         @delete-card="handleDeleteCard"
       />

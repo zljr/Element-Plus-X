@@ -7,31 +7,28 @@ import 'element-plus/theme-chalk/el-message.css';
 type Props = Pick<AttachmentsProps, 'items'>;
 
 const props = withDefaults(defineProps<Props>(), {
-  items: () => [],
+  items: () => []
 });
 
 const attrs = useAttrs();
 
-const {
-  files,
-  handleBeforeUpload,
-  handleHttpRequest,
-  handleUploadDrop,
-} = useAttachmentStubs(props.items);
+const { files, handleBeforeUpload, handleHttpRequest, handleUploadDrop } =
+  useAttachmentStubs(props.items);
 </script>
 
 <template>
   <div>
     <div class="component-container">
-      <div class="component-title">
-        附件上传组件-自定义 列表内容
-      </div>
+      <div class="component-title">附件上传组件-自定义 列表内容</div>
       <!-- :items="files"
       overflow="scrollX"
       :list-style="{ padding: '0 12px' }"
       :hide-upload="false" -->
       <Attachments
-        v-bind="attrs" :items="files" :before-upload="handleBeforeUpload" :http-request="handleHttpRequest"
+        v-bind="attrs"
+        :items="files"
+        :before-upload="handleBeforeUpload"
+        :http-request="handleHttpRequest"
         @upload-drop="handleUploadDrop"
       >
         <template #file-list="{ items }">
@@ -81,6 +78,8 @@ const {
 
 .custom-list {
   display: flex;
+  flex-wrap: wrap;
+  max-width: 800px;
 
   .custom-item {
     margin: 8px;
@@ -91,6 +90,7 @@ const {
     justify-content: center;
     border-radius: 8px;
     background-color: antiquewhite;
+    flex: none;
   }
 }
 </style>
