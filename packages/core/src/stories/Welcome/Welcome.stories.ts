@@ -1,0 +1,110 @@
+import type WelcomeSource from '@components/Welcome/index.vue';
+import type { Meta, StoryObj } from '@storybook/vue3';
+import WelcomeSlotComponent from './index-slot.vue';
+import Welcome from './index.vue';
+
+const meta: Meta<typeof WelcomeSource> = {
+  title: 'Example/Welcome',
+  component: Welcome,
+  argTypes: {
+    variant: {
+      control: { type: 'select' },
+      defaultValue: 'filled',
+      options: ['filled', 'borderless'],
+      description: '组件样式变体（filled/borderless）'
+    },
+    direction: {
+      control: { type: 'select' },
+      defaultValue: 'ltr',
+      options: ['ltr', 'rtl'],
+      description: '组件语言方向（ltr/rtl）'
+    },
+    icon: {
+      control: { type: 'text' },
+      defaultValue: '',
+      description: '图标URL地址'
+    },
+    title: {
+      control: { type: 'text' },
+      defaultValue: '标题',
+      description: '标题'
+    },
+    extra: {
+      control: { type: 'text' },
+      defaultValue: '额外信息',
+      description: '额外信息'
+    },
+    description: {
+      control: { type: 'text' },
+      defaultValue: '描述',
+      description: '描述文本内容'
+    },
+    className: {
+      control: { type: 'text' },
+      defaultValue: '',
+      description: '容器外层自定义类名'
+    },
+    rootClassName: {
+      control: { type: 'text' },
+      defaultValue: '',
+      description: '根节点自定义类名'
+    },
+    classNames: {
+      control: { type: 'object' },
+      defaultValue: {
+        icon: '',
+        title: '',
+        extra: '',
+        description: ''
+      },
+      description: '各部分自定义类名({ icon, title, extra, description })'
+    },
+    style: {
+      control: { type: 'object' },
+      description: '容器外层自定义样式'
+    },
+    styles: {
+      control: { type: 'object' },
+      description: '各部分自定义样式({ icon, title, extra, description })'
+    },
+    prefixCls: {
+      control: { type: 'text' },
+      default: 'welcome',
+      description: '组件类名前缀'
+    }
+  }
+} satisfies Meta<typeof WelcomeSource>;
+
+export default meta;
+
+type Story = StoryObj<typeof meta>;
+
+export const WelcomeDemo: Story = {
+  args: {
+    title: '欢迎使用Element-Plus-X AI 助手',
+    description: '一起玩耍吧',
+    icon: 'https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*s5sNRo5LjfQAAAAAAAAAAAAADgCCAQ/fmt.webp',
+    direction: 'ltr',
+    variant: 'filled'
+  }
+};
+
+export const WelcomeSlotDemo: Story = {
+  args: {
+    title: '欢迎使用Element-Plus-X AI 助手',
+    description: '一起玩耍吧',
+    direction: 'ltr',
+    variant: 'filled',
+    showExtraSlot: true,
+    showImageSlot: true
+  },
+  render: (args: any) => ({
+    components: {
+      WelcomeSlotComponent
+    },
+    setup() {
+      return { attrs: args };
+    },
+    template: `<WelcomeSlotComponent v-bind="attrs" />`
+  })
+};

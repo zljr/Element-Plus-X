@@ -1,0 +1,18 @@
+<script lang="ts" setup>
+import type { PromptsItemsProps } from '@components/Prompts/types';
+import { ElMessage } from 'element-plus';
+import { Prompts } from '../../components';
+
+function handleItemClick(item: PromptsItemsProps) {
+  ElMessage.success(`点击了 ${item.key}`);
+}
+</script>
+
+<template>
+  <Prompts v-bind="$attrs" @item-click="handleItemClick" />
+
+  <h4>不换行和换行展示</h4>
+  <div style="width: 450px; height: fit-content">
+    <Prompts v-bind="$attrs" @item-click="handleItemClick" />
+  </div>
+</template>
