@@ -1,9 +1,9 @@
 import type FilesCardSource from '@components/FilesCard/index.vue';
 import type { Meta, StoryObj } from '@storybook/vue3';
 import { pick } from 'radash';
-import FilesCardCustomColor from './index-custom-color.vue';
-import FilesCardCustomStyle from './index-custom-style.vue';
-import FilesCardImage from './index-image.vue';
+import FilesCardCustomColor from './CustomColorDemo.vue';
+import FilesCardCustomStyle from './CustomStyleDemo.vue';
+import FilesCardImage from './ImageDemo.vue';
 import FilesCard from './index.vue';
 
 const meta: Meta<typeof FilesCardSource> = {

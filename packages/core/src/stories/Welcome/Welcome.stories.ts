@@ -1,7 +1,7 @@
 import type WelcomeSource from '@components/Welcome/index.vue';
 import type { Meta, StoryObj } from '@storybook/vue3';
-import WelcomeSlotComponent from './index-slot.vue';
 import Welcome from './index.vue';
+import WelcomeSlotComponent from './SlotDemo.vue';
 
 const meta: Meta<typeof WelcomeSource> = {
   title: 'Example/Welcome',

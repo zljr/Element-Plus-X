@@ -1,9 +1,9 @@
 import type PromptsSource from '@components/Prompts/index.vue';
 import type { Meta, StoryObj } from '@storybook/vue3';
-import PromptsCustomStyle from './index-custom-style.vue';
-import PromptsNesting from './index-has-children.vue';
+import PromptsCustomStyle from './CustomStyleDemo.vue';
 import Prompts from './index.vue';
 import { CustomStyleItems, mockPromptsItems } from './mock';
+import PromptsNesting from './WithChildrenDemo.vue';
 
 const meta: Meta<typeof PromptsSource> = {
   title: 'Example/Prompts',
