@@ -9,10 +9,7 @@ function handleItemClick(item: PromptsItemsProps) {
 </script>
 
 <template>
-  <Prompts v-bind="$attrs" @item-click="handleItemClick" />
-
-  <h4>不换行和换行展示</h4>
-  <div style="width: 450px; height: fit-content">
+  <div style="width: 450px; height: fit-content; padding: 15px">
     <Prompts v-bind="$attrs" @item-click="handleItemClick" />
   </div>
 </template>
