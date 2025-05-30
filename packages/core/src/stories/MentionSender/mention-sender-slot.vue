@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import type { TriggerEvent } from '@components/EditorSender/types';
 import { CircleClose, Delete, Position } from '@element-plus/icons-vue';
-import { Sender } from '../../components';
+import { MentionSender } from '../../components';
 
-const senderRef = ref<InstanceType<typeof Sender>>();
+const senderRef = ref<InstanceType<typeof MentionSender>>();
 
 const showHeaderFlog = ref(false);
 
@@ -95,7 +95,7 @@ function handleRecordingChange() {
         </el-button>
       </div>
       <br />
-      <Sender
+      <MentionSender
         v-bind="$attrs"
         ref="senderRef"
         @submit="handleSubmit"
@@ -157,7 +157,7 @@ function handleRecordingChange() {
             默认变体 自定义底部
           </div>
         </template>
-      </Sender>
+      </MentionSender>
     </div>
   </div>
 </template>
