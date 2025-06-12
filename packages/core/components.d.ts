@@ -16,7 +16,6 @@ declare module 'vue' {
     ClearButton: typeof import('./src/components/EditorSender/components/ClearButton/index.vue')['default']
     Code: typeof import('./src/components/FilesCard/fileSvg/code.vue')['default']
     Conversations: typeof import('./src/components/Conversations/index.vue')['default']
-    copy: typeof import('./src/components/Typewriter/index copy.vue')['default']
     Database: typeof import('./src/components/FilesCard/fileSvg/database.vue')['default']
     EditorInput: typeof import('./src/components/EditorInput/index.vue')['default']
     EditorSender: typeof import('./src/components/EditorSender/index.vue')['default']
