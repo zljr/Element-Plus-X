@@ -8,11 +8,14 @@ const plugins: PluginOption[] = [
     imports: ['vue'],
     ignore: ['h'],
     resolvers: [ElementPlusResolver()],
-    dts: 'src/auto-import.d.ts',
+    eslintrc: {
+      enabled: true
+    },
+    dts: 'src/auto-import.d.ts'
   }) as PluginOption,
   Components({
-    resolvers: [ElementPlusResolver()],
-  }) as PluginOption,
+    resolvers: [ElementPlusResolver()]
+  }) as PluginOption
 ];
 
 export default plugins;

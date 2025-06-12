@@ -1,219 +1,223 @@
+import type ConversationsSource from '@components/Conversations/index.vue';
 import type { Meta, StoryObj } from '@storybook/vue3';
-import Conversations from '@components/Conversations/index.vue';
-import { pick } from 'radash';
-import AbsoluteCustom from './AbsoluteCustom.vue';
+import ConversationsCustomStyleAndSort from './custom-style-and-sort.vue';
+import Conversations from './index.vue';
 
-const meta: Meta = {
+const meta: Meta<typeof ConversationsSource> = {
   title: 'Example/Conversations',
-  tags: ['autodocs'],
-  component: Conversations as any,
+  component: Conversations,
   argTypes: {
     items: {
-      control: 'object'
+      description: '会话项数据列表，包含 label、group、disabled 等字段',
+      control: 'object',
+      defaultValue: []
     },
-    labelMaxWidth: {
-      control: 'number'
-    },
-    labelHeight: {
-      control: 'number'
-    },
-    showTooltip: {
-      control: 'boolean'
-    },
-    tooltipPlacement: {
-      control: 'radio',
-      options: ['top', 'bottom', 'left', 'right']
-    },
-    tooltipOffset: {
-      control: 'number'
+    groupable: {
+      description: '是否启用分组功能，传入对象可自定义分组排序',
+      defaultValue: false
     },
     showBuiltInMenu: {
-      control: 'boolean'
+      description: '是否显示内置菜单（重命名、删除）',
+      control: 'boolean',
+      defaultValue: false
     },
-    groupable: {
-      control: 'object'
+    loadMore: {
+      control: 'object',
+      description: '懒加载回调函数，滚动至底部时触发'
+    },
+    loadMoreLoading: {
+      description: '加载更多状态，控制加载动画显示',
+      control: 'boolean',
+      defaultValue: false
+    },
+    showToTopBtn: {
+      description: '是否显示返回顶部按钮',
+      control: 'boolean',
+      defaultValue: false
+    },
+    labelKey: {
+      description: '会话项标签字段名',
+      control: 'text',
+      defaultValue: 'label'
     },
     rowKey: {
-      control: 'text'
+      description: '会话项唯一标识字段名',
+      control: 'text',
+      defaultValue: 'id'
     },
     itemsStyle: {
-      control: 'object'
-    },
-    itemsActiveStyle: {
-      control: 'object'
+      description: '会话项默认样式',
+      control: 'object',
+      defaultValue: {}
     },
     itemsHoverStyle: {
-      control: 'object'
+      description: '会话项悬停样式',
+      control: 'object',
+      defaultValue: {}
+    },
+    itemsActiveStyle: {
+      description: '会话项激活样式',
+      control: 'object',
+      defaultValue: {}
     },
     itemsMenuOpenedStyle: {
-      control: 'object'
-    },
-    menuStyle: {
-      control: 'object'
+      description: '会话项菜单打开时样式',
+      control: 'object',
+      defaultValue: {}
     }
-  },
-  args: {
-    items: [
-      {
-        key: 'm1',
-        label: '菜单测试项目 1 - 长文本效果演示文本长度溢出效果测试'.repeat(2),
-        group: '工作'
-      },
-      {
-        key: 'm2',
-        label: '菜单测试项目 2',
-        disabled: true,
-        group: '工作'
-      },
-      {
-        key: 'm3',
-        label: '菜单测试项目 3',
-        group: '工作'
-      },
-      {
-        key: 'm4',
-        label: '菜单测试项目 4',
-        group: '学习'
-      },
-      {
-        key: 'm5',
-        label: '菜单测试项目 5',
-        group: '学习'
-      },
-      {
-        key: 'm6',
-        label: '菜单测试项目 6',
-        group: '学习'
-      },
-      {
-        key: 'm7',
-        label: '菜单测试项目 7',
-        group: '学习'
-      },
-      {
-        key: 'm8',
-        label: '菜单测试项目 8',
-        group: '个人'
-      },
-      {
-        key: 'm9',
-        label: '菜单测试项目 9',
-        group: '个人'
-      },
-      {
-        key: 'm10',
-        label: '菜单测试项目 10',
-        group: '个人'
-      },
-      {
-        key: 'm11',
-        label: '菜单测试项目 11',
-        group: '个人'
-      },
-      {
-        key: 'm12',
-        label: '菜单测试项目 12'
-      },
-      {
-        key: 'm13',
-        label: '菜单测试项目 13'
-      },
-      {
-        key: 'm14',
-        label: '菜单测试项目 14'
-      }
-    ]
   }
-} satisfies Meta<typeof Conversations>;
+} satisfies Meta<typeof ConversationsSource>;
 
 export default meta;
+
 type Story = StoryObj<typeof meta>;
 
-export const AbsoluteCustomDemo: Story = {
-  name: 'AbsoluteCustom',
-  argTypes: {
-    tooltipPlacement: {
-      control: 'radio',
-      options: ['top', 'bottom', 'left', 'right']
-    },
-    labelHeight: {
-      control: 'number'
-    }
-  },
+export const ConversationsDemo: Story = {
   args: {
     items: [
       {
-        key: 'm1',
-        label: '菜单测试项目 1 - 长文本效果演示文本长度溢出效果测试'.repeat(2),
-        group: '工作'
+        id: '1',
+        label: '今天的会话111111111111111111111111111',
+        group: 'today'
       },
       {
-        key: 'm2',
-        label: '菜单测试项目 2',
-        disabled: true,
-        group: '工作'
+        id: '2',
+        group: 'today',
+        label: '今天的会话2',
+        disabled: true
       },
       {
-        key: 'm3',
-        label: '菜单测试项目 3',
-        group: '工作'
+        id: '3',
+        group: 'yesterday',
+        label: '昨天的会话1'
       },
       {
-        key: 'm4',
-        label: '菜单测试项目 4',
-        group: '学习'
+        id: '4',
+        label: '昨天的会话2'
       },
       {
-        key: 'm5',
-        label: '菜单测试项目 5',
-        group: '学习'
+        id: '5',
+        label: '一周前的会话'
       },
       {
-        key: 'm6',
-        label: '菜单测试项目 6',
-        group: '学习'
+        id: '6',
+        label: '一个月前的会话'
       },
       {
-        key: 'm7',
-        label: '菜单测试项目 7',
-        group: '学习'
+        id: '7',
+        label: '很久以前的会话'
       },
       {
-        key: 'm8',
-        label: '菜单测试项目 8',
-        group: '个人'
+        id: '8',
+        label: '一个星期前的会话'
       },
       {
-        key: 'm9',
-        label: '菜单测试项目 9',
-        group: '个人'
+        id: '9',
+        label: '一个月前的会话'
       },
       {
-        key: 'm10',
-        label: '菜单测试项目 10',
-        group: '个人'
+        id: '10',
+        label: '一个月前的会话'
       },
       {
-        key: 'm11',
-        label: '菜单测试项目 11',
-        group: '个人'
+        id: '11',
+        label: '一个月前的会话'
       },
       {
-        key: 'm12',
-        label: '菜单测试项目 12'
+        id: '12',
+        label: '一个月前的会话'
       },
       {
-        key: 'm13',
-        label: '菜单测试项目 13'
-      },
-      {
-        key: 'm14',
-        label: '菜单测试项目 14'
+        id: '13',
+        label: '一个月前的会话'
       }
     ],
+    groupable: true,
+    showBuiltInMenu: true,
+    loadMore: () => {
+      ElMessage.success(`加载更多`);
+    },
+    loadMoreLoading: true,
+    showToTopBtn: true,
+    labelKey: 'label',
+    rowKey: 'id',
+    itemsStyle: {
+      backgroundColor: '#f0f0f0',
+      padding: '8px'
+    },
+    itemsHoverStyle: {
+      backgroundColor: '#e0e0e0'
+    },
+    itemsActiveStyle: {
+      backgroundColor: '#d0d0d0',
+      fontWeight: 'bold'
+    },
+    itemsMenuOpenedStyle: {
+      backgroundColor: '#c0c0c0',
+      border: '1px solid #aaa'
+    }
+  }
+};
+
+export const CustomStyleAndSortDemo: Story = {
+  args: {
+    ...ConversationsDemo.args,
+    items: [
+      {
+        key: 'g1',
+        label: '工作文档1',
+        group: '工作'
+      },
+      {
+        key: 'g2',
+        label: '工作文档11111111111111111111111111111111111111111',
+        group: '工作'
+      },
+      {
+        key: 'g3',
+        label: '工作文档3',
+        group: '工作'
+      },
+      {
+        key: 'g4',
+        label: '工作文档4',
+        group: '工作'
+      },
+      {
+        key: 'g5',
+        label: '工作文档5',
+        group: '工作'
+      },
+      {
+        key: 'g6',
+        label: '工作文档6',
+        group: '工作'
+      },
+      {
+        key: 'g7',
+        label: '学习笔记1',
+        group: '学习'
+      },
+      {
+        key: 'g8',
+        label: '学习笔记2',
+        group: '学习'
+      },
+      {
+        key: 'g9',
+        label: '个人文档1',
+        group: '个人'
+      },
+      {
+        key: 'g10',
+        label: '未分组项目'
+      }
+    ],
+    loadMore: () => {},
+    rowKey: 'key',
     groupable: {
       // 自定义分组排序，学习 > 工作 > 个人 > 未分组
-      sort: (a: any, b: any) => {
+      sort: (a, b) => {
         const order: Record<string, number> = {
           学习: 0,
           工作: 1,
@@ -225,37 +229,6 @@ export const AbsoluteCustomDemo: Story = {
         return orderA - orderB;
       }
     },
-    menu: [
-      {
-        key: 'edit',
-        label: '编辑',
-        icon: '🍉',
-        command: {
-          self_id: '1',
-          self_message: '编辑',
-          self_type: 'text'
-        }
-      },
-      {
-        key: 'delete',
-        label: '删除',
-        icon: '🍎',
-        disabled: true,
-        divided: true
-      },
-      {
-        key: 'share',
-        label: '分享',
-        icon: '🍆',
-        command: 'share'
-      }
-    ],
-    labelMaxWidth: 200,
-    showTooltip: true,
-    tooltipPlacement: 'right',
-    tooltipOffset: 35,
-    showBuiltInMenu: true,
-    rowKey: 'key',
     itemsStyle: {
       padding: '10px 20px',
       borderRadius: '10px',
@@ -282,32 +255,17 @@ export const AbsoluteCustomDemo: Story = {
     menuStyle: {
       backgroundColor: 'red',
       boxShadow: '0 2px 12px 0 rgba(0, 0, 0, 0.1)',
-      padding: '10px 20px'
+      padding: '10px 20px',
+      height: '200px'
     }
   },
-  render: args => ({
-    components: { AbsoluteCustom },
-    setup() {
-      const attrs = pick(args, [
-        'items',
-        'groupable',
-        'menu',
-        'labelMaxWidth',
-        'showTooltip',
-        'tooltipPlacement',
-        'tooltipOffset',
-        'showBuiltInMenu',
-        'rowKey',
-        'itemsStyle',
-        'itemsHoverStyle',
-        'itemsActiveStyle',
-        'itemsMenuOpenedStyle',
-        'menuStyle'
-      ] as (keyof Story['args'])[]);
-      return {
-        attrs
-      };
+  render: (args: any) => ({
+    components: {
+      ConversationsCustomStyleAndSort
     },
-    template: '<AbsoluteCustom v-bind="attrs" />'
+    setup() {
+      return { attrs: args };
+    },
+    template: `<ConversationsCustomStyleAndSort v-bind="attrs" />`
   })
 };
