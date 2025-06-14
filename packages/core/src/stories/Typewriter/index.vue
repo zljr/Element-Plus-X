@@ -2,19 +2,21 @@
 import markdownItMermaid from '@jsonlee_12138/markdown-it-mermaid';
 // import type { TypewriterProps } from '../../components/Typewriter/types';
 import { useAttrs } from 'vue';
-import AppConfig from '../../components/AppConfig/index.vue';
+import ConfigProvider from '../../components/ConfigProvider/index.vue';
 import Typewriter from '../../components/Typewriter/index.vue';
 
-const plugins = [markdownItMermaid({
-  forceLegacyMathML: true,
-  delay: 100,
-})];
+const plugins = [
+  markdownItMermaid({
+    forceLegacyMathML: true,
+    delay: 100
+  })
+];
 
 const attrs = useAttrs();
 </script>
 
 <template>
-  <AppConfig :md-plugins="plugins">
+  <ConfigProvider :md-plugins="plugins">
     <Typewriter v-bind="attrs" />
-  </AppConfig>
+  </ConfigProvider>
 </template>

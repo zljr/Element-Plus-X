@@ -1,8 +1,8 @@
 import type { App, Plugin } from 'vue';
-import AppConfig from './components/AppConfig/index.vue';
 import Attachments from './components/Attachments/index.vue';
 import Bubble from './components/Bubble/index.vue';
 import BubbleList from './components/BubbleList/index.vue';
+import ConfigProvider from './components/ConfigProvider/index.vue';
 import Conversations from './components/Conversations/index.vue';
 import EditorInput from './components/EditorInput/index.vue';
 import EditorSender from './components/EditorSender/index.vue';
@@ -20,10 +20,10 @@ export * from './hooks';
 
 const ElementPlusX: Plugin = {
   install(app: App) {
-    app.component('AppConfig', AppConfig);
     app.component('Attachments', Attachments);
     app.component('Bubble', Bubble);
     app.component('BubbleList', BubbleList);
+    app.component('ConfigProvider', ConfigProvider);
     app.component('Conversations', Conversations);
     app.component('EditorInput', EditorInput);
     app.component('EditorSender', EditorSender);

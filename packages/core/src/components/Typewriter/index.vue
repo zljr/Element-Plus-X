@@ -1,28 +1,34 @@
 <script setup lang="ts">
 import type { ComputedRef } from 'vue';
-import type { TypewriterEmits, TypewriterInstance, TypewriterProps, TypingConfig } from './types.d.ts';
+import type {
+  TypewriterEmits,
+  TypewriterInstance,
+  TypewriterProps,
+  TypingConfig
+} from './types.d.ts';
 import DOMPurify from 'dompurify'; // 新增安全过滤
-import MarkdownIt from 'markdown-it';
-import { usePrism } from '../../hooks/usePrism';
-import { useAppConfig } from '../AppConfig/hooks.ts';
+// import MarkdownIt from 'markdown-it';
+// import { usePrism } from '../../hooks/usePrism';
+import { useConfigProvider } from '../ConfigProvider/hooks.ts';
 
 const props = withDefaults(defineProps<TypewriterProps>(), {
   content: '',
   isMarkdown: false,
   typing: false,
-  isFog: false,
+  isFog: false
 });
 
 const emits = defineEmits<TypewriterEmits>();
 
-const appConfig = useAppConfig();
+const appConfig = useConfigProvider();
+const { md } = appConfig;
 
-const highlight = computed(() => {
-  if (!props.highlight) {
-    return appConfig.highlight ?? usePrism();
-  }
-  return props.highlight;
-});
+// const highlight = computed(() => {
+//   if (!props.highlight) {
+//     return appConfig.highlight ?? usePrism();
+//   }
+//   return props.highlight;
+// });
 
 const markdownContentRef = ref<HTMLElement | null>(null);
 const typeWriterRef = ref<HTMLElement | null>(null);
@@ -32,25 +38,25 @@ onMounted(() => {
   updateFogColor();
 });
 
-const md = new MarkdownIt({
-  html: true,
-  linkify: true,
-  typographer: true,
-  breaks: true,
-  highlight: (code, language) => {
-    return highlight.value?.(code, language);
-  },
-});
+// const md = new MarkdownIt({
+//   html: true,
+//   linkify: true,
+//   typographer: true,
+//   breaks: true,
+//   highlight: (code, language) => {
+//     return highlight.value?.(code, language);
+//   },
+// });
 
 function initMarkdownPlugins() {
   if (appConfig.mdPlugins?.length) {
-    appConfig.mdPlugins.forEach((plugin) => {
-      md.use(plugin);
+    appConfig.mdPlugins.forEach(plugin => {
+      md?.use(plugin);
     });
   }
   if (props.mdPlugins?.length) {
-    props.mdPlugins.forEach((plugin) => {
-      md.use(plugin);
+    props.mdPlugins.forEach(plugin => {
+      md?.use(plugin);
     });
   }
 }
@@ -65,16 +71,21 @@ const contentCache = ref(''); // 添加缓存变量
 // 配置合并逻辑修改
 const mergedConfig: ComputedRef<TypingConfig> = computed(() => {
   const defaultConfig: TypingConfig = {
-    step: typeof props.typing === 'object' ? props.typing.step ?? 2 : 2,
-    interval: typeof props.typing === 'object' ? props.typing.interval ?? 50 : 50,
+    step: typeof props.typing === 'object' ? (props.typing.step ?? 2) : 2,
+    interval:
+      typeof props.typing === 'object' ? (props.typing.interval ?? 50) : 50,
     // 根据条件动态设置后缀
-    suffix: props.isMarkdown ? '' : typeof props.typing === 'object' ? props.typing.suffix ?? '|' : '|',
+    suffix: props.isMarkdown
+      ? ''
+      : typeof props.typing === 'object'
+        ? (props.typing.suffix ?? '|')
+        : '|'
   };
 
   // 处理打字配置
   if (props.typing === true) {
     return {
-      ...defaultConfig,
+      ...defaultConfig
     };
   }
 
@@ -83,7 +94,7 @@ const mergedConfig: ComputedRef<TypingConfig> = computed(() => {
       ...defaultConfig,
       ...props.typing,
       // 强制覆盖后缀设置
-      suffix: props.isMarkdown ? '' : props.typing.suffix ?? '|',
+      suffix: props.isMarkdown ? '' : (props.typing.suffix ?? '|')
     };
   }
 
@@ -92,8 +103,7 @@ const mergedConfig: ComputedRef<TypingConfig> = computed(() => {
 
 // 修改内容处理逻辑
 const processedContent = computed(() => {
-  if (!props.content)
-    return '';
+  if (!props.content) return '';
 
   // 非打字模式直接渲染完整内容
   if (!props.typing) {
@@ -119,9 +129,7 @@ const renderedContent = computed(() => {
     return processedContent.value;
   }
   // Markdown模式添加安全过滤和样式类
-  return DOMPurify.sanitize(
-    md.render(processedContent.value),
-  );
+  return DOMPurify.sanitize(md?.render(processedContent.value ?? '') ?? '');
 });
 
 const instance: TypewriterInstance = {
@@ -131,7 +139,7 @@ const instance: TypewriterInstance = {
   destroy,
   renderedContent: computed(() => renderedContent.value),
   isTyping: toRef(isTyping),
-  progress: computed(() => typingProgress.value),
+  progress: computed(() => typingProgress.value)
 };
 
 // 打字逻辑
@@ -150,8 +158,7 @@ watch(
     if (shouldReset) {
       typingIndex.value = 0;
       contentCache.value = newVal || '';
-    }
-    else {
+    } else {
       contentCache.value = newVal || '';
     }
 
@@ -159,13 +166,12 @@ watch(
       startTyping();
     }
   },
-  { immediate: true },
+  { immediate: true }
 );
 
 function startTyping() {
   clearTimeout(timer!);
-  if (!props.typing || !contentCache.value)
-    return;
+  if (!props.typing || !contentCache.value) return;
 
   isTyping.value = true;
   emits('start', instance);
@@ -219,10 +225,12 @@ function destroy() {
 
 // 辅助函数：获取元素背景色并检查是否透明
 function getBackgroundColor(element: HTMLElement | null) {
-  if (!element)
-    return null;
+  if (!element) return null;
   const color = getComputedStyle(element).backgroundColor;
-  const isTransparent = color === 'rgba(0, 0, 0, 0)' || color === 'transparent' || color === 'initial';
+  const isTransparent =
+    color === 'rgba(0, 0, 0, 0)' ||
+    color === 'transparent' ||
+    color === 'initial';
   return isTransparent ? null : color;
 }
 
@@ -233,10 +241,14 @@ function updateFogColor() {
     if (!bgColor) {
       bgColor = getBackgroundColor(typeWriterRef.value);
       if (!bgColor) {
-        const bubbleContent = document.querySelector('.el-bubble-content') as HTMLElement | null;
+        const bubbleContent = document.querySelector(
+          '.el-bubble-content'
+        ) as HTMLElement | null;
         bgColor = getBackgroundColor(bubbleContent);
         if (!bgColor) {
-          const bubble = document.querySelector('.el-bubble') as HTMLElement | null;
+          const bubble = document.querySelector(
+            '.el-bubble'
+          ) as HTMLElement | null;
           bgColor = getBackgroundColor(bubble);
         }
       }
@@ -257,19 +269,33 @@ defineExpose(instance);
 <template>
   <div ref="typeWriterRef" class="typer-container">
     <div
-      ref="markdownContentRef" class="typer-content" :class="[
+      ref="markdownContentRef"
+      class="typer-content"
+      :class="[
         {
           'markdown-content': isMarkdown,
           'typing-cursor': typing && mergedConfig.suffix && isTyping,
-          'typing-cursor-foggy': props.isFog && typing && mergedConfig.suffix && isTyping,
-          'typing-markdown-cursor-foggy': isMarkdown && props.isFog && typing && isTyping,
+          'typing-cursor-foggy':
+            props.isFog && typing && mergedConfig.suffix && isTyping,
+          'typing-markdown-cursor-foggy':
+            isMarkdown && props.isFog && typing && isTyping
         },
-        isMarkdown ? 'markdown-body' : '',
-      ]" :style="{
+        isMarkdown ? 'markdown-body' : ''
+      ]"
+      :style="{
         '--cursor-char': `'${mergedConfig.suffix}'`,
-        '--cursor-fog-bg-color': props.isFog ? (typeof props.isFog === 'object' ? props.isFog.bgColor ?? 'var(--el-fill-color)' : 'var(--el-fill-color)') : '',
-        '--cursor-fog-width': props.isFog ? (typeof props.isFog === 'object' ? props.isFog.width ?? '80px' : '80px') : '',
-      }" v-html="renderedContent"
+        '--cursor-fog-bg-color': props.isFog
+          ? typeof props.isFog === 'object'
+            ? (props.isFog.bgColor ?? 'var(--el-fill-color)')
+            : 'var(--el-fill-color)'
+          : '',
+        '--cursor-fog-width': props.isFog
+          ? typeof props.isFog === 'object'
+            ? (props.isFog.width ?? '80px')
+            : '80px'
+          : ''
+      }"
+      v-html="renderedContent"
     />
   </div>
 </template>
