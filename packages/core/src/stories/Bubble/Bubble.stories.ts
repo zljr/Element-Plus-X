@@ -11,16 +11,21 @@ const meta = {
   tags: ['autodocs'],
   argTypes: {
     content: { control: 'text' },
-    placement: { control: 'radio', options: ['start', 'end'] },
-    shape: { control: 'radio', options: ['round', 'corner'] },
-    variant: { control: 'radio', options: ['filled', 'borderless', 'outlined', 'shadow'] },
-    avatar: { control: 'text' },
     isMarkdown: { control: 'boolean' },
     typing: { control: 'object' },
     isFog: { control: 'boolean' },
+    placement: { control: 'radio', options: ['start', 'end'] },
+    avatar: { control: 'text' },
+    loading: { control: 'boolean' },
+    shape: { control: 'radio', options: ['round', 'corner'] },
+    variant: {
+      control: 'radio',
+      options: ['filled', 'borderless', 'outlined', 'shadow']
+    }
   },
   args: {
     // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
+    loading: true,
     placement: 'start',
     shape: 'round',
     variant: 'filled',
@@ -30,9 +35,9 @@ const meta = {
       step: 2,
       suffix: '💗',
       interval: 100,
-      isRequestEnd: true,
-    },
-  },
+      isRequestEnd: true
+    }
+  }
 } satisfies Meta<typeof BubbleSource>;
 
 export default meta;
@@ -99,6 +104,7 @@ sequenceDiagram
     Note right of 2: $$\sqrt{2+2}=\sqrt{4}=2$$
 \`\`\`
 `.trim(),
-    avatar: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
-  },
+    avatar:
+      'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
+  }
 };

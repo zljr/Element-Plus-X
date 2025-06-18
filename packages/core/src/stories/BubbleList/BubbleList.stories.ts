@@ -17,7 +17,7 @@ const meta = {
     backButtonThreshold: { control: 'number' },
     btnLoading: { control: 'boolean' },
     btnColor: { control: 'color' },
-    btnIconSize: { control: 'number' },
+    btnIconSize: { control: 'number' }
   },
   args: {
     // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
@@ -28,8 +28,8 @@ const meta = {
     backButtonThreshold: 80,
     btnLoading: true,
     btnColor: '#409EFF',
-    btnIconSize: 24,
-  },
+    btnIconSize: 24
+  }
 } satisfies Meta<typeof BubbleListSource>;
 
 export default meta;
@@ -47,6 +47,6 @@ export const BubbleListDemo: Story = {
     backButtonThreshold: 80,
     btnLoading: true,
     btnColor: '#409EFF',
-    btnIconSize: 24,
-  } as Story['args'],
+    btnIconSize: 24
+  } as Story['args']
 };

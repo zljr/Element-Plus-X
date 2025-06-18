@@ -1,7 +1,9 @@
 import type { TypewriterProps } from '../Typewriter/types';
 
-export type BubbleProps = Pick<TypewriterProps, 'isFog' | 'typing' | 'content' | 'isMarkdown'> & {
-  reasoning_content?: string;
+export type BubbleProps = Pick<
+  TypewriterProps,
+  'isFog' | 'typing' | 'content' | 'isMarkdown'
+> & {
   placement?: 'start' | 'end';
   avatar?: string;
   loading?: boolean;
@@ -17,3 +19,10 @@ export type BubbleProps = Pick<TypewriterProps, 'isFog' | 'typing' | 'content' |
   avatarFit?: 'cover' | 'contain' | 'fill' | 'none' | 'scale-down';
   noStyle?: boolean;
 };
+
+export interface BubbleEmits {
+  (start: 'start', instance: TypewriterInstance): void;
+  (finish: 'finish', instance: TypewriterInstance): void;
+  (writing: 'writing', instance: TypewriterInstance): void;
+  (avatarError: 'avatarError', e: Event): void;
+}

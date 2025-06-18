@@ -9,40 +9,43 @@ import 'prismjs/components/prism-go';
 import 'prismjs/themes/prism.min.css';
 
 defineProps<BubbleProps>();
-const loading = ref(true);
 
 const mdPlugins = [markdownItMermaid({ delay: 100, forceLegacyMathML: true })];
-
-onMounted(() => {
-  setTimeout(() => {
-    loading.value = false;
-  }, 2000);
-});
 </script>
 
 <template>
   <AppConfig :md-plugins="mdPlugins">
     <div class="component-container">
-      <p>新版本支持 打字器 雾化效果 使用 Mermaid.js 支持简单的图表和函数公式 </p>
+      <p>
+        1.2.0 版本支持 打字器 雾化效果 使用 Mermaid.js
+        支持简单的图表和函数公式，具体可以查看开发文档
+      </p>
       <div class="component-1">
         <Bubble
-          :placement="placement" :content="content" :shape="shape" :variant="variant" :loading="loading"
-          :typing="typing" :is-markdown="isMarkdown" :is-fog="{ bgColor: '#FFFFFF' }"
+          :loading="loading"
+          :placement="placement"
+          :content="content"
+          :shape="shape"
+          :variant="variant"
+          :typing="typing"
+          :is-markdown="isMarkdown"
+          :is-fog="{ bgColor: '#FFFFFF' }"
         >
           <template #avatar>
             <el-avatar :size="32" :src="avatar" />
           </template>
-
-          <!-- <template #content>
-          <div class="content-container">在这里可以自定义内容，支持插槽。</div>
-        </template> -->
 
           <template #footer>
             <div class="footer-container">
               <el-button type="info" :icon="Refresh" size="small" circle />
               <el-button type="success" :icon="Search" size="small" circle />
               <el-button type="warning" :icon="Star" size="small" circle />
-              <el-button color="#626aef" :icon="DocumentCopy" size="small" circle />
+              <el-button
+                color="#626aef"
+                :icon="DocumentCopy"
+                size="small"
+                circle
+              />
             </div>
           </template>
         </Bubble>

@@ -5,6 +5,7 @@
     "ComputedRef": true,
     "DirectiveBinding": true,
     "EffectScope": true,
+    "ElMessage": true,
     "ExtractDefaultPropTypes": true,
     "ExtractPropTypes": true,
     "ExtractPublicPropTypes": true,
@@ -66,11 +67,10 @@
     "useId": true,
     "useModel": true,
     "useSlots": true,
-    "useTemplateRef": true,
     "watch": true,
     "watchEffect": true,
     "watchPostEffect": true,
     "watchSyncEffect": true,
-    "ElMessage": true
+    "useTemplateRef": true
   }
 }
