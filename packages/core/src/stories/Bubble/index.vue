@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { BubbleProps } from '@components/Bubble/types';
-import AppConfig from '@components/AppConfig/index.vue';
 import Bubble from '@components/Bubble/index.vue';
+import ConfigProvider from '@components/ConfigProvider/index.vue';
 import { DocumentCopy, Refresh, Search, Star } from '@element-plus/icons-vue';
 import markdownItMermaid from '@jsonlee_12138/markdown-it-mermaid';
 import 'prismjs/components/prism-java';
@@ -14,19 +14,16 @@ const mdPlugins = [markdownItMermaid({ delay: 100, forceLegacyMathML: true })];
 </script>
 
 <template>
-  <AppConfig :md-plugins="mdPlugins">
+  <ConfigProvider :md-plugins="mdPlugins">
     <div class="component-container">
-      <p>
-        1.2.0 版本支持 打字器 雾化效果 使用 Mermaid.js
-        支持简单的图表和函数公式，具体可以查看开发文档
-      </p>
+      <p>新版本支持 打字器 雾化效果 使用 Mermaid.js 支持简单的图表和函数公式</p>
       <div class="component-1">
         <Bubble
-          :loading="loading"
           :placement="placement"
           :content="content"
           :shape="shape"
           :variant="variant"
+          :loading="loading"
           :typing="typing"
           :is-markdown="isMarkdown"
           :is-fog="{ bgColor: '#FFFFFF' }"
@@ -51,7 +48,7 @@ const mdPlugins = [markdownItMermaid({ delay: 100, forceLegacyMathML: true })];
         </Bubble>
       </div>
     </div>
-  </AppConfig>
+  </ConfigProvider>
 </template>
 
 <style scoped lang="scss">

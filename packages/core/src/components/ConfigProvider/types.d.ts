@@ -2,7 +2,8 @@ import type MarkdownIt from 'markdown-it';
 
 export type MarkdownItPlugin = (md: MarkdownIt) => void;
 
-export interface AppConfigProps {
+export interface ConfigProviderProps {
   mdPlugins?: MarkdownItPlugin[];
-  highlight?: (code: string, language: string) => string;
+  md?: MarkdownIt;
+  // highlight?: (code: string, language: string) => string;
 }

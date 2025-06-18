@@ -2,9 +2,11 @@ import type TypewriterSource from '@components/Typewriter/index.vue';
 // import { fn } from '@storybook/test';
 import type { Meta, StoryObj } from '@storybook/vue3';
 import Typewriter from './index.vue';
-import 'prismjs/components/prism-java';
-import 'prismjs/components/prism-go';
-import 'prismjs/themes/prism.min.css';
+import PrismDemo from './PrismDemo.vue';
+// import 'prismjs/components/prism-java';
+// import 'prismjs/components/prism-go';
+// import 'prismjs/themes/prism.min.css';
+import ShikiDemo from './ShikiDemo.vue';
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories
 const meta = {
@@ -52,7 +54,7 @@ export const BaseRender: Story = {
   } as Story['args']
 };
 
-export const CodeRender: Story = {
+export const PrismRender: Story = {
   args: {
     content: `
     # javascript
@@ -79,7 +81,18 @@ export const CodeRender: Story = {
     }
   \`\`\`
       `.trim()
-  } as Story['args']
+  } as Story['args'],
+  render: args => ({
+    components: {
+      PrismDemo
+    },
+    setup() {
+      return {
+        attrs: args
+      };
+    },
+    template: `<PrismDemo v-bind="attrs" />`
+  })
 };
 
 export const PieRender: Story = {
@@ -113,4 +126,55 @@ export const MathRender: Story = {
 \`\`\`
     `.trim()
   } as Story['args']
+};
+
+export const ShikiRender: Story = {
+  args: {
+    content: `
+    # javascript
+  \`\`\`javascript
+    const name = "world";
+    console.log('Hello, \$\{name\}\`);
+  \`\`\`
+  # java
+  \`\`\`java
+    public class HelloWorld {
+        public static void main(String[] args) {
+            System.out.println("Hello, world!");
+        }
+    }
+  \`\`\`
+  # go
+  \`\`\`go
+    package main
+
+    import "fmt"
+
+    func main() {
+        fmt.Println("Hello, world!")
+    }
+  \`\`\`
+      `.trim()
+  } as Story['args'],
+  render: args => ({
+    components: {
+      ShikiDemo
+    },
+    setup() {
+      return {
+        attrs: {
+          ...args,
+          typing: false
+        }
+      };
+    },
+    template: `
+    <p style="color: #f00;">注: 由于shiki是异步加载, 因此当前使用的异步加载, 如果介意的话可以在全局注册markdown-it, 后期可能会提供比较好的方案来解决这个问题。</p>
+    <Suspense>
+      <ShikiDemo v-bind="attrs" />
+      <template #fallback>
+        <div>Loading...</div>
+      </template>
+    </Suspense>`
+  })
 };

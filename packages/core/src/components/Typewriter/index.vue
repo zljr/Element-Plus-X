@@ -7,9 +7,7 @@ import type {
   TypingConfig
 } from './types.d.ts';
 import DOMPurify from 'dompurify'; // 新增安全过滤
-import MarkdownIt from 'markdown-it';
-import { usePrism } from '../../hooks/usePrism';
-import { useAppConfig } from '../AppConfig/hooks.ts';
+import { useConfigProvider } from '../ConfigProvider/hooks.ts';
 
 const props = withDefaults(defineProps<TypewriterProps>(), {
   content: '',
@@ -19,37 +17,21 @@ const props = withDefaults(defineProps<TypewriterProps>(), {
 });
 const emits = defineEmits<TypewriterEmits>();
 
-const appConfig = useAppConfig();
+const configProvider = useConfigProvider();
+const { md } = configProvider;
 
 const markdownContentRef = ref<HTMLElement | null>(null);
 const typeWriterRef = ref<HTMLElement | null>(null);
 
-// markdown-it highlight plugin 处理
-const highlight = computed(() => {
-  if (!props.highlight) {
-    return appConfig.highlight ?? usePrism();
-  }
-  return props.highlight;
-});
-const md = new MarkdownIt({
-  html: true,
-  linkify: true,
-  typographer: true,
-  breaks: true,
-  highlight: (code, language) => {
-    return highlight.value?.(code, language);
-  }
-});
-
 function initMarkdownPlugins() {
-  if (appConfig.mdPlugins?.length) {
-    appConfig.mdPlugins.forEach(plugin => {
-      md.use(plugin);
+  if (configProvider.mdPlugins?.length) {
+    configProvider.mdPlugins.forEach(plugin => {
+      md?.use(plugin);
     });
   }
   if (props.mdPlugins?.length) {
     props.mdPlugins.forEach(plugin => {
-      md.use(plugin);
+      md?.use(plugin);
     });
   }
 }
@@ -118,7 +100,7 @@ const renderedContent = computed(() => {
     return processedContent.value;
   }
   // Markdown模式添加安全过滤和样式类
-  return DOMPurify.sanitize(md.render(processedContent.value));
+  return DOMPurify.sanitize(md?.render(processedContent.value ?? '') ?? '');
 });
 
 const instance: TypewriterInstance = {
