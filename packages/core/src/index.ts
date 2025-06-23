@@ -7,6 +7,7 @@ import Conversations from './components/Conversations/index.vue';
 import EditorInput from './components/EditorInput/index.vue';
 import EditorSender from './components/EditorSender/index.vue';
 import FilesCard from './components/FilesCard/index.vue';
+import { MarkdownRenderer, MarkdownRendererAsync } from './components/Markdown';
 import MentionSender from './components/MentionSender/index.vue';
 import Prompts from './components/Prompts/index.vue';
 import Sender from './components/Sender/index.vue';
@@ -35,6 +36,8 @@ const ElementPlusX: Plugin = {
     app.component('ThoughtChain', ThoughtChain);
     app.component('Typewriter', Typewriter);
     app.component('Welcome', Welcome);
+    app.component('MarkdownRenderer', MarkdownRenderer);
+    app.component('MarkdownRendererAsync', MarkdownRendererAsync);
   }
 };
 
