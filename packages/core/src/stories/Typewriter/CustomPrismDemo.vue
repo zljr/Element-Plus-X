@@ -23,6 +23,16 @@ const attrs = useAttrs();
 
 <template>
   <ConfigProvider :md="md">
-    <Typewriter v-bind="attrs" />
+    <div class="component-container">
+      <Typewriter v-bind="attrs" />
+    </div>
   </ConfigProvider>
 </template>
+
+<style scoped lang="scss">
+.component-container {
+  background-color: white;
+  padding: 12px;
+  border-radius: 15px;
+}
+</style>

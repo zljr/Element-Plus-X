@@ -1,51 +1,32 @@
 <script setup lang="ts">
-import type { BubbleProps } from '@components/Bubble/types';
 import Bubble from '@components/Bubble/index.vue';
 import ConfigProvider from '@components/ConfigProvider/index.vue';
-import { DocumentCopy, Refresh, Search, Star } from '@element-plus/icons-vue';
 import markdownItMermaid from '@jsonlee_12138/markdown-it-mermaid';
-import 'prismjs/components/prism-java';
-import 'prismjs/components/prism-go';
-import 'prismjs/themes/prism.min.css';
 
-defineProps<BubbleProps>();
-
-const mdPlugins = [markdownItMermaid({ delay: 100, forceLegacyMathML: true })];
+const mdPlugins = [
+  markdownItMermaid({
+    forceLegacyMathML: true,
+    delay: 100
+  })
+];
 </script>
 
 <template>
   <ConfigProvider :md-plugins="mdPlugins">
     <div class="component-container">
-      <p>新版本支持 打字器 雾化效果 使用 Mermaid.js 支持简单的图表和函数公式</p>
+      <p>
+        1.2.0 版本支持 打字器 雾化效果 使用 Mermaid.js 支持简单的图表和函数公式
+      </p>
+      <p style="color: #ff8c00">
+        在这个版本的 md 我们将 markdown-it
+        配置全部暴露出来了，需要大家自行集成配置，包括代码高亮和简单的图表、函数公式这些。
+      </p>
+      <p style="color: #f00">
+        后面可能会上一个大的版本，找到更好的处理 md
+        渲染的方法。大家有好的想法可以加交流群或者作者VX一起交流
+      </p>
       <div class="component-1">
-        <Bubble
-          :placement="placement"
-          :content="content"
-          :shape="shape"
-          :variant="variant"
-          :loading="loading"
-          :typing="typing"
-          :is-markdown="isMarkdown"
-          :is-fog="{ bgColor: '#FFFFFF' }"
-        >
-          <template #avatar>
-            <el-avatar :size="32" :src="avatar" />
-          </template>
-
-          <template #footer>
-            <div class="footer-container">
-              <el-button type="info" :icon="Refresh" size="small" circle />
-              <el-button type="success" :icon="Search" size="small" circle />
-              <el-button type="warning" :icon="Star" size="small" circle />
-              <el-button
-                color="#626aef"
-                :icon="DocumentCopy"
-                size="small"
-                circle
-              />
-            </div>
-          </template>
-        </Bubble>
+        <Bubble v-bind="$attrs" />
       </div>
     </div>
   </ConfigProvider>
@@ -56,15 +37,5 @@ const mdPlugins = [markdownItMermaid({ delay: 100, forceLegacyMathML: true })];
   background-color: white;
   padding: 12px;
   border-radius: 15px;
-
-  .component-1 {
-    .footer-container {
-      :deep() {
-        .el-button + .el-button {
-          margin-left: 8px;
-        }
-      }
-    }
-  }
 }
 </style>

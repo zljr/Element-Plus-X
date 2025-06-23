@@ -3,8 +3,86 @@ import type { BubbleListProps } from '@components/BubbleList/types';
 import type { FilesType } from '@components/FilesCard/types';
 import type { ThinkingStatus } from '@components/Thinking/types';
 
-const avatar
-  = 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png';
+// 头像1
+export const avatar1: string =
+  'https://avatars.githubusercontent.com/u/76239030?v=4';
+
+// 头像2
+export const avatar2: string =
+  'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png';
+
+// md 普通内容
+export const mdContent = `
+# 标题
+这是一个 Markdown 示例。
+- 列表项 1
+- 列表项 2
+**粗体文本** 和 *斜体文本*
+
+`.trim();
+
+// md 代码块高亮
+export const highlightMdContent = `
+
+### javascript
+\`\`\`javascript
+console.log('Hello, world!');
+\`\`\`
+
+### java
+\`\`\`java
+public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, world!");
+    }
+}
+\`\`\`
+
+### go
+\`\`\`go
+package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("Hello, world!")
+}
+\`\`\`
+
+`.trim();
+
+// md 美人鱼图表
+export const mermaidMdContent = `
+
+### mermaid 饼状图
+\`\`\`mermaid
+pie
+    "传媒及文化相关" : 35
+    "广告与市场营销" : 8
+    "游戏开发" : 15
+    "影视动画与特效" : 12
+    "互联网产品设计" : 10
+    "VR/AR开发" : 5
+    "其他" : 15
+\`\`\`
+
+`;
+
+// md 数学公式
+export const mathMdContent = `
+
+### mermaid 数学公式
+\`\`\`mermaid
+sequenceDiagram
+    autonumber
+    participant 1 as $$alpha$$
+    participant 2 as $$beta$$
+    1->>2: Solve: $$\sqrt{2+2}$$
+    2-->>1: Answer: $$2$$
+    Note right of 2: $$\sqrt{2+2}=\sqrt{4}=2$$
+\`\`\`
+
+`;
 
 export type MessageItem = BubbleProps & {
   key: number;
@@ -19,14 +97,14 @@ export const messageArr: BubbleListProps<MessageItem>['list'] = [
     key: 1,
     role: 'ai',
     placement: 'start',
-    content:
-      '这是机器人的消息这是机器人的消息这是机器人的消息这是机器人的消息这是机器人的消息这是机器人的消息这是机器人的消息',
+    content: '欢迎使用 Element Plus X .'.repeat(5),
     loading: true,
     shape: 'corner',
     variant: 'filled',
     isMarkdown: false,
     typing: { step: 2, suffix: '💗' },
-    avatar,
+    avatar: avatar2,
+    avatarSize: '32px'
   },
   {
     key: 2,
@@ -37,20 +115,21 @@ export const messageArr: BubbleListProps<MessageItem>['list'] = [
     shape: 'corner',
     variant: 'outlined',
     isMarkdown: false,
-    avatar,
+    avatar: avatar1,
+    avatarSize: '32px'
   },
   {
     key: 3,
     role: 'ai',
     placement: 'start',
-    content:
-      '这是机器人的消息这是机器人的消息这是机器人的消息这是机器人的消息这是机器人的消息这是机器人的消息这是机器人的消息',
+    content: '欢迎使用 Element Plus X .'.repeat(5),
     loading: true,
     shape: 'corner',
     variant: 'filled',
     isMarkdown: false,
     typing: { step: 2, suffix: '💗' },
-    avatar,
+    avatar: avatar2,
+    avatarSize: '32px'
   },
   {
     key: 4,
@@ -61,20 +140,21 @@ export const messageArr: BubbleListProps<MessageItem>['list'] = [
     shape: 'corner',
     variant: 'outlined',
     isMarkdown: false,
-    avatar,
+    avatar: avatar1,
+    avatarSize: '32px'
   },
   {
     key: 5,
     role: 'ai',
     placement: 'start',
-    content:
-      '这是机器人的消息这是机器人的消息这是机器人的消息这是机器人的消息这是机器人的消息这是机器人的消息这是机器人的消息',
+    content: '欢迎使用 Element Plus X .'.repeat(5),
     loading: true,
     shape: 'corner',
     variant: 'filled',
     isMarkdown: false,
     typing: { step: 2, suffix: '💗' },
-    avatar,
+    avatar: avatar2,
+    avatarSize: '32px'
   },
   {
     key: 6,
@@ -85,20 +165,21 @@ export const messageArr: BubbleListProps<MessageItem>['list'] = [
     shape: 'corner',
     variant: 'outlined',
     isMarkdown: false,
-    avatar,
+    avatar: avatar1,
+    avatarSize: '32px'
   },
   {
     key: 7,
     role: 'ai',
     placement: 'start',
-    content:
-      '这是机器人的消息这是机器人的消息这是机器人的消息这是机器人的消息这是机器人的消息这是机器人的消息这是机器人的消息',
+    content: '欢迎使用 Element Plus X .'.repeat(5),
     loading: true,
     shape: 'corner',
     variant: 'filled',
     isMarkdown: false,
     typing: { step: 2, suffix: '💗', isRequestEnd: true },
-    avatar,
+    avatar: avatar2,
+    avatarSize: '32px'
   },
   {
     key: 8,
@@ -109,8 +190,9 @@ export const messageArr: BubbleListProps<MessageItem>['list'] = [
     shape: 'corner',
     variant: 'outlined',
     isMarkdown: false,
-    avatar,
-  },
+    avatar: avatar1,
+    avatarSize: '32px'
+  }
 ];
 
 // 模拟自定义文件卡片数据
@@ -131,7 +213,7 @@ export const colorMap: Record<FilesType, string> = {
   link: '#2962FF',
   zip: '#673AB7',
   file: '#FFC757',
-  unknown: '#6E9DA4',
+  unknown: '#6E9DA4'
 };
 
 // 自己定义文件颜色
@@ -151,7 +233,7 @@ export const colorMap1: Record<FilesType, string> = {
   link: '#5D7CBA',
   zip: '#8B5E3C',
   file: '#AAB2BF',
-  unknown: '#888888',
+  unknown: '#888888'
 };
 
 // 自己定义文件颜色1
@@ -171,5 +253,5 @@ export const colorMap2: Record<FilesType, string> = {
   link: '#007BFF',
   zip: '#888888',
   file: '#F0D9B5',
-  unknown: '#D8D8D8',
+  unknown: '#D8D8D8'
 };

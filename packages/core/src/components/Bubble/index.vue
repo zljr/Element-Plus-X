@@ -15,7 +15,6 @@ const props = withDefaults(defineProps<BubbleProps>(), {
   avatarSize: '',
   avatarGap: '12px',
   avatarShape: 'circle',
-  avatarIcon: '',
   avatarSrcSet: '',
   avatarAlt: '',
   avatarFit: 'cover',
@@ -145,7 +144,6 @@ defineExpose(instance);
         :size="0"
         :src="avatar"
         :shape="avatarShape"
-        :icon="avatarIcon"
         :src-set="avatarSrcSet"
         :alt="avatarFit"
         @error="avatarError"
@@ -173,12 +171,12 @@ defineExpose(instance);
         class="el-bubble-content"
         :class="{
           'el-bubble-content-loading': loading,
-          'el-bubble-content-round': shape === 'round',
-          'el-bubble-content-corner': shape === 'corner',
-          'el-bubble-content-filled': variant === 'filled',
-          'el-bubble-content-borderless': variant === 'borderless',
-          'el-bubble-content-outlined': variant === 'outlined',
-          'el-bubble-content-shadow': variant === 'shadow'
+          'el-bubble-content-round': shape === 'round' && !noStyle,
+          'el-bubble-content-corner': shape === 'corner' && !noStyle,
+          'el-bubble-content-filled': variant === 'filled' && !noStyle,
+          'el-bubble-content-borderless': variant === 'borderless' && !noStyle,
+          'el-bubble-content-outlined': variant === 'outlined' && !noStyle,
+          'el-bubble-content-shadow': variant === 'shadow' && !noStyle
         }"
       >
         <div

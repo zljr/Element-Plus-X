@@ -14,3 +14,5 @@ provide<ConfigProviderProps>(APP_CONFIG_PROVIDE_KEY, {
 <template>
   <slot />
 </template>
+
+<style scoped lang="scss" src="./style.scss"></style>

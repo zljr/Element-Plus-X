@@ -2,8 +2,9 @@ import type { Meta, StoryObj } from '@storybook/vue3';
 import Attachments from '@components/Attachments/index.vue';
 import { pick } from 'radash';
 import CustomButtons from './CustomButtons.vue';
-import CustomList from './CustomList.vue';
+// import CustomList from './CustomList.vue';
 import DefaultScrollX from './DefaultScrollX.vue';
+import AttachmentsDemo from './index.vue';
 import ScrollY from './ScrollY.vue';
 import { genDefaultFiles } from './useAttachmentStubs';
 import Wrap from './Wrap.vue';
@@ -11,7 +12,7 @@ import Wrap from './Wrap.vue';
 const files = genDefaultFiles();
 
 const meta: Meta = {
-  title: 'Example/Attachments',
+  title: 'Example/Attachments 附件上传组件 📪️',
   tags: ['autodocs'],
   component: Attachments,
   argTypes: {
@@ -53,7 +54,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const CustomListDemo: Story = {
-  name: 'CustomList',
+  name: 'AttachmentsDemo',
   args: {
     drag: true,
     items: files,
@@ -61,8 +62,10 @@ export const CustomListDemo: Story = {
       padding: '0 12px'
     }
   },
-  render: (args) => ({
-    components: { CustomList },
+  render: args => ({
+    components: {
+      AttachmentsDemo
+    },
     setup() {
       const attrs = pick(args, [
         'items',
@@ -78,7 +81,7 @@ export const CustomListDemo: Story = {
         attrs
       };
     },
-    template: '<CustomList v-bind="attrs" />'
+    template: '<AttachmentsDemo v-bind="attrs" />'
   })
 };
 
@@ -93,7 +96,7 @@ export const CustomButtonsDemo: Story = {
     hideUpload: false,
     overflow: 'scrollX'
   } as Story['args'],
-  render: (args) => ({
+  render: args => ({
     components: { CustomButtons },
     setup() {
       const attrs = pick(args, [
@@ -125,7 +128,7 @@ export const DefaultScrollXDemo: Story = {
     hideUpload: false,
     overflow: 'scrollX'
   } as Story['args'],
-  render: (args) => ({
+  render: args => ({
     components: { DefaultScrollX },
     setup() {
       const attrs = pick(args, [
@@ -156,7 +159,7 @@ export const ScrollYDemo: Story = {
     },
     overflow: 'scrollY'
   },
-  render: (args) => ({
+  render: args => ({
     components: { ScrollY },
     setup() {
       const attrs = pick(args, [
@@ -187,7 +190,7 @@ export const WrapDemo: Story = {
     },
     overflow: 'wrap'
   },
-  render: (args) => ({
+  render: args => ({
     components: { Wrap },
     setup() {
       const attrs = pick(args, [

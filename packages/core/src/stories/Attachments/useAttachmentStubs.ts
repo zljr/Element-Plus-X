@@ -1,4 +1,8 @@
-import type { FilesCardProps, FilesType } from '@components/FilesCard/types';
+import type { FileListProps } from '@components/Attachments/types.d.ts';
+import type {
+  FilesCardProps,
+  FilesType
+} from '@components/FilesCard/types.d.ts';
 import { colorMap1 } from '@assets/mock.ts';
 import { ElMessage } from 'element-plus';
 import { ref } from 'vue';
@@ -20,7 +24,7 @@ export function genDefaultFiles(count: number = 30) {
       url: 'https://www.baidu.com',
       thumbUrl: 'https://www.baidu.com',
       imgFile: new File([], `test${i}.txt`),
-      showDelIcon: true,
+      showDelIcon: true
     });
   }
   return res;
@@ -36,10 +40,9 @@ export function useAttachmentStubs(initValue: SelfFilesCardProps[] = []) {
     }
     return true;
   }
-  function handleUploadDrop(dropped: File[], props: any) {
+  function handleUploadDrop(dropped: File[], props: FileListProps) {
     console.log(dropped, props);
-    if (!dropped.length)
-      return;
+    if (!dropped.length) return;
     if (dropped[0].type === '') {
       ElMessage.error('禁止上传文件夹！');
       return false;
@@ -62,7 +65,7 @@ export function useAttachmentStubs(initValue: SelfFilesCardProps[] = []) {
         fileName: options.file.name,
         uid: options.file.name,
         fileSize: options.file.size,
-        imgFile: options.file,
+        imgFile: options.file
       };
       files.value.push({
         id: files.value.length,
@@ -70,7 +73,7 @@ export function useAttachmentStubs(initValue: SelfFilesCardProps[] = []) {
         name: res.fileName,
         fileSize: res.fileSize,
         imgFile: res.imgFile,
-        showDelIcon: true,
+        showDelIcon: true
       });
       ElMessage.success('上传成功');
     }, 1000);
@@ -85,6 +88,6 @@ export function useAttachmentStubs(initValue: SelfFilesCardProps[] = []) {
     handleBeforeUpload,
     handleUploadDrop,
     handleHttpRequest,
-    handleDeleteCard,
+    handleDeleteCard
   };
 }

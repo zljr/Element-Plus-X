@@ -15,3 +15,16 @@ export interface FileListProps {
 }
 
 export type AttachmentsProps = FileListProps;
+
+export interface AttachmentsEmits {
+  (event: 'uploadChange', file: File, props: FileListProps): void;
+  (
+    event: 'uploadSuccess',
+    response: any,
+    file: File,
+    props: FileListProps
+  ): void;
+  (event: 'uploadError', error: any, file: File, props: FileListProps): void;
+  (event: 'uploadDrop', fileArr: File[], props: FileListProps): void;
+  (event: 'deleteCard', item: FilesCardProps, index: number): void;
+}

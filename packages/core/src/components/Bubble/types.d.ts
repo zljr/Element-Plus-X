@@ -13,7 +13,6 @@ export type BubbleProps = Pick<
   avatarSize?: string;
   avatarGap?: string;
   avatarShape?: 'circle' | 'square';
-  avatarIcon?: string;
   avatarSrcSet?: string;
   avatarAlt?: string;
   avatarFit?: 'cover' | 'contain' | 'fill' | 'none' | 'scale-down';
@@ -21,8 +20,8 @@ export type BubbleProps = Pick<
 };
 
 export interface BubbleEmits {
-  (start: 'start', instance: TypewriterInstance): void;
-  (finish: 'finish', instance: TypewriterInstance): void;
-  (writing: 'writing', instance: TypewriterInstance): void;
-  (avatarError: 'avatarError', e: Event): void;
+  (event: 'start', instance: TypewriterInstance): void;
+  (event: 'finish', instance: TypewriterInstance): void;
+  (event: 'writing', instance: TypewriterInstance): void;
+  (event: 'avatarError', e: Event): void;
 }

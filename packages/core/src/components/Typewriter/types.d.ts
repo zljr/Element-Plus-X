@@ -24,9 +24,9 @@ export interface TypewriterProps {
 }
 
 export interface TypewriterEmits {
-  (start: 'start', instance: TypewriterInstance): void;
-  (writing: 'writing', instance: TypewriterInstance): void;
-  (finish: 'finish', instance: TypewriterInstance): void;
+  (event: 'start', instance: TypewriterInstance): void;
+  (event: 'writing', instance: TypewriterInstance): void;
+  (event: 'finish', instance: TypewriterInstance): void;
 }
 
 export interface TypewriterInstance {

@@ -21,7 +21,7 @@ addons.setConfig({
   theme,
   darkTheme,
   // 侧边栏宽度（像素）
-  navSize: 300,
+  navSize: 310,
   // 底部面板高度（像素）
   bottomPanelHeight: 200,
   // 右侧面板宽度（像素）
@@ -29,9 +29,9 @@ addons.setConfig({
   // 控制面板位置：'bottom' 或 'right'
   panelPosition: 'right',
   // 是否启用快捷键
-  enableShortcuts: true,
+  enableShortcuts: false,
   // 是否显示顶部工具栏
-  showToolbar: true,
+  showToolbar: false,
   // 初始选中的面板（undefined 表示不强制选中）
   selectedPanel: undefined,
   // 初始激活的界面元素：'sidebar' 或 'panel'
@@ -65,7 +65,7 @@ addons.setConfig({
   // 顶部工具栏配置
   toolbar: {
     // 故事标题控件
-    title: { hidden: false },
+    title: { hidden: true },
     // 缩放控件
     zoom: { hidden: true },
     // 弹出到新窗口控件
@@ -73,6 +73,8 @@ addons.setConfig({
     // 复制控件
     copy: { hidden: false },
     // 全屏控件
-    fullscreen: { hidden: false }
+    fullscreen: { hidden: false },
+    // 刷新控件
+    remount: { hidden: false }
   }
 });

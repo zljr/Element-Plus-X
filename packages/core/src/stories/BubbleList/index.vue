@@ -1,25 +1,26 @@
 <script setup lang="ts">
 import type { MessageItem } from '@assets/mock';
 import type { BubbleListProps } from '@components/BubbleList/types';
+import { avatar1, avatar2 } from '@assets/mock';
 import BubbleList from '@components/BubbleList/index.vue';
 import { ElMessage } from 'element-plus';
 import 'element-plus/theme-chalk/el-message.css';
 
 const props = defineProps<Pick<BubbleListProps, 'list'>>();
 
-const bubbleItems = ref<BubbleListProps<MessageItem>['list']>(props.list as BubbleListProps<MessageItem>['list']);
+const bubbleItems = ref<BubbleListProps<MessageItem>['list']>(
+  props.list as BubbleListProps<MessageItem>['list']
+);
 
-const avatar = ref('https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png');
 const bubbleListRef = ref();
 const num = ref(0);
-const attrs = useAttrs();
 
 function addMessage() {
   const i = bubbleItems.value.length;
   const isUser = !!(i % 2);
   const content = isUser
-    ? 'Mock user content.'
-    : 'Mock AI content. '.repeat(5);
+    ? '这是用户的消息'
+    : '欢迎使用 Element Plus X .'.repeat(5);
   const placement = isUser ? 'end' : 'start';
   const typing = isUser ? false : { step: 2, suffix: '...' };
   const obj = {
@@ -29,7 +30,8 @@ function addMessage() {
     placement,
     typing,
     isFog: true,
-    avatar: avatar.value,
+    avatar: isUser ? avatar1 : avatar2,
+    avatarSize: '32px'
   };
   bubbleItems.value.push(obj as MessageItem);
   bubbleListRef.value.scrollToBottom();
@@ -60,8 +62,11 @@ onMounted(() => {
 
 <template>
   <div class="component-container">
-    <p>1. 气泡列表组件，同样继承 雾化效果，点击添加对话预览 </p>
-    <p>2. 新版本 支持回到底部按钮，支持 鼠标悬停出现滚动条增强 交互体验 </p>
+    <div class="component-title" style="color: red">
+      气泡列表的 list 数组中的 item 属性，会直接透传到内置的 bubble
+      组件中，也就是每一个消息气泡的属性，都是用这个数组控制。因此 bubble
+      组件的属性都可以放在列表项中，同时也可以自己拓展每一项的属性做自定义的拓展处理。
+    </div>
     <div class="top-wrap">
       <div class="btn-list">
         <el-button type="primary" plain @click="addMessage">
@@ -70,7 +75,12 @@ onMounted(() => {
         <el-button type="primary" plain @click="scrollToTop">
           滚动到顶部
         </el-button>
-        <el-input-number v-model="num" :min="0" :max="10" controls-position="right" />
+        <el-input-number
+          v-model="num"
+          :min="0"
+          :max="10"
+          controls-position="right"
+        />
         <el-button type="primary" plain @click="scrollToBubble">
           滚动第{{ num }}个气泡框
         </el-button>
@@ -79,52 +89,11 @@ onMounted(() => {
 
     <div class="component-1">
       <BubbleList
-        v-bind="attrs"
+        v-bind="{ ...$attrs, ...props }"
         ref="bubbleListRef"
         :list="bubbleItems"
         @complete="handleOnComplete"
-      >
-        <template #avatar="{ item }">
-          <el-avatar :size="32" :src="item.avatar" />
-        </template>
-
-        <template #header="{ item }">
-          <div class="header-container">
-            {{
-              item.role === "ai" ? "机器人头部自定义内容" : "用户头部自定义内容"
-            }}
-          </div>
-        </template>
-
-        <!-- 自定义 content -->
-        <!-- <template #content="{ item }">
-          <div class="content-container">
-            {{ item.content }}
-          </div>
-        </template> -->
-
-        <template #footer="{ item }">
-          <div class="footer-container">
-            {{
-              item.role === "ai" ? "机器人底部自定义内容" : "用户底部自定义内容"
-            }}
-          </div>
-        </template>
-
-        <template #loading="{ item }">
-          <div class="loading-container">
-            {{
-              item.role === "ai" ? "机器人自定义加载动画" : "用户自定义加载动画"
-            }}
-          </div>
-        </template>
-
-        <!-- <template #backToBottom>
-          <el-button circle style="padding: 23px; font-size: 20px;">
-            💖
-          </el-button>
-        </template> -->
-      </BubbleList>
+      />
     </div>
   </div>
 </template>
@@ -134,8 +103,29 @@ onMounted(() => {
   background-color: white;
   padding: 12px;
   border-radius: 15px;
-  height: calc(100vh - 60px);
   overflow: auto;
+
+  .component-title {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-left: 12px;
+    font-weight: 700;
+    line-height: 1.5;
+    margin-bottom: 12px;
+    margin-top: 24px;
+
+    &::after {
+      position: absolute;
+      content: '';
+      display: block;
+      width: 5px;
+      height: 75%;
+      border-radius: 15px;
+      left: 0;
+      background-color: #409eff;
+    }
+  }
 
   .btn-list {
     display: flex;
