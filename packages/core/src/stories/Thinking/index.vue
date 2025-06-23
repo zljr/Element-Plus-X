@@ -8,6 +8,10 @@ import { useXStream } from '../../hooks/useXStream';
 
 const { startStream, cancel, data, error, isLoading } = useXStream();
 
+interface MessageItems extends MessageItem {
+  reasoning_content?: string;
+}
+
 const BASE_URL = 'https://api.siliconflow.cn/v1/chat/completions';
 // 仅供测试，请勿拿去测试其他付费模型
 const API_KEY = 'sk-vfjyscildobjnrijtcllnkhtcouidcxdgjxtldzqzeowrbga';
@@ -15,7 +19,7 @@ const MODEL = 'THUDM/GLM-Z1-9B-0414';
 
 const inputValue = ref('帮我写一篇小米手机介绍');
 const senderRef = ref<any>(null);
-const bubbleItems = ref<MessageItem[]>([]);
+const bubbleItems = ref<MessageItems[]>([]);
 const bubbleListRef = ref<BubbleListInstance | null>(null);
 const processedIndex = ref(0);
 const attrs = useAttrs();
@@ -36,10 +40,12 @@ function handleDataChunk(chunk: string) {
     const reasoningChunk = JSON.parse(chunk).choices[0].delta.reasoning_content;
     if (reasoningChunk) {
       // 开始思考链状态
-      bubbleItems.value[bubbleItems.value.length - 1].thinkingStatus = 'thinking';
+      bubbleItems.value[bubbleItems.value.length - 1].thinkingStatus =
+        'thinking';
       bubbleItems.value[bubbleItems.value.length - 1].loading = true;
       if (bubbleItems.value.length) {
-        bubbleItems.value[bubbleItems.value.length - 1].reasoning_content += reasoningChunk;
+        bubbleItems.value[bubbleItems.value.length - 1].reasoning_content +=
+          reasoningChunk;
       }
     }
 
@@ -53,19 +59,22 @@ function handleDataChunk(chunk: string) {
         bubbleItems.value[bubbleItems.value.length - 1].content += parsedChunk;
       }
     }
-  }
-  catch (err) {
+  } catch (err) {
     console.error('解析数据时出错:', err);
   }
 }
 
-watch(data, () => {
-  for (let i = processedIndex.value; i < data.value.length; i++) {
-    const chunk = data.value[i].data;
-    handleDataChunk(chunk);
-    processedIndex.value++;
-  }
-}, { deep: true });
+watch(
+  data,
+  () => {
+    for (let i = processedIndex.value; i < data.value.length; i++) {
+      const chunk = data.value[i].data;
+      handleDataChunk(chunk);
+      processedIndex.value++;
+    }
+  },
+  { deep: true }
+);
 
 // 封装错误处理逻辑
 function handleError(err: any) {
@@ -85,25 +94,26 @@ async function startSSE() {
     const response = await fetch(BASE_URL, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${API_KEY}`,
+        Authorization: `Bearer ${API_KEY}`,
         'Content-Type': 'application/json',
-        'Accept': 'text/event-stream',
+        Accept: 'text/event-stream'
       },
       body: JSON.stringify({
         model: MODEL,
-        messages: bubbleItems.value.filter((item: any) => item.role === 'user').map((item: any) => ({
-          role: item.role,
-          content: item.content,
-        })),
-        stream: true,
-      }),
+        messages: bubbleItems.value
+          .filter((item: any) => item.role === 'user')
+          .map((item: any) => ({
+            role: item.role,
+            content: item.content
+          })),
+        stream: true
+      })
     });
     const readableStream = response.body!;
     // 重置状态
     processedIndex.value = 0;
     await startStream({ readableStream });
-  }
-  catch (err) {
+  } catch (err) {
     handleError(err);
   }
 }
@@ -111,9 +121,11 @@ async function startSSE() {
 // 添加消息 - 维护聊天记录
 function addMessage(message: string, isUser: boolean) {
   const i = bubbleItems.value.length;
-  const obj: MessageItem = {
+  const obj: MessageItems = {
     key: i,
-    avatar: isUser ? 'https://avatars.githubusercontent.com/u/76239030?v=4' : 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
+    avatar: isUser
+      ? 'https://avatars.githubusercontent.com/u/76239030?v=4'
+      : 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
     avatarSize: '48px',
     role: isUser ? 'user' : 'system',
     placement: isUser ? 'end' : 'start',
@@ -126,7 +138,7 @@ function addMessage(message: string, isUser: boolean) {
     loading: !isUser,
     content: message || '',
     reasoning_content: '',
-    thinkingStatus: 'start',
+    thinkingStatus: 'start'
   };
   bubbleItems.value.push(obj);
 }
@@ -150,7 +162,14 @@ function handleChange(payload: { value: boolean; status: ThinkingStatus }) {
       </div>
       <BubbleList ref="bubbleListRef" :list="bubbleItems">
         <template #header="{ item }">
-          <Thinking v-if="item.reasoning_content" v-bind="attrs" :content="item.reasoning_content" :status="item.thinkingStatus" class="thinking-chain-warp" @change="handleChange" />
+          <Thinking
+            v-if="item.reasoning_content"
+            v-bind="attrs"
+            :content="item.reasoning_content"
+            :status="item.thinkingStatus"
+            class="thinking-chain-warp"
+            @change="handleChange"
+          />
         </template>
 
         <template #content="{ item }">
@@ -179,9 +198,7 @@ function handleChange(payload: { value: boolean; status: ThinkingStatus }) {
               <span v-if="status === 'error'">想不出来 🥵</span>
             </template>
 
-            <template #arrow>
-              👇
-            </template>
+            <template #arrow> 👇 </template>
 
             <template #error>
               <span class="error-color">思考报错</span>
@@ -192,13 +209,24 @@ function handleChange(payload: { value: boolean; status: ThinkingStatus }) {
             </template>
           </Thinking>
 
-          <Typewriter :content="item.content" :loading="item.loading" :typing="item.typing" :is-markdown="item.isMarkdown" :is-fog="item.isFog" />
+          <Typewriter
+            :content="item.content"
+            :loading="item.loading"
+            :typing="item.typing"
+            :is-markdown="item.isMarkdown"
+            :is-fog="item.isFog"
+          />
         </template>
       </BubbleList>
       <Sender ref="senderRef" v-model="inputValue" @submit="startSSE">
         <template #action-list>
           <div class="footer-container">
-            <el-button v-if="!isLoading" type="danger" circle @click="senderRef.submit()">
+            <el-button
+              v-if="!isLoading"
+              type="danger"
+              circle
+              @click="senderRef.submit()"
+            >
               <el-icon><Position /></el-icon>
             </el-button>
             <el-button v-if="isLoading" type="primary" @click="cancel">
@@ -213,7 +241,7 @@ function handleChange(payload: { value: boolean; status: ThinkingStatus }) {
   </div>
 </template>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .component-container {
   background-color: white;
   padding: 12px;
