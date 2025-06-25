@@ -1,71 +1,25 @@
 <script setup lang="ts">
-import type { SubmitResult } from '@components/ChatEditorSender/types';
-import { onMounted, ref } from 'vue';
+import type {
+  EditorProps,
+  SubmitResult
+} from '@components/ChatEditorSender/types';
+import { computed, onMounted, ref } from 'vue';
 import { EditorSender } from '../../components';
+
+const props = withDefaults(defineProps<EditorProps>(), {});
+const emits = defineEmits(['update:loading']);
 
 const editorRef = ref<InstanceType<typeof EditorSender>>();
 const elBtnRef = ref();
-const loading = ref(false);
-const selectList = [
-  {
-    dialogTitle: '风格选择',
-    key: 'style',
-    options: [
-      {
-        id: '1',
-        name: '人像摄影',
-        preview: 'https://www.jianfv.top/style/style1.webp'
-      },
-      {
-        id: '2',
-        name: '电影写真',
-        preview: 'https://www.jianfv.top/style/style2.webp'
-      },
-      {
-        id: '3',
-        name: '中国风',
-        preview: 'https://www.jianfv.top/style/style3.webp'
-      }
-    ]
+
+const _loading = computed<boolean>({
+  get() {
+    return props.loading;
+  },
+  set(val) {
+    emits('update:loading', val);
   }
-];
-const userList = [
-  {
-    id: '5',
-    name: '张三丰',
-    pinyin: 'zhang san feng'
-  },
-  {
-    id: '1',
-    name: '张三',
-    pinyin: 'zhang san'
-  },
-  {
-    id: '2',
-    name: '李四',
-    pinyin: 'li si'
-  },
-  {
-    id: '3',
-    name: '王五',
-    pinyin: 'wang wu'
-  },
-  {
-    id: '4',
-    name: '马六',
-    pinyin: 'ma liu'
-  }
-];
-const customList = [
-  {
-    dialogTitle: '群话题',
-    prefix: '#',
-    tagList: [
-      { id: 'ht1', name: '话题一', pinyin: 'hua ti yi' },
-      { id: 'ht2', name: '话题二', pinyin: 'hua ti er' }
-    ]
-  }
-];
+});
 
 function change() {
   console.log('sender-change-ing~');
@@ -79,7 +33,7 @@ function submit({
   userTags,
   customTags
 }: SubmitResult) {
-  loading.value = true;
+  _loading.value = true;
   console.log(text, 'text');
   console.log(html, 'html');
   console.log(inputTags, 'inputTags');
@@ -89,7 +43,7 @@ function submit({
 }
 
 function cancel() {
-  loading.value = false;
+  _loading.value = false;
 }
 
 const showHeaderFlog = ref(false);
@@ -210,14 +164,7 @@ onMounted(() => {
 
     <EditorSender
       ref="editorRef"
-      :loading="loading"
-      :custom-style="{
-        maxHeight: '240px'
-      }"
-      :select-list="selectList"
-      :user-list="userList"
-      :custom-trigger="customList"
-      variant="updown"
+      v-bind="props"
       @change="change"
       @submit="submit"
       @cancel="cancel"
