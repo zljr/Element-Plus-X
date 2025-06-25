@@ -1,11 +1,16 @@
 import type FilesCardSource from '@components/FilesCard/index.vue';
 import type { Meta, StoryObj } from '@storybook/vue3';
-import FilesCardCustomStyle from './CustomStyleDemo.vue';
+import CustomSolt from './CustomSolt.vue';
 import FilesCard from './index.vue';
 
 const meta: Meta<typeof FilesCardSource> = {
-  title: 'Example/FilesCard',
+  title: 'Example/FilesCard 文件卡片 📇',
   component: FilesCard,
+  parameters: {
+    controls: {
+      expanded: false // 单独控制是否展开组件描述详情
+    }
+  },
   argTypes: {
     uid: {
       control: 'text',
@@ -20,7 +25,25 @@ const meta: Meta<typeof FilesCardSource> = {
       description: '文件大小（单位：字节，自动转换为易读格式）'
     },
     fileType: {
-      control: 'text',
+      control: { type: 'radio' },
+      options: [
+        'word',
+        'excel',
+        'ppt',
+        'pdf',
+        'txt',
+        'mark',
+        'image',
+        'audio',
+        'video',
+        'three',
+        'code',
+        'database',
+        'link',
+        'zip',
+        'file',
+        'unknown'
+      ],
       description: '文件类型（优先级高于 name 后缀解析，如image、document）'
     },
     description: {
@@ -105,10 +128,11 @@ type Story = StoryObj<typeof meta>;
 
 export const FilesCardDemo: Story = {
   args: {
-    name: '自定义.doc',
+    name: '自定义.zdy',
     fileSize: 6000,
     iconSize: '60px',
-    iconColor: '#2767bc',
+    iconColor: '',
+    fileType: 'word',
     maxWidth: '300px',
     errorTip: '上传失败',
     imgVariant: 'rectangle',
@@ -120,7 +144,7 @@ export const FilesCardDemo: Story = {
   }
 };
 
-export const FilesCardCustomStyleDemo: Story = {
+export const StyleSoltDemo: Story = {
   args: {
     ...FilesCardDemo.args,
     name: '自定义样式.doc',
@@ -137,11 +161,11 @@ export const FilesCardCustomStyleDemo: Story = {
   },
   render: args => ({
     components: {
-      FilesCardCustomStyle
+      CustomSolt
     },
     setup() {
       return { attrs: args };
     },
-    template: `<FilesCardCustomStyle v-bind="attrs" />`
+    template: `<CustomSolt v-bind="attrs" />`
   })
 };

@@ -2,7 +2,6 @@
 import type { AttachmentsProps } from '@components/Attachments/types';
 import Attachments from '@components/Attachments/index.vue';
 import { useAttachmentStubs } from './useAttachmentStubs';
-import 'element-plus/theme-chalk/el-message.css';
 
 type Props = Pick<AttachmentsProps, 'items'>;
 
@@ -17,31 +16,29 @@ const { files, handleBeforeUpload, handleHttpRequest, handleUploadDrop } =
 </script>
 
 <template>
-  <div>
-    <div class="component-container">
-      <div class="component-title">附件上传组件-自定义 列表内容</div>
-      <!-- :items="files"
+  <div class="component-container">
+    <div class="component-title">附件上传组件-自定义 列表内容</div>
+    <!-- :items="files"
       overflow="scrollX"
       :list-style="{ padding: '0 12px' }"
       :hide-upload="false" -->
-      <Attachments
-        v-bind="attrs"
-        :items="files"
-        :before-upload="handleBeforeUpload"
-        :http-request="handleHttpRequest"
-        @upload-drop="handleUploadDrop"
-      >
-        <template #file-list="{ items }">
-          <div class="custom-list">
-            <div v-for="(item, idx) in items" :key="idx" class="custom-item">
-              <div class="custom-item-name">
-                {{ item.name }}
-              </div>
+    <Attachments
+      v-bind="attrs"
+      :items="files"
+      :before-upload="handleBeforeUpload"
+      :http-request="handleHttpRequest"
+      @upload-drop="handleUploadDrop"
+    >
+      <template #file-list="{ items }">
+        <div class="custom-list">
+          <div v-for="(item, idx) in items" :key="idx" class="custom-item">
+            <div class="custom-item-name">
+              {{ item.name }}
             </div>
           </div>
-        </template>
-      </Attachments>
-    </div>
+        </div>
+      </template>
+    </Attachments>
   </div>
 </template>
 
@@ -50,7 +47,6 @@ const { files, handleBeforeUpload, handleHttpRequest, handleUploadDrop } =
   background-color: white;
   padding: 12px;
   border-radius: 15px;
-  height: calc(100vh - 80px);
   overflow-y: auto;
 
   .component-title {

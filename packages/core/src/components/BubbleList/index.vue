@@ -1,7 +1,7 @@
 <script setup lang="ts" generic="T extends BubbleProps">
 import type { BubbleProps } from '../Bubble/types';
 import type { TypewriterInstance } from '../Typewriter/types.d.ts';
-import type { BubbleListProps } from './types.d.ts';
+import type { BubbleListEmits, BubbleListProps } from './types.d.ts';
 import { ArrowDownBold } from '@element-plus/icons-vue';
 import useScrollDetector from '../../utils/useScrollDetector.ts';
 import Bubble from '../Bubble/index.vue';
@@ -19,16 +19,20 @@ const props = withDefaults(defineProps<BubbleListProps<T>>(), {
   },
   btnLoading: true,
   btnColor: '#409EFF',
-  btnIconSize: 24,
+  btnIconSize: 24
 });
 
-const emits = defineEmits<{
-  (e: 'complete', instance: TypewriterInstance, index: number): void;
-}>();
+const emits = defineEmits<BubbleListEmits>();
 
 function initStyle() {
-  document.documentElement.style.setProperty('--el-bubble-list-max-height', props.maxHeight);
-  document.documentElement.style.setProperty('--el-bubble-list-btn-size', `${props.btnIconSize}px`);
+  document.documentElement.style.setProperty(
+    '--el-bubble-list-max-height',
+    props.maxHeight
+  );
+  document.documentElement.style.setProperty(
+    '--el-bubble-list-btn-size',
+    `${props.btnIconSize}px`
+  );
 }
 
 onMounted(() => {
@@ -61,7 +65,7 @@ watch(
       });
     }
   },
-  { immediate: true },
+  { immediate: true }
 );
 
 // 父组件的触发方法，直接让滚动容器滚动到顶部
@@ -83,20 +87,17 @@ function scrollToBottom() {
         stopAutoScrollToBottom.value = false;
       });
     }
-  }
-  catch (error) {
+  } catch (error) {
     console.warn('[BubbleList error]: ', error);
   }
 }
 // 父组件触发滚动到指定气泡框
 function scrollToBubble(index: number) {
   const container = scrollContainer.value;
-  if (!container)
-    return;
+  if (!container) return;
 
   const bubbles = container.querySelectorAll('.el-bubble');
-  if (index >= bubbles.length)
-    return;
+  if (index >= bubbles.length) return;
 
   stopAutoScrollToBottom.value = true;
   const targetBubble = bubbles[index] as HTMLElement;
@@ -106,18 +107,21 @@ function scrollToBubble(index: number) {
   const bubbleRect = targetBubble.getBoundingClientRect();
 
   // 计算需要滚动的距离（元素顶部相对于容器顶部的位置 - 容器当前滚动位置）
-  const scrollPosition = bubbleRect.top - containerRect.top + container.scrollTop;
+  const scrollPosition =
+    bubbleRect.top - containerRect.top + container.scrollTop;
 
   // 使用容器自己的滚动方法
   container.scrollTo({
     top: scrollPosition,
-    behavior: 'smooth',
+    behavior: 'smooth'
   });
 }
 // 组件内部触发方法，跟随打字器滚动，滚动底部
 function autoScroll() {
   if (scrollContainer.value) {
-    const listBubbles = scrollContainer.value!.querySelectorAll('.el-bubble-content-wrapper');
+    const listBubbles = scrollContainer.value!.querySelectorAll(
+      '.el-bubble-content-wrapper'
+    );
     // 如果页面上有监听节点，先移除
     if (resizeObserver.value) {
       resizeObserver.value.disconnect();
@@ -135,7 +139,11 @@ function autoScroll() {
 }
 
 const completeMap = ref<Record<number, TypewriterInstance>>({});
-const typingList = computed(() => props.list.map((item, _index_) => ({ ...item, _index_ })).filter(item => item.typing));
+const typingList = computed(() =>
+  props.list
+    .map((item, _index_) => ({ ...item, _index_ }))
+    .filter(item => item.typing)
+);
 // 打字机播放完成回调
 function handleBubbleComplete(index: number, instance: TypewriterInstance) {
   switch (props.triggerIndices) {
@@ -151,7 +159,8 @@ function handleBubbleComplete(index: number, instance: TypewriterInstance) {
       }
       break;
     default:
-      props.triggerIndices.includes(index) && emits('complete', instance, index);
+      props.triggerIndices.includes(index) &&
+        emits('complete', instance, index);
       break;
   }
 }
@@ -163,7 +172,8 @@ function handleScroll() {
 
     // 计算是否超过安全距离
     const distanceToBottom = scrollHeight - (scrollTop + clientHeight);
-    showBackToBottom.value = props.showBackButton && distanceToBottom > props.backButtonThreshold;
+    showBackToBottom.value =
+      props.showBackButton && distanceToBottom > props.backButtonThreshold;
 
     // 判断是否距离底部小于阈值 (这里吸附值大一些会体验更好)
     const isCloseToBottom = scrollTop + clientHeight >= scrollHeight - 30;
@@ -189,8 +199,7 @@ function handleScroll() {
         // 重置累积距离
         accumulatedScrollUpDistance.value = 0;
       }
-    }
-    else {
+    } else {
       // 如果用户停止向上滚动或开始向下滚动，重置累积距离
       accumulatedScrollUpDistance.value = 0;
     }
@@ -209,25 +218,40 @@ function handleScroll() {
 defineExpose({
   scrollToTop,
   scrollToBottom,
-  scrollToBubble,
+  scrollToBubble
 });
 </script>
 
 <template>
   <div
-    ref="scrollContainer" class="el-bubble-list" :class="{ 'always-scrollbar': props.alwaysShowScrollbar }"
+    ref="scrollContainer"
+    class="el-bubble-list"
+    :class="{ 'always-scrollbar': props.alwaysShowScrollbar }"
     @scroll="handleScroll"
   >
     <!-- 如果给 BubbleList 的 item 传入 md 配置，则按照 item 的 md 配置渲染 -->
     <!-- 否则，则按照 BubbleList 的 md 配置渲染 -->
     <Bubble
-      v-for="(item, index) in list" :key="index" :content="item.content" :placement="item.placement"
-      :loading="item.loading" :shape="item.shape" :variant="item.variant" :is-markdown="item.isMarkdown"
-      :is-fog="item.isFog" :typing="item.typing" :max-width="item.maxWidth" :avatar="item.avatar"
-      :avatar-size="item.avatarSize" :avatar-gap="item.avatarGap" :avatar-shape="item.avatarShape"
-      :avatar-icon="item.avatarIcon" :avatar-src-set="item.avatarSrcSet" :avatar-alt="item.avatarAlt"
-      :avatar-fit="item.avatarFit" :no-style="item.noStyle"
-      @finish="(instance) => handleBubbleComplete(index, instance)"
+      v-for="(item, index) in list"
+      :key="index"
+      :content="item.content"
+      :placement="item.placement"
+      :loading="item.loading"
+      :shape="item.shape"
+      :variant="item.variant"
+      :is-markdown="item.isMarkdown"
+      :is-fog="item.isFog"
+      :typing="item.typing"
+      :max-width="item.maxWidth"
+      :avatar="item.avatar"
+      :avatar-size="item.avatarSize"
+      :avatar-gap="item.avatarGap"
+      :avatar-shape="item.avatarShape"
+      :avatar-src-set="item.avatarSrcSet"
+      :avatar-alt="item.avatarAlt"
+      :avatar-fit="item.avatarFit"
+      :no-style="item.noStyle"
+      @finish="instance => handleBubbleComplete(index, instance)"
     >
       <template v-if="$slots.avatar" #avatar>
         <slot name="avatar" :item="item" />
@@ -247,158 +271,32 @@ defineExpose({
     </Bubble>
 
     <!-- 自定义按钮插槽 默认返回按钮 -->
-
     <div
-      v-if="showBackToBottom && hasVertical" class="el-bubble-list-default-back-button" :class="{
-        'el-bubble-list-back-to-bottom-solt': $slots.backToBottom,
-      }" :style="{
+      v-if="showBackToBottom && hasVertical"
+      class="el-bubble-list-default-back-button"
+      :class="{
+        'el-bubble-list-back-to-bottom-solt': $slots.backToBottom
+      }"
+      :style="{
         bottom: backButtonPosition.bottom,
-        left: backButtonPosition.left,
-      }" @click="scrollToBottom"
+        left: backButtonPosition.left
+      }"
+      @click="scrollToBottom"
     >
       <slot name="backToBottom">
-        <el-icon class="el-bubble-list-back-to-bottom-icon" :style="{ color: props.btnColor }">
+        <el-icon
+          class="el-bubble-list-back-to-bottom-icon"
+          :style="{ color: props.btnColor }"
+        >
           <ArrowDownBold />
-          <loadingBg v-if="props.btnLoading" class="back-to-bottom-loading-svg-bg" />
+          <loadingBg
+            v-if="props.btnLoading"
+            class="back-to-bottom-loading-svg-bg"
+          />
         </el-icon>
       </slot>
     </div>
   </div>
 </template>
 
-<style scoped lang="scss">
-.el-bubble-list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  min-height: 0;
-  max-height: var(--el-bubble-list-max-height);
-  overflow: auto;
-  scroll-behavior: smooth;
-
-  position: relative;
-
-  /* 默认滚动条样式（透明） */
-  &::-webkit-scrollbar {
-    width: 6px;
-    height: 8px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: transparent;
-    background-color: #0003;
-    border-radius: 10px;
-    transition: background-color 0.2s ease-in-out;
-  }
-
-  &::-webkit-scrollbar-track {
-    border-radius: 10px;
-    background: transparent;
-  }
-
-  /* 悬停时显示滚动条 */
-  &:hover {
-    &::-webkit-scrollbar-thumb {
-      background: #c1c1c1;
-    }
-
-    &::-webkit-scrollbar-thumb:hover {
-      background: #a8a8a8;
-    }
-  }
-
-  /* 始终显示滚动条模式 */
-  &.always-scrollbar {
-    &::-webkit-scrollbar-thumb {
-      background: #c1c1c1;
-    }
-
-    &:hover::-webkit-scrollbar-thumb {
-      background: #a8a8a8;
-    }
-  }
-}
-
-/* 火狐浏览器滚动条样式 */
-@supports (scrollbar-color: auto) {
-  .el-bubble-list {
-    scrollbar-color: transparent transparent;
-    scrollbar-width: thin;
-
-    &:hover {
-      scrollbar-color: #c1c1c1 transparent;
-    }
-
-    &.always-scrollbar {
-      scrollbar-color: #c1c1c1 transparent;
-    }
-  }
-}
-
-.el-bubble-list-default-back-button {
-  position: sticky;
-  user-select: none;
-  cursor: pointer;
-  width: fit-content;
-  height: fit-content;
-  padding: 10px;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #ffffff;
-  // background-color: aquamarine;
-  border-radius: 50%;
-  box-shadow:
-    0 0 4px 0 rgba(0, 0, 0, 0.02),
-    0 6px 10px 0 rgba(47, 53, 64, 0.1);
-  transition: all 0.3s ease;
-  z-index: 100;
-
-  &:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  }
-
-  .el-bubble-list-back-to-bottom-icon {
-    font-size: var(--el-bubble-list-btn-size);
-    position: relative;
-
-    .back-to-bottom-loading-svg-bg {
-      position: absolute;
-      font-size: calc(var(--el-bubble-list-btn-size) + 26px);
-      animation: is-loading 1s infinite linear;
-    }
-
-    @keyframes is-loading {
-      0% {
-        transform: rotate(0deg);
-      }
-
-      100% {
-        transform: rotate(360deg);
-      }
-    }
-  }
-}
-
-// 如果是有自定义插槽，则初始化默认样式
-.el-bubble-list-back-to-bottom-solt {
-  position: sticky;
-  user-select: none;
-  cursor: initial;
-  width: fit-content;
-  height: fit-content;
-  padding: 0;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: initial;
-
-  &:hover {
-    transform: translateY(0px);
-    box-shadow: initial;
-  }
-}
-</style>
+<style scoped lang="scss" src="./style.scss"></style>

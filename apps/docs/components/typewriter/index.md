@@ -52,7 +52,7 @@
 
 提供一个内置的样式
 
-<demo src="./demos/newMaekDown.vue"></demo>
+<demo src="./demos/newMarkDown.vue"></demo>
 
 ### MD-插件模式（v1.2.0 新增）
 

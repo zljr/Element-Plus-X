@@ -1,52 +1,64 @@
 import type BubbleListSource from '@components/BubbleList/index.vue';
-// import { fn } from '@storybook/test';
 import type { Meta, StoryObj } from '@storybook/vue3';
 import { messageArr } from '@assets/mock';
+import CustomSolt from './CustomSolt.vue';
 import BubbleList from './index.vue';
 
-// More on how to set up stories at: https://storybook.js.org/docs/writing-stories
 const meta = {
-  title: 'Example/BubbleList',
+  title: 'Example/BubbleList 气泡列表 🍅',
   component: BubbleList,
-  // This component will have an automatically generated docsPage entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ['autodocs'],
   argTypes: {
     maxHeight: { control: 'text' },
+    triggerIndices: { control: 'object' },
+    alwaysShowScrollbar: { control: 'boolean' },
     showBackButton: { control: 'boolean' },
     backButtonPosition: { control: 'object' },
     backButtonThreshold: { control: 'number' },
     btnLoading: { control: 'boolean' },
     btnColor: { control: 'color' },
-    btnIconSize: { control: 'number' },
+    btnIconSize: { control: 'number' }
   },
   args: {
-    // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
     list: messageArr,
     maxHeight: '500px',
+    triggerIndices: 'only-last',
+    alwaysShowScrollbar: true,
     showBackButton: true,
     backButtonPosition: { bottom: '20px', left: 'calc(50% - 19px)' },
     backButtonThreshold: 80,
     btnLoading: true,
     btnColor: '#409EFF',
-    btnIconSize: 24,
-  },
+    btnIconSize: 24
+  }
 } satisfies Meta<typeof BubbleListSource>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
-/*
- *👇 Render functions are a framework specific feature to allow you control on how the component renders.
- * See https://storybook.js.org/docs/api/csf
- * to learn how to use render functions.
- */
+
 export const BubbleListDemo: Story = {
+  args: {}
+};
+
+export const SoltDemo: Story = {
   args: {
-    maxHeight: '500px',
-    showBackButton: true,
-    backButtonPosition: { bottom: '20px', left: 'calc(50% - 19px)' },
-    backButtonThreshold: 80,
-    btnLoading: true,
-    btnColor: '#409EFF',
-    btnIconSize: 24,
+    ...BubbleListDemo.args,
+    content: '欢迎使用 Element Plus X',
+    ismarkdown: false,
+    list: messageArr?.map(item => ({
+      ...item,
+      noStyle: true
+    }))
   } as Story['args'],
+  render: (args: any) => ({
+    components: {
+      CustomSolt
+    },
+    setup() {
+      return {
+        attrs: args
+      };
+    },
+    template: `<CustomSolt v-bind="attrs" />`
+  })
 };

@@ -1,6 +1,22 @@
 import type { CSSProperties } from 'vue';
 
-export type FilesType = 'word' | 'excel' | 'ppt' | 'pdf' | 'txt' | 'mark' | 'image' | 'audio' | 'video' | 'three' | 'code' | 'database' | 'link' | 'zip' | 'file' | 'unknown';
+export type FilesType =
+  | 'word'
+  | 'excel'
+  | 'ppt'
+  | 'pdf'
+  | 'txt'
+  | 'mark'
+  | 'image'
+  | 'audio'
+  | 'video'
+  | 'three'
+  | 'code'
+  | 'database'
+  | 'link'
+  | 'zip'
+  | 'file'
+  | 'unknown';
 
 export interface FilesCardProps {
   uid?: string | number;
@@ -31,4 +47,16 @@ export interface FilesCardProps {
   percent?: numbe;
   // 失败提示信息
   errorTip?: string;
+}
+
+export interface FilesCardEmits {
+  (event: 'delete', fileProps: FilesCardProps): void;
+  (event: 'imagePreview', fileProps: FilesCardProps): void;
+}
+
+// 文档暂时还没有更新，介绍能获取到这些
+export interface FilesCardInstance {
+  namePrefix: globalThis.ComputedRef<string>;
+  nameSuffix: globalThis.ComputedRef<string>;
+  colorMap: Record<FilesType, string>;
 }

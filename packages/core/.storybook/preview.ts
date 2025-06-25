@@ -6,16 +6,23 @@ const preview: Preview = {
     controls: {
       matchers: {
         color: /(background|color)$/i,
-        date: /Date$/i,
+        date: /Date$/i
       },
+      disableSaveFromUI: true
+      // expanded: true // 默认展开所有组件描述
+    },
+    backgrounds: {
+      grid: {
+        disable: true // 禁用网格
+      }
     },
     darkMode: {
       // Override the default dark theme
       dark: { ...themes.dark },
       // Override the default light theme
-      light: { ...themes.normal },
-    },
-  },
+      light: { ...themes.normal }
+    }
+  }
 };
 
 export default preview;

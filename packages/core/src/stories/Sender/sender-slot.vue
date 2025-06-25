@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { TriggerEvent } from '@components/EditorSender/types';
 import { CircleClose, Delete, Position } from '@element-plus/icons-vue';
+import { ElMessage } from 'element-plus';
 import { Sender } from '../../components';
 
 const senderRef = ref<InstanceType<typeof Sender>>();

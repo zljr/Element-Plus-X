@@ -1,7 +1,12 @@
 <script lang="ts" setup>
 import type { FilesCardProps } from '../FilesCard/types.d.ts';
-import type { FileListProps } from './types';
-import { ArrowLeftBold, ArrowRightBold, Plus, UploadFilled } from '@element-plus/icons-vue';
+import type { AttachmentsEmits, FileListProps } from './types.d.ts';
+import {
+  ArrowLeftBold,
+  ArrowRightBold,
+  Plus,
+  UploadFilled
+} from '@element-plus/icons-vue';
 import { debounce } from 'radash';
 import FilesCard from '../FilesCard/index.vue';
 
@@ -11,10 +16,10 @@ const props = withDefaults(defineProps<FileListProps>(), {
   listStyle: () => ({}),
   uploadIconSize: '64px',
   dragTarget: undefined,
-  hideUpload: false,
+  hideUpload: false
 });
 
-const emits = defineEmits(['uploadChange', 'uploadSuccess', 'uploadError', 'uploadDrop', 'deleteCard']);
+const emits = defineEmits<AttachmentsEmits>();
 
 /* 列表相关 开始 */
 const containerRef = ref<HTMLDivElement | null>(null);
@@ -25,18 +30,21 @@ const pingEnd = ref(false);
 const TOLERANCE = 1;
 function checkPing() {
   const containerEle = containerRef.value;
-  if (!containerEle)
-    return;
+  if (!containerEle) return;
 
   if (props.overflow === 'scrollX') {
     pingStart.value = Math.abs(containerEle.scrollLeft) >= TOLERANCE;
-    pingEnd.value = containerEle.scrollWidth - containerEle.clientWidth - Math.abs(containerEle.scrollLeft) >= TOLERANCE;
-  }
-  else if (props.overflow === 'scrollY') {
+    pingEnd.value =
+      containerEle.scrollWidth -
+        containerEle.clientWidth -
+        Math.abs(containerEle.scrollLeft) >=
+      TOLERANCE;
+  } else if (props.overflow === 'scrollY') {
     pingStart.value = containerEle.scrollTop !== 0;
-    pingEnd.value = containerEle.scrollHeight - containerEle.clientHeight !== containerEle.scrollTop;
-  }
-  else {
+    pingEnd.value =
+      containerEle.scrollHeight - containerEle.clientHeight !==
+      containerEle.scrollTop;
+  } else {
     pingStart.value = false;
     pingEnd.value = false;
   }
@@ -45,9 +53,15 @@ function onScrollOffset(offset: -1 | 1) {
   const containerEle = containerRef.value;
   if (containerEle) {
     containerEle.scrollTo({
-      left: props.overflow === 'scrollX' ? containerEle.scrollLeft + offset * containerEle.clientWidth : containerEle.scrollLeft,
-      top: props.overflow === 'scrollY' ? containerEle.scrollTop + offset * containerEle.clientHeight : containerEle.scrollTop,
-      behavior: 'smooth',
+      left:
+        props.overflow === 'scrollX'
+          ? containerEle.scrollLeft + offset * containerEle.clientWidth
+          : containerEle.scrollLeft,
+      top:
+        props.overflow === 'scrollY'
+          ? containerEle.scrollTop + offset * containerEle.clientHeight
+          : containerEle.scrollTop,
+      behavior: 'smooth'
     });
   }
 }
@@ -89,33 +103,31 @@ function toggleDragStyle(isDrag: boolean) {
         dropAreaRef.value.style.height = '100vh'; // 视口高度
         dropAreaRef.value.style.left = '0';
         dropAreaRef.value.style.top = '0';
-      }
-      else {
+      } else {
         // 其他元素保持原逻辑
         targetElement.value.style.position = 'relative';
       }
-    }
-    else {
+    } else {
       targetElement.value.style.position = '';
     }
   }
 }
 
-function handleUploadChange(file: File, fileList: FileListProps) {
-  emits('uploadChange', file, fileList);
+function handleUploadChange(file: File, props: FileListProps) {
+  emits('uploadChange', file, props);
 }
 
-function handleUploadSuccess(response: any, file: File, fileList: FileListProps) {
-  emits('uploadSuccess', response, file, fileList);
+function handleUploadSuccess(response: any, file: File, props: FileListProps) {
+  console.log('上传成功', response, file, props);
+  emits('uploadSuccess', response, file, props);
 }
 
-function handleUploadError(error: any, file: File, fileList: FileListProps) {
-  emits('uploadError', error, file, fileList);
+function handleUploadError(error: any, file: File, props: FileListProps) {
+  emits('uploadError', error, file, props);
 }
 
 function getTargetElement() {
-  if (!props.dragTarget)
-    return wrapperRef.value;
+  if (!props.dragTarget) return wrapperRef.value;
   // 新增：处理原生 DOM 元素（如 document.body）
   if (props.dragTarget instanceof HTMLElement) {
     return props.dragTarget;
@@ -177,7 +189,6 @@ onMounted(() => {
 
   // 如果有拖拽目标元素，则监听拖拽事件
   if (wrapperRef.value) {
-    console.log('wrapperRef===>', getTargetElement());
     targetElement.value = getTargetElement() || wrapperRef.value;
     // 监听拖拽事件
     targetElement.value.addEventListener('dragenter', targetDragEnter, false);
@@ -190,8 +201,16 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener('resize', debouncedCheckPing);
   if (targetElement.value) {
-    targetElement.value.removeEventListener('dragenter', targetDragEnter, false);
-    targetElement.value.removeEventListener('dragleave', targetDropLeave, false);
+    targetElement.value.removeEventListener(
+      'dragenter',
+      targetDragEnter,
+      false
+    );
+    targetElement.value.removeEventListener(
+      'dragleave',
+      targetDropLeave,
+      false
+    );
     targetElement.value.removeEventListener('drop', targetDrop, false);
     targetElement.value.removeEventListener('dragover', targetDragOver, false);
   }
@@ -205,8 +224,8 @@ watch(
   },
   {
     immediate: true, // 组件初始化时立即调用一次
-    deep: true, // 如果 items 是对象或数组，需要深度监听
-  },
+    deep: true // 如果 items 是对象或数组，需要深度监听
+  }
 );
 
 // 监听 props.dragTarget
@@ -214,14 +233,21 @@ watch(
   () => props.dragTarget,
   () => {
     // 确保 DOM 更新后再调用 checkPing
-    // 确保 DOM 更新后再调用 checkPing
     nextTick(() => {
       // 如果有拖拽目标元素，则监听拖拽事件
       if (wrapperRef.value) {
         targetElement.value = getTargetElement() || wrapperRef.value;
         // 监听拖拽事件
-        targetElement.value.addEventListener('dragenter', targetDragEnter, false);
-        targetElement.value.addEventListener('dragleave', targetDropLeave, false);
+        targetElement.value.addEventListener(
+          'dragenter',
+          targetDragEnter,
+          false
+        );
+        targetElement.value.addEventListener(
+          'dragleave',
+          targetDropLeave,
+          false
+        );
         targetElement.value.addEventListener('drop', targetDrop, false);
         targetElement.value.addEventListener('dragover', targetDragOver, false);
       }
@@ -229,32 +255,40 @@ watch(
   },
   {
     immediate: true, // 组件初始化时立即调用一次
-    deep: true,
-  },
+    deep: true
+  }
 );
 
 defineExpose({
   onScrollLeft,
   onScrollRight,
-  debouncedCheckPing,
+  debouncedCheckPing
 });
 </script>
 
 <template>
   <div
-    ref="wrapperRef" class="elx-attachments-wrapper" :class="{
-      'elx-attachments-overflow-ping-start': overflow === 'scrollX' && pingStart,
-      'elx-attachments-overflow-ping-end': overflow === 'scrollX' && pingEnd,
-    }" :style="{
+    ref="wrapperRef"
+    class="elx-attachments-wrapper"
+    :class="{
+      'elx-attachments-overflow-ping-start':
+        overflow === 'scrollX' && pingStart,
+      'elx-attachments-overflow-ping-end': overflow === 'scrollX' && pingEnd
+    }"
+    :style="{
       ...listStyle,
-      '--elx-attachments-upload-icon-size': props.uploadIconSize,
+      '--elx-attachments-upload-icon-size': props.uploadIconSize
     }"
   >
     <div v-if="!items.length && !props.hideUpload">
       <slot name="empty-upload">
         <el-upload
-          class="elx-attachments-upload-btn" v-bind="$attrs" :show-file-list="false"
-          @change="handleUploadChange" @success="handleUploadSuccess" @error="handleUploadError"
+          class="elx-attachments-upload-btn"
+          v-bind="$attrs"
+          :show-file-list="false"
+          @change="handleUploadChange"
+          @success="handleUploadSuccess"
+          @error="handleUploadError"
         >
           <el-icon class="uploader-icon">
             <Plus />
@@ -264,41 +298,70 @@ defineExpose({
     </div>
 
     <div class="elx-attachments-background">
-      <div v-if="overflow === 'scrollX' && pingStart" class="elx-attachments-background-start" />
-      <div v-if="overflow === 'scrollX' && pingEnd" class="elx-attachments-background-end" />
+      <div
+        v-if="overflow === 'scrollX' && pingStart"
+        class="elx-attachments-background-start"
+      />
+      <div
+        v-if="overflow === 'scrollX' && pingEnd"
+        class="elx-attachments-background-end"
+      />
     </div>
 
     <div
-      ref="containerRef" class="elx-attachments" :class="{
-        [`elx-attachments-overflow-${overflow}`]: overflow,
-      }" :style="{
-        ...(overflow === 'scrollX' ? { whiteSpace: 'nowrap', overflowX: 'auto', overflowY: 'hidden' } : {}),
-        ...(overflow === 'scrollY' ? { overflowX: 'hidden', overflowY: 'auto' } : {}),
-        ...(overflow === 'wrap' ? { display: 'flex', flexWrap: 'wrap' } : {}),
-      }" @scroll="debouncedCheckPing"
+      ref="containerRef"
+      class="elx-attachments"
+      :class="{
+        [`elx-attachments-overflow-${overflow}`]: overflow
+      }"
+      :style="{
+        ...(overflow === 'scrollX'
+          ? { whiteSpace: 'nowrap', overflowX: 'auto', overflowY: 'hidden' }
+          : {}),
+        ...(overflow === 'scrollY'
+          ? { overflowX: 'hidden', overflowY: 'auto' }
+          : {}),
+        ...(overflow === 'wrap' ? { display: 'flex', flexWrap: 'wrap' } : {})
+      }"
+      @scroll="debouncedCheckPing"
     >
       <div
-        v-if="items.length" :class="{
-          'elx-attachments-file-card-wrap': overflow === 'scrollX',
+        v-if="items.length"
+        :class="{
+          'elx-attachments-file-card-wrap': overflow === 'scrollX'
         }"
       >
         <slot name="file-list" :items="items">
-          <div v-for="(item, index) in items" :key="item.uid" class="elx-attachments-card">
+          <div
+            v-for="(item, index) in items"
+            :key="item.uid"
+            class="elx-attachments-card"
+          >
             <transition name="card-motion">
               <FilesCard
-                v-if="item.uid" v-bind="item" class="elx-attachments-card-item"
+                v-if="item.uid"
+                v-bind="item"
+                class="elx-attachments-card-item"
                 @delete="handleDelete(item, index)"
               />
             </transition>
           </div>
         </slot>
 
-        <div v-if="items.length && !_isOverLimit && !props.hideUpload" class="elx-attachments-upload-placeholder">
+        <div
+          v-if="items.length && !_isOverLimit && !props.hideUpload"
+          class="elx-attachments-upload-placeholder"
+        >
           <slot name="no-empty-upload">
             <el-upload
-              v-bind="$attrs" :show-file-list="false" :style="{
-                height: overflow === 'scrollY' && '',
-              }" class="elx-attachments-upload-btn" @change="handleUploadChange" @success="handleUploadSuccess"
+              v-bind="$attrs"
+              :show-file-list="false"
+              :style="{
+                height: overflow === 'scrollY' && ''
+              }"
+              class="elx-attachments-upload-btn"
+              @change="handleUploadChange"
+              @success="handleUploadSuccess"
               @error="handleUploadError"
             >
               <template #trigger>
@@ -312,9 +375,15 @@ defineExpose({
       </div>
     </div>
 
-    <slot name="prev-button" :show="overflow === 'scrollX' && pingStart" :on-scroll-left="onScrollLeft">
+    <slot
+      name="prev-button"
+      :show="overflow === 'scrollX' && pingStart"
+      :on-scroll-left="onScrollLeft"
+    >
       <el-button
-        v-if="overflow === 'scrollX' && pingStart" size="small" class="elx-attachments-prev-btn"
+        v-if="overflow === 'scrollX' && pingStart"
+        size="small"
+        class="elx-attachments-prev-btn"
         @click="onScrollLeft"
       >
         <el-icon>
@@ -323,9 +392,15 @@ defineExpose({
       </el-button>
     </slot>
 
-    <slot name="next-button" :show="overflow === 'scrollX' && pingEnd" :on-scroll-right="onScrollRight">
+    <slot
+      name="next-button"
+      :show="overflow === 'scrollX' && pingEnd"
+      :on-scroll-right="onScrollRight"
+    >
       <el-button
-        v-if="overflow === 'scrollX' && pingEnd" size="small" class="elx-attachments-next-btn"
+        v-if="overflow === 'scrollX' && pingEnd"
+        size="small"
+        class="elx-attachments-next-btn"
         @click="onScrollRight"
       >
         <el-icon>
@@ -341,216 +416,11 @@ defineExpose({
           <el-icon class="elx-attachments-drop-area-icon">
             <UploadFilled />
           </el-icon>
-          <div class="elx-attachments-drop-area-text">
-            在此处拖放文件上传
-          </div>
+          <div class="elx-attachments-drop-area-text">在此处拖放文件上传</div>
         </div>
       </slot>
     </teleport>
   </div>
 </template>
 
-<style scoped>
-/* CSS 动画样式调整 */
-.card-motion-enter-active,
-.card-motion-move,
-.card-motion-leave-active {
-  transition: all 0.3s ease;
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.card-motion-enter-from,
-.card-motion-leave-to {
-  opacity: 0;
-  /* 从左侧外进入（进场）/ 移动到右侧外（退场） */
-  transform: translateX(-100%);
-  /* 进场初始位置在左侧外 */
-  /* 如果你希望从左侧稍微偏移进入，可以用 translateX(-10px) */
-}
-
-.card-motion-leave-active {
-  /* 退场时从当前位置移动到右侧外 */
-  transform: translateX(100%);
-  opacity: 0;
-}
-
-.elx-attachments-file-card-wrap {
-  display: flex;
-  height: 100%;
-  align-items: center;
-}
-
-.elx-attachments-upload-placeholder {
-  display: inline-block;
-  width: fit-content;
-  align-self: center;
-  margin: 6px;
-}
-
-.elx-attachments-card {
-  display: inline-block;
-  vertical-align: top;
-}
-
-.elx-attachments-card-item {
-  margin: 6px;
-}
-
-.elx-attachments-prev-btn,
-.elx-attachments-next-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10;
-  background-color: rgba(0, 0, 0, 0.3);
-  color: white;
-  border: none;
-  padding: 4px 0px;
-  border-radius: 3px;
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.5);
-  }
-
-  &:active {
-    background-color: rgba(0, 0, 0, 0.7);
-  }
-}
-
-.elx-attachments-prev-btn {
-  left: 8px;
-  border-top-left-radius: 0px;
-  border-bottom-left-radius: 0px;
-}
-
-.elx-attachments-next-btn {
-  right: 8px;
-  border-top-right-radius: 0px;
-  border-bottom-right-radius: 0px;
-}
-
-.elx-attachments-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  pointer-events: none;
-}
-
-.elx-attachments-background-start {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: 50px;
-  background: linear-gradient(to right, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0));
-  z-index: 5;
-}
-
-.elx-attachments-background-end {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 50px;
-  background: linear-gradient(to left, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0));
-  z-index: 5;
-}
-
-.elx-attachments-overflow-scrollX {
-  height: 100%;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  scrollbar-width: none;
-}
-
-.elx-attachments-overflow-scrollY {
-  width: 100%;
-  height: 100%;
-}
-
-.elx-attachments-wrapper {
-  position: relative;
-  display: block;
-}
-
-.elx-attachments-upload-btn {
-  display: flex;
-}
-
-:deep() {
-  .el-upload {
-    border: 1px dashed var(--el-border-color);
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    transition: var(--el-transition-duration-fast);
-
-    &:hover {
-      border-color: var(--el-color-primary);
-
-      .el-icon.uploader-icon {
-        color: var(--el-color-primary);
-      }
-    }
-  }
-
-  .el-icon.uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    text-align: center;
-    width: var(--elx-attachments-upload-icon-size);
-    height: var(--elx-attachments-upload-icon-size);
-  }
-
-  .el-upload-dragger {
-    padding: 0;
-
-    &:hover {
-      .el-icon {
-        color: var(--el-color-primary);
-      }
-    }
-  }
-}
-
-/* 设置穿梭节点的样式 */
-.elx-attachments-drop-area {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: calc(100% - 4px);
-  height: calc(100% - 4px);
-  border-radius: 15px;
-  border: 2px dashed var(--el-color-primary);
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  background: rgba(225, 225, 225, 0.3);
-  backdrop-filter: blur(2px);
-
-  .elx-attachments-drop-area-icon {
-    font-size: 50px;
-    color: var(--el-color-primary);
-  }
-
-  .elx-attachments-drop-area-text {
-    font-size: 16px;
-    color: var(--el-color-primary);
-    margin-top: 10px;
-    text-align: center;
-    width: 100%;
-    max-width: 300px;
-  }
-}
-</style>
+<style scoped lang="scss" src="./style.scss"></style>
