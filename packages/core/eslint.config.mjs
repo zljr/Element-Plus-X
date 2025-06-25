@@ -19,6 +19,7 @@ export default antfu({
     'vue/comma-dangle': 'off',
     '@typescript-eslint/comma-dangle': 'off',
     'comma-dangle': 'off',
+    'style/brace-style': 'off',
     'style/comma-dangle': 'off',
     'style/arrow-parens': 'off',
     'style/quote-props': 'off',
