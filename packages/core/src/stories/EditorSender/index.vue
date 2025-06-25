@@ -168,6 +168,13 @@ function setHtml() {
     `<img class="img-tag" src="https://cdn.element-plus-x.com/element-plus-x.png" alt="">`
   );
 }
+function openSelectDialog() {
+  editorRef.value?.openSelectDialog({
+    key: 'style',
+    elm: document.getElementById('dialogBtn')!,
+    insertText: '自定义前置内容'
+  });
+}
 
 onMounted(() => {
   showHeaderFlog.value = true;
@@ -291,7 +298,13 @@ onMounted(() => {
             <el-button dark type="primary" plain @click="setMixTags">
               混合标签覆盖写入
             </el-button>
-            <el-button dark type="primary" plain>
+            <el-button
+              id="dialogBtn"
+              dark
+              type="primary"
+              plain
+              @click="openSelectDialog"
+            >
               外部调用选择标签弹窗
             </el-button>
           </div>

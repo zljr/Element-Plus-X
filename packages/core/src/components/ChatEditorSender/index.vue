@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import type { ChatOperateNode } from 'chatarea';
-import type { ChatState, EditorProps, MixTag, SubmitResult } from './types';
+import type {
+  ChatState,
+  EditorProps,
+  MixTag,
+  SelectDialogOption,
+  SubmitResult
+} from './types';
 import ChatArea from 'chatarea';
 import { onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue';
 import ClearButton from './components/ClearButton/index.vue';
@@ -55,7 +61,9 @@ const chatState = reactive<ChatState>({
   isEmpty: true,
   textLength: 0, // 该属性值只会在配置了maxLength情况下才拥有赋值
   lastFocusNode: null,
-  lastOffset: 0
+  lastOffset: 0,
+  wrapCallSelectDialog: false, // 记录是否是外部调用了选择弹窗进行插值行为操作
+  selectTagInsetText: ''
 });
 // 创建输入框
 function createChat() {
@@ -97,6 +105,14 @@ function createChat() {
     },
     true
   );
+  // 订阅标签选择事件
+  chat.value.addEventListener('selectCheck', () => {
+    if (chatState.wrapCallSelectDialog && chatState.selectTagInsetText) {
+      chat.value?.insertText(chatState.selectTagInsetText);
+      chatState.wrapCallSelectDialog = false;
+      chatState.selectTagInsetText = '';
+    }
+  });
   if (props.disabled) {
     chat.value.disabled();
   }
@@ -195,6 +211,7 @@ function selectAll() {
 }
 // 插入一个选择标签
 function setSelectTag(key: string, tagId: string) {
+  chatState.wrapCallSelectDialog = false;
   const tag = props.selectList
     ?.find(option => option.key === key)
     ?.options.find(tag => tag.id === tagId);
@@ -278,6 +295,12 @@ function setHtml(html: string) {
 // 在当前光标处插入text内容
 function setText(txt: string) {
   chat.value?.insertText(txt);
+}
+// 外部调用唤起标签选择弹窗
+function openSelectDialog(option: SelectDialogOption) {
+  chatState.selectTagInsetText = option.insertText || '';
+  chatState.wrapCallSelectDialog = true;
+  chat.value?.showPCSelectDialog(option.key, option.elm);
 }
 
 /** 监听响应props的响应式修改 去更新chat示例对象对应的配置 */
@@ -389,6 +412,7 @@ defineExpose({
   setMixTags,
   setHtml,
   setText,
+  openSelectDialog,
   chat, // 暴露chat实例对象
   chatState
 });

@@ -21,6 +21,8 @@ export interface ChatState {
   textLength: number;
   lastFocusNode: Node | null;
   lastOffset: number;
+  wrapCallSelectDialog: boolean;
+  selectTagInsetText: string;
 }
 
 export interface SubmitResult {
@@ -45,4 +47,10 @@ export interface MixTag {
   key?: string;
   value?: string;
   placeholder?: string;
+}
+
+export interface SelectDialogOption {
+  key: string;
+  elm: HTMLElement;
+  insertText?: string;
 }
