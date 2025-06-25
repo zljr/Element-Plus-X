@@ -572,7 +572,7 @@ defineExpose({
     align-items: flex-end;
 
     .el-editor-sender-prefix {
-      height: 100%;
+      flex: none;
     }
 
     .el-editor-sender-chat-room {
