@@ -34,12 +34,16 @@ const slots = defineSlots();
 const visibleHeader = ref(false);
 // 展开头部
 function openHeader() {
-  if (!slots.header) return false;
+  if (!slots.header) {
+    return false;
+  }
   visibleHeader.value = true;
 }
 // 关闭头部
 function closeHeader() {
-  if (!slots.header) return false;
+  if (!slots.header) {
+    return false;
+  }
   visibleHeader.value = false;
 }
 
